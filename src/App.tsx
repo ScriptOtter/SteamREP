@@ -2,11 +2,18 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import { FaSearch } from "react-icons/fa";
+import { MostReportedPlayers } from "./component/MostReportedPlayers";
 import { MdClose } from "react-icons/md";
-
+import { MostReportedPlayersList } from "./data/data.tsx";
 function App() {
   const [count, setCount] = useState(0);
-
+  const [mostReportedPlayers, setMostReportedPlayers] = useState(
+    MostReportedPlayersList
+  );
+  let currentId: number = 1;
+  const generateId = (): number => {
+    return currentId++;
+  };
   return (
     <>
       <div className="bg-blue-950 w-screen">
@@ -43,14 +50,25 @@ function App() {
           </div>
           <div className="w-full">
             <div className="flex justify-evenly">
-              <p>#</p>
-              <p>Player</p>
-              <p>Number of Complains</p>
-              <p>Last Report</p>
+              <p className="basis-[12%]">#</p>
+              <p className="basis-[30%]">Player</p>
+              <p className="basis-[12%]">Number of Complains</p>
+              <p className="basis-[12%]">Last Report</p>
             </div>
-            <div className="">
-              <p>1</p>
-            </div>
+
+            {/* <MostReportedPlayers
+              nickname={mostReportedPlayers[0].nickname}
+              numberofcomplains={mostReportedPlayers.numberofcomplains}
+              lastReport={mostReportedPlayers.lastReport}
+            /> */}
+            {mostReportedPlayers.map((player) => (
+              <MostReportedPlayers
+                id={generateId()}
+                nickname={player.nickname}
+                numberofcomplains={player.numberofcomplains}
+                lastReport={player.lastReport}
+              />
+            ))}
           </div>
         </div>
       </div>
