@@ -1,5 +1,6 @@
 import { FaSearch } from "react-icons/fa";
 import { Link, Outlet } from "react-router-dom";
+import { Input } from "../component/Input.tsx";
 export const Header = () => {
   return (
     <>
@@ -11,11 +12,11 @@ export const Header = () => {
           <div className="flex justify-center pt-2 grow">
             <div className="w-[48vw] bg-amber-300 rounded-3xl pl-4 pr-4 pt-2 pb-2 flex">
               <FaSearch className="w-1/32 size-5  text-gray-200 pt-1 pr-1" />
-              <input
+              <Input
                 type="text"
                 placeholder="Search for a profile (Steam ID / Steam Profile Link / Custom Steam URL)"
-                className="w-15/16 flex-grow outline-none placeholder:text-s placeholder:italic"
-              ></input>
+                variant="forSearch"
+              ></Input>
               <div className="flex">
                 <div className="pl-1">
                   <button className="cursor-pointer">
@@ -26,7 +27,9 @@ export const Header = () => {
             </div>
           </div>
           <div className="flex justify-center bg-red-500 w-[20vw]">
-            Steam LOGIN
+            <p>
+              <Link to="/auth/signin">Sign In</Link>
+            </p>
           </div>
         </div>
       </div>

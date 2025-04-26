@@ -19,14 +19,13 @@ export const MostReportedPlayers = ({
 
   if (id % 2 == 0) {
     return (
-      <div className="bg-red-300 rounded-2xl mb-2">
-        <div className="flex justify-evenly">
+      <div className="bg-red-300 rounded-2xl p-1 mb-1">
+        <div className="flex justify-evenly items-center">
           <p className="basis-[12%]">{id}</p>
-          <div className="flex basis-[30%] items-center">
+          <div className="flex basis-[30%] items-center space-x-2">
             <img
-              className="
-mask-radial-at-center"
               src={API_AVATAR_URL}
+              className="inline-block h-12 w-12 rounded-full ring-1"
             />
             <p className="">{nickname}</p>
           </div>
@@ -38,14 +37,19 @@ mask-radial-at-center"
     );
   } else {
     return (
-      <div className="bg-blue-300 rounded-2xl mb-2">
-        {/* <div className="flex justify-evenly">
+      <div className="bg-blue-300 rounded-2xl p-1 mb-1">
+        <div className="flex justify-evenly items-center ">
           <p className="basis-[12%]">{id}</p>
-          <img src={API_AVATAR_URL} />
-          <p className="basis-[30%]">{nickname}</p>
+          <div className="flex basis-[30%] items-center space-x-2">
+            <img
+              src={API_AVATAR_URL}
+              className="inline-block h-12 w-12 rounded-full ring-1"
+            />
+            <p className="">{nickname}</p>
+          </div>
           <p className="basis-[12%]">{numberofcomplains}</p>
           <p className="basis-[12%]">{lastReport}</p>
-        </div> */}
+        </div>
       </div>
     );
   }

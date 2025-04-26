@@ -1,6 +1,6 @@
 import { Header } from "../views/Header";
 import { MostReportedPlayersList } from "../data/data";
-import { MostReportedPlayers } from "../component/MostReportedPlayers";
+import { MostReportedPlayers } from "../views/MostReportedPlayers";
 import { useState } from "react";
 export const MostReportedPlayersPage = () => {
   const [mostReportedPlayers, setMostReportedPlayers] = useState(

@@ -8,7 +8,7 @@
 
 # npm install random-words
 
-# SteamREP
+# npm install @sglara/cn
 
 # SteamREP
 

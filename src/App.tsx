@@ -5,6 +5,8 @@ import { MostReportedPlayersPage } from "./pages/MostReporotedPlayersPage.tsx";
 import { HomePage } from "./pages/HomePage.tsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { NoPage } from "./pages/NoPage.tsx";
+import { SignIn } from "./auth/SignIn.tsx";
+import { SignUp } from "./auth/SignUp.tsx";
 
 function App() {
   const [page, setPage] = useState(0);
@@ -18,6 +20,8 @@ function App() {
             path="/MostReportedPlayers"
             element={<MostReportedPlayersPage />}
           />
+          <Route path="/auth/signup" element={<SignUp />} />
+          <Route path="/auth/signin" element={<SignIn />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>
