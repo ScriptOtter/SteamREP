@@ -10,9 +10,7 @@
 
 # npm install @sglara/cn
 
-# npm install formik yup
-
-# SteamREP
+# npm install zod
 
 # SteamREP
 
