@@ -10,7 +10,7 @@
 
 # npm install @sglara/cn
 
-# SteamREP
+# npm install formik yup
 
 # SteamREP
 

@@ -2,9 +2,19 @@ import { InputHTMLAttributes } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   variant?: "default" | "forSearch" | "forAuth";
+  type?: "text" | "email" | "password" | "checkbox";
+  id?: string;
 }
 
-export const Input = ({ placeholder, variant = "default" }: InputProps) => {
+export const Input = ({
+  className,
+  placeholder,
+  variant = "default",
+  type = "text",
+  id,
+  value,
+  onChange,
+}: InputProps) => {
   const variantStyles = {
     default: "bg-red-400 border-red-300 focus:ring-blue-500",
     forSearch:
@@ -14,6 +24,13 @@ export const Input = ({ placeholder, variant = "default" }: InputProps) => {
   };
 
   return (
-    <input className={variantStyles[variant]} placeholder={placeholder}></input>
+    <input
+      className={variantStyles[variant] + " " + className}
+      placeholder={placeholder}
+      type={type}
+      id={id}
+      value={value}
+      onChange={onChange}
+    ></input>
   );
 };
