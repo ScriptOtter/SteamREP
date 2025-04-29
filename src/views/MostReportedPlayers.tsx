@@ -1,4 +1,4 @@
-import { generate } from "random-words";
+import { API_AVATAR } from "../services/apiAvatar";
 
 interface MostReportedPlayersProps {
   id: number;
@@ -13,10 +13,7 @@ export const MostReportedPlayers = ({
   numberofcomplains,
   lastReport,
 }: MostReportedPlayersProps) => {
-  const API_AVATAR = "https://ui-avatars.com/api/?background=random&name=";
-  let words = generate(2);
-  const API_AVATAR_URL = API_AVATAR + words[0] + "+" + words[1];
-
+  const API_AVATAR_URL = API_AVATAR();
   if (id % 2 == 0) {
     return (
       <div className="bg-red-300 rounded-2xl p-1 mb-1">

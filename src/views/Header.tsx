@@ -4,10 +4,10 @@ import { Input } from "../component/Input.tsx";
 export const Header = () => {
   return (
     <>
-      <div className="bg-blue-950 w-screen pb-2">
+      <div className="bg-indigo-700 w-screen pb-2">
         <div className="flex justify-between items-center">
           <div className="flex justify-center bg-red-500 w-[20vw]">
-            SteamREP
+            <Link to="/">SteamREP</Link>
           </div>
           <div className="flex justify-center pt-2 grow">
             <div className="w-[48vw] bg-amber-300 rounded-3xl pl-4 pr-4 pt-2 pb-2 flex">

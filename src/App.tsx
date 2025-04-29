@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { NoPage } from "./pages/NoPage.tsx";
 import { SignIn } from "./auth/SignIn.tsx";
 import { SignUp } from "./auth/SignUp.tsx";
+import { ProfilePage } from "./pages/ProfilePage.tsx";
 
 function App() {
   const [page, setPage] = useState(0);
@@ -22,6 +23,7 @@ function App() {
           />
           <Route path="/auth/signup" element={<SignUp />} />
           <Route path="/auth/signin" element={<SignIn />} />
+          <Route path="/profiles/:id" element={<ProfilePage />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>
