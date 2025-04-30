@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
 import { Header } from "../views/Header";
-import { API_AVATAR } from "../services/apiAvatar";
+import { API_AVATAR } from "../services/apiAvatar.ts";
 
+import { SteamId } from "../services/steam.tsx";
 interface ProfileParams {
   id: string;
 }
@@ -9,6 +10,10 @@ interface ProfileParams {
 export const ProfilePage = () => {
   const { id } = useParams<ProfileParams>();
   const API_AVATAR_URL = API_AVATAR();
+
+  // const res = SteamId();
+  // console.log(res);
+
   return (
     <>
       <Header />

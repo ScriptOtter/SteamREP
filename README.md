@@ -12,6 +12,6 @@
 
 # npm install zod
 
-# SteamREP
+# npm install axios https-proxy-agent
 
 # SteamREP
