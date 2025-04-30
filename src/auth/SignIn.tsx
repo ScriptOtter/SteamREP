@@ -3,10 +3,6 @@ import { Input } from "../component/Input";
 import { Header } from "../views/Header";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-interface UserLogin {
-  username: string;
-  password: string;
-}
 
 export const SignIn = () => {
   const [username, setUsername] = useState<string>("");
