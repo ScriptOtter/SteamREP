@@ -1,8 +1,8 @@
-import axios from "axios";
 import { Input } from "../component/Input";
 import { Header } from "../views/Header";
 import { useState } from "react";
 import z from "zod";
+import { Register } from "./Auth";
 
 export const SignUp = () => {
   type FormData = z.infer<typeof formDataScheme>;
@@ -55,13 +55,6 @@ export const SignUp = () => {
   };
 
   const handleSignUp = (event: React.FormEvent) => {
-    const serverSignUp = async (formData: Partial<FormData>) => {
-      const res = await axios.post(
-        "http://localhost:3000/api/auth/signup",
-        formData
-      );
-      console.log(res);
-    };
     event.preventDefault();
 
     const errors = validate();
@@ -70,10 +63,9 @@ export const SignUp = () => {
       setShowErrors(true);
       console.log(errors);
       return;
+    } else {
+      const res = Register(formData);
     }
-    console.log("Goood!");
-    console.log(formData);
-    serverSignUp(formData);
   };
 
   const errors = showErrors ? validate() : undefined;

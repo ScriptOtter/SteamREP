@@ -23,7 +23,7 @@ function App() {
           />
           <Route path="/auth/signup" element={<SignUp />} />
           <Route path="/auth/signin" element={<SignIn />} />
-          <Route path="/profiles/:id" element={<ProfilePage />} />
+          <Route path="/profile/:id" element={<ProfilePage />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>

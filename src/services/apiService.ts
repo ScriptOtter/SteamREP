@@ -1,9 +1,10 @@
-import SteamAPI from "steamapi";
+const URL = import.meta.env.VITE_SERVER_URL;
 
-// export const getSteamProfile = (steamid: string) => {
-//   const steam = new SteamAPI("B0C642A55BA751013BA4CE32AAF8D905");
-
-//   steam.resolve("https://steamcommunity.com/id/DimGG").then((id) => {
-//     console.log(id); // 76561198146931523
-//   });
-// };
+export const API_ENDPOINTS = {
+  API_URL: URL,
+  signin: URL + "auth/signin",
+  signup: URL + "auth/signup",
+  commentCreate: URL + "comment/create",
+  profile: URL + "profile",
+  myProfile: URL + "profile/me",
+};

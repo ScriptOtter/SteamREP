@@ -1,19 +1,33 @@
-import { ReactFormState } from "react-dom/client";
 import { Input } from "../component/Input";
 import { Header } from "../views/Header";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../store/UserSlice";
 
 export const SignIn = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleSignIn = (event: React.FormEvent) => {
     event.preventDefault();
-    if (!username || !password) {
+    if (!username || !password || !isChecked) {
       console.log("pusto");
-    } else console.log(username, password, isChecked);
+    } else {
+      const data = { username: username, password: password };
+      dispatch(loginUser(data)).then((result) => {
+        console.log(result);
+        if (result.payload) {
+          setUsername("");
+          setPassword("");
+          navigate("/profile/me");
+        }
+      });
+    }
   };
 
   return (

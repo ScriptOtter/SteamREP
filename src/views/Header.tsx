@@ -1,7 +1,12 @@
 import { FaSearch } from "react-icons/fa";
 import { Link, Outlet } from "react-router-dom";
 import { Input } from "../component/Input.tsx";
+import { IUser } from "../models/IUser.ts";
+import { useState } from "react";
+
 export const Header = () => {
+  const [profile, setProfile] = useState<IUser>();
+
   return (
     <>
       <div className="bg-indigo-700 w-screen pb-2">
@@ -26,10 +31,29 @@ export const Header = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center bg-red-500 w-[20vw]">
-            <p>
-              <Link to="/auth/signin">Sign In</Link>
-            </p>
+          <div className=" bg-red-500 w-[20vw]">
+            {(!profile && (
+              <p>
+                <Link to="/auth/signin">Sign In</Link>
+              </p>
+            )) || (
+              <div className="flex items-center justify-between">
+                <p>{profile.username}</p>
+                <button
+                  className="cursos:pointer"
+                  onClick={() => {
+                    localStorage.removeItem("user");
+                  }}
+                >
+                  <img
+                    src={
+                      "https://avatars.steamstatic.com/b8abd274ab68b6589536960fb7cbf7a1f4863966_full.jpg"
+                    }
+                    className="inline-block h-6 rounded-full ring-1 ring-gray-500"
+                  ></img>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
