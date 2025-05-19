@@ -1,3 +1,6 @@
+import { IComment } from "./IComment";
+import { ISteamUser } from "./ISteamUser";
+
 export interface IUser {
   id: string;
   email: string;
@@ -5,4 +8,6 @@ export interface IUser {
   role: string;
   avatar: string;
   createdAt: string;
+  steamUser?: ISteamUser;
+  commentsAsRecipient: IComment[];
 }

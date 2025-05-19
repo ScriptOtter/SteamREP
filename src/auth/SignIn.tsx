@@ -9,24 +9,38 @@ export const SignIn = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [showError, setShorwError] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSignIn = (event: React.FormEvent) => {
     event.preventDefault();
-    if (!username || !password || !isChecked) {
+    if (!username || !password) {
       console.log("pusto");
     } else {
       const data = { username: username, password: password };
-      dispatch(loginUser(data)).then((result) => {
-        console.log(result);
-        if (result.payload) {
-          setUsername("");
-          setPassword("");
-          navigate("/profile/me");
-        }
-      });
+      dispatch(loginUser(data))
+        .then((result) => {
+          console.log(result);
+          if (result.payload) {
+            setUsername("");
+            setPassword("");
+            navigate("/profile/me");
+          } else {
+            if (result.error.code === "ERR_BAD_REQUEST") {
+              setPassword("");
+              setError("Wrong username or password!");
+              setShorwError(true);
+            }
+          }
+        })
+        .catch((e) => {
+          //setError(e);
+          console.log(e);
+          setShorwError(true);
+        });
     }
   };
 
@@ -81,6 +95,7 @@ export const SignIn = () => {
 
               <p className="text-[14px] text-indigo-500">Forgot password?</p>
             </div>
+            <p className="text-red-500">{showError && error}</p>
             <div className="flex justify-center items-center w-full">
               <button
                 className="bg-indigo-600 w-1/1 p-1.5 rounded-[8px] text-white text-[14px]"

@@ -5,6 +5,7 @@ export const API_ENDPOINTS = {
   signin: URL + "auth/signin",
   signup: URL + "auth/signup",
   commentCreate: URL + "comment/create",
+  comments: URL + "comments/",
   profile: URL + "profile",
   myProfile: URL + "profile/me",
 };

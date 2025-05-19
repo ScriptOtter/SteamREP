@@ -1,10 +1,9 @@
+import { useState } from "react";
 import { Time } from "../data/time";
-import { IAuthor } from "../models/IAuthor";
-import { IUser } from "../models/IUser";
 import { API_AVATAR } from "../services/apiAvatar";
 
 interface CommentProps {
-  authorId: string;
+  author: string;
   content: string;
   createdAt: string;
   key: string;
@@ -13,7 +12,7 @@ interface CommentProps {
   avatar: string;
 }
 export const Comment = ({
-  authorId,
+  author,
   content,
   createdAt,
   updatedAt,
@@ -21,25 +20,20 @@ export const Comment = ({
   avatar,
 }: CommentProps) => {
   if (!avatar) avatar = API_AVATAR();
-  const showUpdated = false;
-  if (createdAt !== updatedAt) {
-    const showUpdated = true;
-  }
+
   return (
-    <div className="bg-orange-300 rounded-2xl mx-2 my-1">
-      <div className="flex">
-        <div className="mr-2">
-          <img
-            src={avatar}
-            className="inline-block h-12 w-12 rounded-full ring-1"
-          ></img>
+    <div className="flex items-start p-4 border-b border-gray-200">
+      <img src={avatar} alt="Avatar" className="w-12 h-12 rounded-full mr-4" />
+      <div className="flex-1">
+        <div className="flex justify-between items-center mb-2">
+          <h3 className="text-lg font-semibold">{username}</h3>
+          <div className="text-sm text-gray-500">
+            <span>Posted: {Time(createdAt)}</span>
+            {createdAt !== updatedAt && <span className="mx-2">|</span>}
+            {createdAt !== updatedAt && <span>Updated: {Time(updatedAt)}</span>}
+          </div>
         </div>
-        <div>
-          <p className="text-xl text-white">
-            {username} {!showUpdated && Time(updatedAt)}
-          </p>
-          <p className="">{content}</p>
-        </div>
+        <p className="text-gray-700">{content}</p>
       </div>
     </div>
   );

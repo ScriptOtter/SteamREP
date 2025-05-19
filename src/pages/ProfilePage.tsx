@@ -1,9 +1,15 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { redirect, useNavigate, useParams } from "react-router-dom";
 import { Header } from "../views/Header";
 import { useEffect, useState } from "react";
 import { getMe, getSteamUser } from "../data/getUser.ts";
 import { ISteamUser } from "../models/ISteamUser.ts";
 import { Comment } from "../component/Comment.tsx";
+import { SteamInformation } from "../component/SteamInformation.tsx";
+import { ProfileTabs } from "../component/ProfileTabs.tsx";
+import { CommentTextArea } from "../component/CommentTextArea.tsx";
+import { getComments } from "../data/getComments.ts";
+import { IComment } from "../models/IComment.ts";
+import axios from "axios";
 
 interface ProfileParams {
   id: string;
@@ -16,6 +22,7 @@ export const ProfilePage = () => {
   const { id } = useParams<ProfileParams>();
 
   const [user, setUser] = useState<ISteamUser>();
+  const [comments, setComments] = useState<IComment>();
 
   useEffect(() => {
     const fetchData = async (id: string) => {
@@ -23,6 +30,8 @@ export const ProfilePage = () => {
         if (id !== "me") {
           const res = await getSteamUser(id);
           setUser(res);
+          const comments = await getComments(id);
+          setComments(comments);
           setLoading(false);
           return;
         }
@@ -30,7 +39,14 @@ export const ProfilePage = () => {
         if (!res) {
           navigate("/");
         }
-        setUser(res);
+        console.log(res.steamUser);
+        if (!res.steamUser) {
+          console.log("!res" + res);
+          setUser(res);
+          return;
+        }
+
+        setUser(res.steamUser);
         setLoading(false);
         return;
       } catch (e) {
@@ -48,8 +64,8 @@ export const ProfilePage = () => {
         <Header />
 
         <div className="w-full h-screen pt-8 bg-gray-900 flex justify-center">
-          <div className="container max-w-[1280px]">
-            <div className="flex ">
+          <div className="container max-w-[1280px] mt-2">
+            <div className="flex">
               <div className="ml-2 lg:w-[320px] w-[256px]">
                 <div className="flex justify-center items-center">
                   <img
@@ -71,50 +87,44 @@ export const ProfilePage = () => {
                   </button>
                 </div>
               </div>
-              <div className="bg-blue-200 flex-4/5 lg:flex-3/4">
-                <div className="flex space-x-2">
-                  <p>Steam Account</p>
-                  <p>отзывы</p>
-                  <p>отзывы</p>
-                  <p>отзывы</p>
-                  <p>отзывы</p>
-                </div>
-                {/* <p>
+              <div className="bg-gray-800 flex-4/5 lg:flex-3/4 mx-4 my-4 rounded">
+                <button
+                  className="cursor-pointer hover:bg-red-700"
+                  onClick={() => {
+                    redirect("http://localhost:3000/api/steam/verify");
+                  }}
+                >
+                  НАЖМИ
+                </button>
+                <ProfileTabs />
+
+                <SteamInformation user={user} />
+                <p className="mx-4 my-4 text-2xl text-white">Comments:</p>
+                <CommentTextArea />
+
+                {comments?.map((comment) => (
+                  <Comment
+                    key={comment?.id}
+                    author={comment?.author}
+                    content={comment?.content}
+                    createdAt={comment?.createdAt}
+                    updatedAt={comment?.updatedAt}
+                    username={comment?.author.username}
+                    avatar={
+                      comment?.author?.steamUser?.avatar ||
+                      comment?.author?.avatar
+                    }
+                  />
+                ))}
+              </div>
+            </div>
+            {/* <p>
                   Когда зареган акк, основная инфа, сколько игр,SteamID Запреты
                   и ограничения трейд ссылка Формула для рейтинга аккаунта,
                   доверие к челу
                 </p> */}
-                <p className="bold text-2xl">{user?.personaName}</p>
-                <p>Custom URL: {" " + user?.profileUrl}</p>
-                <p>SteamID64: {" " + user?.id}</p>
-                <p>Realname: {" " + user?.realname}</p>
-                <p>Joined Steam: {user?.timeCreated}</p>
-                <div>
-                  <p>Comments:</p>
-                  {user?.commentsAsRecipient.map((comment) => (
-                    <Comment
-                      key={comment?.id}
-                      authorId={comment?.authorId}
-                      content={comment?.content}
-                      createdAt={comment?.createdAt}
-                      updatedAt={comment?.updatedAt}
-                      username={comment?.author.username}
-                      avatar={comment?.author.avatar}
-                    />
-                  ))}
-                </div>
-                <div className="w-full max-w-lg p-6 bg-blue-200 rounded-lg shadow-md">
-                  <h2 className="text-lg  font-semibold mb-4">Leave comment</h2>
-                  <textarea
-                    className="w-full h-32 p-4 border bg-blue-300 border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    placeholder="Ender your comment..."
-                  ></textarea>
-                  <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    Send
-                  </button>
-                </div>
-              </div>
-            </div>
+
+            <div></div>
           </div>
         </div>
       </>

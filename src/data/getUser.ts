@@ -5,6 +5,7 @@ import { ISteamUser } from "../models/ISteamUser";
 export const getMe = () => {
   let user = localStorage.getItem("user");
   if (user) {
+    console.log(JSON.parse(user));
     return JSON.parse(user);
   }
 };
