@@ -1,57 +1,155 @@
 import { FaSearch } from "react-icons/fa";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, redirect, useNavigate } from "react-router-dom";
 import { Input } from "../component/Input.tsx";
-import { IUser } from "../models/IUser.ts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { removeUser, setUser } from "@/store/UserSlice.ts";
+import { IAuth } from "@/models/IAuth.ts";
+import { useAuth } from "@/hooks/use-auth.ts";
+import Avatar from "@/component/Avatar.tsx";
+import DropdownMenu from "@/component/DropDownMenu.tsx";
+import { BellDot, Bookmark } from "lucide-react";
+
+interface HeaderProps {
+  avatarUrl: string;
+  nickname: string;
+  onLogout: () => void;
+  onProfile: () => void;
+}
 
 export const Header = () => {
-  const [profile, setProfile] = useState<IUser>();
+  const [searchInput, setSearchInput] = useState<string>("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleMenu = () => {
+    setIsMenuOpen((prevState) => !prevState);
+  };
+
+  const handleLogout = () => {
+    dispatch(removeUser());
+    navigate("/");
+  };
+  const getUserId = (str: string): string => {
+    const baseUrl = "https://steamcommunity.com/id/";
+
+    // Проверяем, начинается ли URL с базового URL
+    if (str.startsWith(baseUrl)) {
+      // Убираем базовый URL и слэш в конце, если он есть
+      const profileId = str.slice(baseUrl.length).replace(`//$/`, "");
+      return profileId; // Возвращаем идентификатор профиля
+    }
+
+    return str; // Если URL не соответствует, возвращаем null
+  };
+
+  const handleSearch = () => {
+    const newUserId = getUserId(searchInput);
+    if (newUserId !== currentUserId) {
+      setCurrentUserId(newUserId);
+      navigate("/profile/" + newUserId);
+    }
+  };
+
+  const profileURL = () => {
+    if (auth.role == "VERIFIED_STEAM") {
+      navigate("/profile/" + auth.id);
+    } else navigate("/profile/createProfile");
+  };
+
+  const [profile, setProfile] = useState<IAuth>();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const auth = useAuth();
+
+  useEffect(() => {
+    const data = localStorage.getItem("user");
+    console.log("data из localstorage");
+    console.log(data);
+    if (data === null) {
+      setProfile(auth);
+      return;
+    }
+
+    setProfile(JSON.parse(data));
+    dispatch(setUser(JSON.parse(data)));
+    console.log("header dispatch");
+    console.log(JSON.parse(data));
+
+    return;
+  }, []);
 
   return (
     <>
-      <div className="bg-indigo-700 w-screen pb-2">
-        <div className="flex justify-between items-center">
-          <div className="flex justify-center bg-red-500 w-[20vw]">
-            <Link to="/">SteamREP</Link>
+      <div className="bg-indigo-700 w-full shadow-lg">
+        <div className="flex justify-between items-center p-4">
+          {/* Логотип */}
+          <div className="flex items-center mx-8">
+            <Link to="/" className="text-white text-2xl font-bold">
+              SteamREP
+            </Link>
           </div>
-          <div className="flex justify-center pt-2 grow">
-            <div className="w-[48vw] bg-amber-300 rounded-3xl pl-4 pr-4 pt-2 pb-2 flex">
-              <FaSearch className="w-1/32 size-5  text-gray-200 pt-1 pr-1" />
-              <Input
+
+          {/* Поиск */}
+          <div className="flex grow mx-8 ">
+            <div className="w-full bg-amber-300 rounded-full flex items-center p-2">
+              <FaSearch className="text-gray-600 mr-2" />
+              <input
+                onKeyDown={(event) => {
+                  if (event.key === "Enter")
+                    navigate("/profile/" + getUserId(searchInput));
+                }}
+                value={searchInput}
+                onChange={(e) => {
+                  setSearchInput(e.target.value);
+                  console.log(searchInput);
+                }}
                 type="text"
                 placeholder="Search for a profile (Steam ID / Steam Profile Link / Custom Steam URL)"
-                variant="forSearch"
-              ></Input>
-              <div className="flex">
-                <div className="pl-1">
-                  <button className="cursor-pointer">
-                    <FaSearch className="pt-1 size-5" />
-                  </button>
-                </div>
-              </div>
+                className="flex-grow bg-transparent outline-none text-gray-800 placeholder-gray-500"
+              />
+              <button
+                type="submit"
+                onClick={(event) => {
+                  event.preventDefault();
+                  navigate("/profile/" + getUserId(searchInput));
+                }}
+                className="bg-red-500 text-white rounded-full px-3 py-1 ml-2 hover:bg-red-600 transition duration-200"
+              >
+                <FaSearch />
+              </button>
             </div>
           </div>
-          <div className=" bg-red-500 w-[20vw]">
-            {(!profile && (
-              <p>
-                <Link to="/auth/signin">Sign In</Link>
-              </p>
-            )) || (
-              <div className="flex items-center justify-between">
-                <p>{profile.username}</p>
-                <button
-                  className="cursos:pointer"
-                  onClick={() => {
-                    localStorage.removeItem("user");
-                  }}
-                >
-                  <img
-                    src={
-                      "https://avatars.steamstatic.com/b8abd274ab68b6589536960fb7cbf7a1f4863966_full.jpg"
-                    }
-                    className="inline-block h-6 rounded-full ring-1 ring-gray-500"
-                  ></img>
-                </button>
+
+          {/* Уведомления */}
+          <div className="flex justify-center items-center space-x-6 mx-1">
+            <div>
+              <Bookmark className="text-red-500" />
+            </div>
+            <div>
+              <BellDot className="text-blue-300" />
+            </div>
+          </div>
+
+          {/* Профиль */}
+          <div className="flex items-center mx-4">
+            {!profile?.isAuth ? (
+              <Link to="/auth/signin" className="text-white hover:underline">
+                Sign In
+              </Link>
+            ) : (
+              <div className="relative flex items-center">
+                <Avatar
+                  avatarUrl={profile.avatar}
+                  nickname={profile.username}
+                  onToggleMenu={toggleMenu}
+                />
+                {isMenuOpen && (
+                  <DropdownMenu
+                    onProfile={profileURL}
+                    onLogout={handleLogout}
+                    onClose={() => setIsMenuOpen((prev) => !prev)}
+                  />
+                )}
               </div>
             )}
           </div>
@@ -60,19 +158,19 @@ export const Header = () => {
       <nav className="bg-blue-800">
         <ul>
           <div className="flex space-x-8 ml-4">
-            <li className="hover:underline underline-offset-2  cursor-pointer">
+            <li className="hover:underline underline-offset-2 cursor-pointer">
               <Link to="/">Home</Link>
             </li>
-            <li className="hover:underline underline-offset-2  cursor-pointer">
+            <li className="hover:underline underline-offset-2 cursor-pointer">
               <Link to="/MostReportedPlayers">Most Reported Players</Link>
             </li>
-            <li className="hover:underline underline-offset-2  cursor-pointer">
+            <li className="hover:underline underline-offset-2 cursor-pointer">
               <Link to="/BannedPlayers">Banned Players</Link>
             </li>
-            <li className="hover:underline underline-offset-2  cursor-pointer">
+            <li className="hover:underline underline-offset-2 cursor-pointer">
               <Link to="/Scammers">Scammers</Link>
             </li>
-            <li className="hover:underline underline-offset-2  cursor-pointer">
+            <li className="hover:underline underline-offset-2 cursor-pointer">
               <Link to="/404">More links</Link>
             </li>
           </div>

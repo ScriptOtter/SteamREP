@@ -3,7 +3,9 @@ import { Header } from "../views/Header";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../store/UserSlice";
+import { API_ENDPOINTS } from "@/services/apiService";
+import axios, { AxiosResponse } from "axios";
+import { setUser } from "@/store/UserSlice";
 
 export const SignIn = () => {
   const [username, setUsername] = useState<string>("");
@@ -12,35 +14,36 @@ export const SignIn = () => {
   const [error, setError] = useState<string>("");
   const [showError, setShorwError] = useState<boolean>(false);
 
+  interface ISignIn {
+    username: string;
+    password: string;
+  }
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSignIn = (event: React.FormEvent) => {
+  const handleSignIn = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!username || !password) {
-      console.log("pusto");
     } else {
       const data = { username: username, password: password };
-      dispatch(loginUser(data))
-        .then((result) => {
-          console.log(result);
-          if (result.payload) {
-            setUsername("");
-            setPassword("");
-            navigate("/profile/me");
-          } else {
-            if (result.error.code === "ERR_BAD_REQUEST") {
-              setPassword("");
-              setError("Wrong username or password!");
-              setShorwError(true);
-            }
-          }
-        })
-        .catch((e) => {
-          //setError(e);
-          console.log(e);
-          setShorwError(true);
-        });
+      console.log(data);
+      const res = await axios.post(API_ENDPOINTS.signin, data, {
+        withCredentials: true,
+      });
+      console.log(res.data);
+
+      if (!res.data.steamUser) {
+        console.log(res.data);
+        dispatch(setUser(res.data));
+        setUsername("");
+        setPassword("");
+        navigate("/profile/createProfile");
+      } else {
+        dispatch(setUser(res.data));
+        navigate("/profile/" + res.data.steamUser.id);
+        return;
+      }
     }
   };
 

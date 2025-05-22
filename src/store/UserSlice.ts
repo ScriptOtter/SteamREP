@@ -1,54 +1,54 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { API_ENDPOINTS } from "../services/apiService";
-import { IUser } from "../models/IUser";
+import { createSlice } from "@reduxjs/toolkit";
 
-interface ISignIn {
-  username: string;
-  password: string;
-}
-
-export const loginUser = createAsyncThunk(
-  "user/loginUser",
-  async (data: ISignIn): Promise<AxiosResponse<IUser>> => {
-    const res = await axios.post(API_ENDPOINTS.signin, data, {
-      withCredentials: true,
-    });
-    const { accessToken, refreshToken, ...userData } = res.data;
-    localStorage.setItem("user", JSON.stringify(userData));
-    return userData;
-  }
-);
-
-const initialState = {
-  loading: false,
-  user: null,
-  error: null,
+let initialState = {
+  id: null,
+  avatar: null,
+  personaName: null,
+  role: null,
+  isAuth: false,
 };
+// if (!localStorage.getItem("user")) {
+//   initialState = JSON.parse(localStorage.get("user"));
+// }
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  extraReducers: (builder) => {
-    builder
-      .addCase(loginUser.pending, (state) => {
-        state.loading = true;
-        state.user = null;
-        state.error = null;
-      })
-      .addCase(loginUser.fulfilled, (state, action: any) => {
-        state.loading = false;
-        state.user = action.payload;
-        state.error = null;
-      })
-      .addCase(loginUser.rejected, (state, action: any) => {
-        state.loading = false;
-        state.user = null;
-        console.log(action.error.message);
-        state.error = action.error.message;
-      });
+
+  reducers: {
+    setUser(state: any, action: any) {
+      state.id = action.payload?.steamUser?.id || action.payload.id;
+      state.avatar =
+        action.payload?.steamUser?.avatar || action.payload.avatar || null;
+      state.usename =
+        action.payload?.steamUser?.personaName || action.payload.username;
+      state.role = action.payload.role;
+      state.isAuth = !!action.payload.id;
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          id: action.payload?.steamUser?.id || action.payload.id,
+          avatar:
+            action.payload?.steamUser?.avatar || action.payload.avatar || null,
+          username:
+            action.payload?.steamUser?.personaName || action.payload?.username,
+
+          role: action.payload.role,
+          isAuth: !!action.payload.id,
+        })
+      );
+    },
+    removeUser(state: any) {
+      state.id = null;
+      state.avatar = null;
+      state.personaName = null;
+      state.role = null;
+      state.isAuth = false;
+      localStorage.removeItem("user");
+    },
   },
-  reducers: undefined,
 });
 
+export const { setUser, removeUser } = userSlice.actions;
 export default userSlice.reducer;
