@@ -1,9 +1,10 @@
+import { getMe } from "@/data/getUser";
 import { createSlice } from "@reduxjs/toolkit";
 
 let initialState = {
   id: null,
   avatar: null,
-  personaName: null,
+  username: null,
   role: null,
   isAuth: false,
 };
@@ -20,7 +21,7 @@ const userSlice = createSlice({
       state.id = action.payload?.steamUser?.id || action.payload.id;
       state.avatar =
         action.payload?.steamUser?.avatar || action.payload.avatar || null;
-      state.usename =
+      state.username =
         action.payload?.steamUser?.personaName || action.payload.username;
       state.role = action.payload.role;
       state.isAuth = !!action.payload.id;

@@ -11,6 +11,8 @@ import { getComments } from "../data/getComments.ts";
 import { IComment } from "../models/IComment.ts";
 import axios, { AxiosResponse } from "axios";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { useDispatch } from "react-redux";
+import { API_ENDPOINTS } from "@/services/apiService.ts";
 
 interface RouteParams {
   id: string;
@@ -25,6 +27,19 @@ export const ProfilePage = () => {
 
   const [user, setUser] = useState<AxiosResponse<ISteamUser>>();
   const [comments, setComments] = useState<AxiosResponse<IComment>>([]);
+
+  const hendlePost = async (event: React.FormEvent, id) => {
+    event.preventDefault();
+    console.log(API_ENDPOINTS.commentCreate);
+    const res = await axios.post(
+      API_ENDPOINTS.commentCreate + id,
+      { content: content },
+      {
+        withCredentials: true,
+      }
+    );
+    console.log(res);
+  };
 
   useEffect(() => {
     const fetchData = async (id: string) => {

@@ -9,6 +9,9 @@ import { useAuth } from "@/hooks/use-auth.ts";
 import Avatar from "@/component/Avatar.tsx";
 import DropdownMenu from "@/component/DropDownMenu.tsx";
 import { BellDot, Bookmark } from "lucide-react";
+import { getMe } from "@/data/getUser.ts";
+import axios from "axios";
+import { API_ENDPOINTS } from "@/services/apiService.ts";
 
 interface HeaderProps {
   avatarUrl: string;
@@ -24,29 +27,19 @@ export const Header = () => {
     setIsMenuOpen((prevState) => !prevState);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     dispatch(removeUser());
+    await axios.get(API_ENDPOINTS.logout, { withCredentials: true });
     navigate("/");
   };
   const getUserId = (str: string): string => {
     const baseUrl = "https://steamcommunity.com/id/";
 
-    // Проверяем, начинается ли URL с базового URL
     if (str.startsWith(baseUrl)) {
-      // Убираем базовый URL и слэш в конце, если он есть
       const profileId = str.slice(baseUrl.length).replace(`//$/`, "");
-      return profileId; // Возвращаем идентификатор профиля
+      return profileId;
     }
-
-    return str; // Если URL не соответствует, возвращаем null
-  };
-
-  const handleSearch = () => {
-    const newUserId = getUserId(searchInput);
-    if (newUserId !== currentUserId) {
-      setCurrentUserId(newUserId);
-      navigate("/profile/" + newUserId);
-    }
+    return str;
   };
 
   const profileURL = () => {
@@ -61,21 +54,23 @@ export const Header = () => {
   const navigate = useNavigate();
   const auth = useAuth();
 
+  console.log(auth);
+
+  useEffect(() => {
+    getMe(dispatch, auth);
+    console.log("GETME");
+  }, []);
+
   useEffect(() => {
     const data = localStorage.getItem("user");
-    console.log("data из localstorage");
-    console.log(data);
+
     if (data === null) {
       setProfile(auth);
-      return;
+    } else {
+      const parsedData = JSON.parse(data);
+      setProfile(parsedData);
+      dispatch(setUser(parsedData));
     }
-
-    setProfile(JSON.parse(data));
-    dispatch(setUser(JSON.parse(data)));
-    console.log("header dispatch");
-    console.log(JSON.parse(data));
-
-    return;
   }, []);
 
   return (
