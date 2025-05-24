@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Time } from "../data/time";
 import { API_AVATAR } from "../services/apiAvatar";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -34,9 +33,9 @@ export const Comment = ({
 
         <div className="flex-1">
           <div className="flex justify-between items-center mb-2">
-            <h3 className="text-lg font-semibold">{username}</h3>
+            <h3 className="text-lg font-semibold text-white">{username}</h3>
 
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-white">
               <span>Posted: {Time(createdAt)}</span>
               {createdAt !== updatedAt && <span className="mx-2">|</span>}
               {createdAt !== updatedAt && (
@@ -44,7 +43,7 @@ export const Comment = ({
               )}
             </div>
           </div>
-          <p className="text-gray-700">{content}</p>
+          <p className="text-white">{content}</p>
         </div>
       </div>
     </>

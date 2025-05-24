@@ -2,14 +2,26 @@ import axios, { AxiosResponse } from "axios";
 import { API_ENDPOINTS } from "../services/apiService";
 import { ISteamUser } from "../models/ISteamUser";
 import { removeUser, setUser } from "@/store/UserSlice";
-import { useDispatch } from "react-redux";
-import { useAuth } from "@/hooks/use-auth";
+import { isTokenExpired } from "@/utils/jwt_decode";
 
-export const refreshToken = async () => {
-  const res = await axios.get(API_ENDPOINTS.refresh, { withCredentials: true });
-  console.log("refresh");
-  console.log(res);
-  return res;
+export const refreshToken = async (dispatch: any) => {
+  try {
+    const res = await axios.get(API_ENDPOINTS.refresh, {
+      withCredentials: true,
+    });
+    console.log("refreshTOKEN!");
+    console.log(res);
+    if (res) {
+      const res = await axios.get(API_ENDPOINTS.me, { withCredentials: true });
+      console.log(res);
+      dispatch(setUser(res.data));
+    } else dispatch(removeUser());
+    return res;
+  } catch (e) {
+    console.log("refreshTOKEN! CATCH");
+    console.log(e);
+    dispatch(removeUser());
+  }
 };
 
 export const getMe = async (dispatch: any, auth: any) => {
@@ -29,23 +41,13 @@ export const getMe = async (dispatch: any, auth: any) => {
     }
   } catch (error) {
     console.error(error);
-    const refreshResponse = await refreshToken();
-    console.log("refreshResponse");
-    console.log(refreshResponse);
-    if (refreshResponse) {
-      const res = await axios.get(API_ENDPOINTS.me, { withCredentials: true });
-      console.log("newRes");
-      console.log(res);
-      dispatch(setUser(res.data));
-    } else {
-      removeUser();
-    }
+    await refreshToken(dispatch);
   }
 };
 
-export const getSteamUser = async (
-  id: string
-): Promise<AxiosResponse<ISteamUser>> => {
-  const res = await axios.post(API_ENDPOINTS.API_URL + id);
+export const getSteamUser = async (id: string): Promise<ISteamUser> => {
+  const res: AxiosResponse<ISteamUser> = await axios.post(
+    API_ENDPOINTS.API_URL + id
+  );
   return res.data;
 };

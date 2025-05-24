@@ -1,84 +1,43 @@
 import { FaSearch } from "react-icons/fa";
-import { Link, Outlet, redirect, useNavigate } from "react-router-dom";
-import { Input } from "../component/Input.tsx";
+import { Link, useNavigate } from "react-router-dom";
+
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { removeUser, setUser } from "@/store/UserSlice.ts";
-import { IAuth } from "@/models/IAuth.ts";
+
 import { useAuth } from "@/hooks/use-auth.ts";
 import Avatar from "@/component/Avatar.tsx";
 import DropdownMenu from "@/component/DropDownMenu.tsx";
-import { BellDot, Bookmark } from "lucide-react";
+import { BellDot, Bookmark, CircleHelp, Search } from "lucide-react";
 import { getMe } from "@/data/getUser.ts";
-import axios from "axios";
-import { API_ENDPOINTS } from "@/services/apiService.ts";
 
-interface HeaderProps {
-  avatarUrl: string;
-  nickname: string;
-  onLogout: () => void;
-  onProfile: () => void;
-}
+import { getUserId, profileURL } from "@/utils/steamUrl";
+import { useProfile } from "@/hooks/use-profile.ts";
+import { useLogout } from "@/hooks/use-logout";
+import { useDropDownMenu } from "@/hooks/use-drop-down-menu";
 
 export const Header = () => {
   const [searchInput, setSearchInput] = useState<string>("");
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const toggleMenu = () => {
-    setIsMenuOpen((prevState) => !prevState);
-  };
-
-  const handleLogout = async () => {
-    dispatch(removeUser());
-    await axios.get(API_ENDPOINTS.logout, { withCredentials: true });
-    navigate("/");
-  };
-  const getUserId = (str: string): string => {
-    const baseUrl = "https://steamcommunity.com/id/";
-
-    if (str.startsWith(baseUrl)) {
-      const profileId = str.slice(baseUrl.length).replace(`//$/`, "");
-      return profileId;
-    }
-    return str;
-  };
-
-  const profileURL = () => {
-    if (auth.role == "VERIFIED_STEAM") {
-      navigate("/profile/" + auth.id);
-    } else navigate("/profile/createProfile");
-  };
-
-  const [profile, setProfile] = useState<IAuth>();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = useAuth();
 
-  console.log(auth);
+  const { profile } = useProfile();
+  const { handleLogout } = useLogout();
+  const { isMenuOpen, toggleMenu, menuRef } = useDropDownMenu();
 
   useEffect(() => {
+    //if (id === auth.id)
     getMe(dispatch, auth);
-    console.log("GETME");
-  }, []);
-
-  useEffect(() => {
-    const data = localStorage.getItem("user");
-
-    if (data === null) {
-      setProfile(auth);
-    } else {
-      const parsedData = JSON.parse(data);
-      setProfile(parsedData);
-      dispatch(setUser(parsedData));
-    }
   }, []);
 
   return (
     <>
-      <div className="bg-indigo-700 w-full shadow-lg">
-        <div className="flex justify-between items-center p-4">
+      <div className="bg-[#2F3136] w-full shadow-lg">
+        <div className="flex justify-between items-center p-3">
           {/* Логотип */}
-          <div className="flex items-center mx-8">
+          <div className="flex items-center mx-8 space-x-2">
+            <CircleHelp className="size-9" />
             <Link to="/" className="text-white text-2xl font-bold">
               SteamREP
             </Link>
@@ -86,7 +45,7 @@ export const Header = () => {
 
           {/* Поиск */}
           <div className="flex grow mx-8 ">
-            <div className="w-full bg-amber-300 rounded-full flex items-center p-2">
+            <div className="w-full bg-[#282a2e] rounded-2xl flex items-center p-1.5">
               <FaSearch className="text-gray-600 mr-2" />
               <input
                 onKeyDown={(event) => {
@@ -100,7 +59,7 @@ export const Header = () => {
                 }}
                 type="text"
                 placeholder="Search for a profile (Steam ID / Steam Profile Link / Custom Steam URL)"
-                className="flex-grow bg-transparent outline-none text-gray-800 placeholder-gray-500"
+                className="flex-grow bg-transparent outline-none text-white placeholder-gray-500"
               />
               <button
                 type="submit"
@@ -108,9 +67,9 @@ export const Header = () => {
                   event.preventDefault();
                   navigate("/profile/" + getUserId(searchInput));
                 }}
-                className="bg-red-500 text-white rounded-full px-3 py-1 ml-2 hover:bg-red-600 transition duration-200"
+                className="text-white px-3 py-1 ml-2 cursor-pointer"
               >
-                <FaSearch />
+                <Search className="size-5" />
               </button>
             </div>
           </div>
@@ -118,31 +77,32 @@ export const Header = () => {
           {/* Уведомления */}
           <div className="flex justify-center items-center space-x-6 mx-1">
             <div>
-              <Bookmark className="text-red-500" />
+              <Bookmark className="text-[#F04747]" />
             </div>
             <div>
-              <BellDot className="text-blue-300" />
+              <BellDot className="text-[#7289DA]" />
             </div>
           </div>
 
           {/* Профиль */}
           <div className="flex items-center mx-4">
             {!profile?.isAuth ? (
-              <Link to="/auth/signin" className="text-white hover:underline">
+              <Link
+                to="/auth/signin"
+                className="text-white cursor-pointer hover:underline "
+              >
                 Sign In
               </Link>
             ) : (
-              <div className="relative flex items-center">
-                <Avatar
-                  avatarUrl={profile.avatar}
-                  nickname={profile.username}
-                  onToggleMenu={toggleMenu}
-                />
+              <div
+                className="relative flex items-center text-white"
+                ref={menuRef}
+              >
+                <Avatar onToggleMenu={toggleMenu} />
                 {isMenuOpen && (
                   <DropdownMenu
-                    onProfile={profileURL}
+                    onProfile={() => profileURL(navigate, auth)}
                     onLogout={handleLogout}
-                    onClose={() => setIsMenuOpen((prev) => !prev)}
                   />
                 )}
               </div>
@@ -150,9 +110,9 @@ export const Header = () => {
           </div>
         </div>
       </div>
-      <nav className="bg-blue-800">
+      <nav className="bg-[#2F3136] pb-2 pt-1">
         <ul>
-          <div className="flex space-x-8 ml-4">
+          <div className="flex space-x-8 ml-8 text-white font-semibold">
             <li className="hover:underline underline-offset-2 cursor-pointer">
               <Link to="/">Home</Link>
             </li>
@@ -171,6 +131,7 @@ export const Header = () => {
           </div>
         </ul>
       </nav>
+      <div className="bg-gray-600 p-[0.5px]"></div>
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { href, redirect, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Header } from "../views/Header";
 import { useEffect, useState } from "react";
 import { getMe, getSteamUser } from "../data/getUser.ts";
@@ -9,37 +9,27 @@ import { ProfileTabs } from "../component/ProfileTabs.tsx";
 import { CommentTextArea } from "../component/CommentTextArea.tsx";
 import { getComments } from "../data/getComments.ts";
 import { IComment } from "../models/IComment.ts";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { useDispatch } from "react-redux";
-import { API_ENDPOINTS } from "@/services/apiService.ts";
+import { useAuth } from "@/hooks/use-auth.ts";
 
-interface RouteParams {
-  id: string;
+export interface RouteParams {
+  [key: string]: string | undefined;
+  id?: string;
 }
 
 export const ProfilePage = () => {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<AxiosError | string | null>();
   const [showError, setShowError] = useState<boolean>(false);
   const { id } = useParams<RouteParams>();
 
-  const [user, setUser] = useState<AxiosResponse<ISteamUser>>();
-  const [comments, setComments] = useState<AxiosResponse<IComment>>([]);
+  const [steamUser, steamSteamUser] = useState<ISteamUser>();
+  const [comments, setComments] = useState<AxiosResponse<IComment>>();
 
-  const hendlePost = async (event: React.FormEvent, id) => {
-    event.preventDefault();
-    console.log(API_ENDPOINTS.commentCreate);
-    const res = await axios.post(
-      API_ENDPOINTS.commentCreate + id,
-      { content: content },
-      {
-        withCredentials: true,
-      }
-    );
-    console.log(res);
-  };
+  const dispatch = useDispatch();
+  const auth = useAuth();
 
   useEffect(() => {
     const fetchData = async (id: string) => {
@@ -55,22 +45,22 @@ export const ProfilePage = () => {
             setLoading(false);
             return;
           }
-          setUser(res);
+          steamSteamUser(res);
           setComments(comments);
           setShowError(false);
           setError("");
           setLoading(false);
         }
-      } catch (e) {
-        setError(e);
+      } catch (e: unknown) {
+        if (axios.isAxiosError(e)) setError(e);
+        else if (e instanceof Error) setError(e.message);
         console.log("Ошибка, перезагрузка страницы");
         console.log(e);
-      } finally {
-        setLoading(false);
       }
     };
-    fetchData(id);
+    if (id) fetchData(id);
   }, [id]);
+
   const handleRedirect = () => {
     window.location.href = "http://localhost:3000/api/steam/verify";
   };
@@ -79,7 +69,7 @@ export const ProfilePage = () => {
     <>
       <Header />
       {id !== "createProfile" ? (
-        <div className="w-full h-screen pt-8 bg-gray-900 flex justify-center">
+        <div className="w-full h-screen pt-8 bg-[#2F3136] flex justify-center">
           <div className="container max-w-[1280px] mt-2">
             {!showError ? (
               <div className="flex">
@@ -89,7 +79,7 @@ export const ProfilePage = () => {
                       <Skeleton className="h-[288px] w-[288px] rounded-full" />
                     ) : (
                       <img
-                        src={user?.avatar}
+                        src={steamUser?.avatar}
                         className="inline-block h-[95%] w-[95%] rounded-full ring-1 ring-gray-500"
                       />
                     )}
@@ -99,7 +89,7 @@ export const ProfilePage = () => {
                       <Skeleton className="h-7 w-[25%]" />
                     ) : (
                       <p className="text-2xl text-bold text-white mt-2">
-                        {user?.realname ? user?.realname : ""}
+                        {steamUser?.realname ? steamUser?.realname : ""}
                       </p>
                     )}
                     {loading ? (
@@ -122,10 +112,10 @@ export const ProfilePage = () => {
                     </button>
                   </div>
                 </div>
-                <div className="bg-gray-800 flex-4/5 lg:flex-3/4 mx-4 my-4 rounded">
+                <div className="bg-[#36393F] flex-4/5 lg:flex-3/4 mx-4 my-4 rounded">
                   <ProfileTabs />
 
-                  <SteamInformation user={user} loading={loading} />
+                  <SteamInformation user={steamUser} />
                   <p className="mx-4 my-4 text-2xl text-white">Comments:</p>
                   <CommentTextArea />
 
@@ -148,7 +138,7 @@ export const ProfilePage = () => {
               </div>
             ) : (
               <div className="flex justify-center items-center">
-                <p className="text-red-600 text-3xl">{error}</p>
+                <p className="text-red-600 text-3xl">{error?.toString()}</p>
               </div>
             )}
             {/* <p>

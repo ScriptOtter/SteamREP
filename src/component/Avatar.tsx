@@ -1,24 +1,20 @@
+import { useAuth } from "@/hooks/use-auth";
 import React from "react";
 
 interface AvatarProps {
-  avatarUrl: string;
-  nickname: string;
   onToggleMenu: () => void;
 }
 
-const Avatar: React.FC<AvatarProps> = ({
-  avatarUrl,
-  nickname,
-  onToggleMenu,
-}) => {
+const Avatar: React.FC<AvatarProps> = ({ onToggleMenu }) => {
+  const auth = useAuth();
   return (
     <div className="flex items-center cursor-pointer" onClick={onToggleMenu}>
       <img
-        src={avatarUrl}
+        src={auth.avatar || ""}
         alt="Avatar"
-        className="w-10 h-10 rounded-full mr-2"
+        className="w-10 h-10 rounded-full mr-2 "
       />
-      <span className="mr-1 font-semibold">{nickname}</span>
+      <span className="mr-1 font-semibold">{auth.username}</span>
       <span className="text-gray-600">▼</span>
     </div>
   );
