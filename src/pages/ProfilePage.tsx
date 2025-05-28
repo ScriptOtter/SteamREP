@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { Header } from "../views/Header";
 import { useEffect, useState } from "react";
-import { getMe, getSteamUser } from "../data/getUser.ts";
+import { getSteamUser } from "../data/getUser.ts";
 import { ISteamUser } from "../models/ISteamUser.ts";
 import { Comment } from "../component/Comment.tsx";
 import { SteamInformation } from "../component/SteamInformation.tsx";
@@ -9,10 +9,13 @@ import { ProfileTabs } from "../component/ProfileTabs.tsx";
 import { CommentTextArea } from "../component/CommentTextArea.tsx";
 import { getComments } from "../data/getComments.ts";
 import { IComment } from "../models/IComment.ts";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError } from "axios";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { useDispatch } from "react-redux";
 import { useAuth } from "@/hooks/use-auth.ts";
+import { API_ENDPOINTS } from "@/services/apiService.ts";
+import { createApi } from "@/services/axios.ts";
+import { toast } from "react-toastify";
 
 export interface RouteParams {
   [key: string]: string | undefined;
@@ -26,10 +29,51 @@ export const ProfilePage = () => {
   const { id } = useParams<RouteParams>();
 
   const [steamUser, steamSteamUser] = useState<ISteamUser>();
-  const [comments, setComments] = useState<AxiosResponse<IComment>>();
+  const [comments, setComments] = useState<IComment[]>([]);
 
   const dispatch = useDispatch();
   const auth = useAuth();
+  const api = createApi(dispatch);
+
+  const hendlePost = async (res: IComment) => {
+    const comments = await getComments(id!);
+    setComments(comments);
+    console.log(res);
+  };
+
+  const toastDelete = async (commentsId: string) => {
+    toast.warning(
+      <button
+        onClick={async () => await deteleComment(commentsId)}
+        className="cursor-pointer underline underline-offset-2"
+      >
+        Сonfirm delete action
+      </button>,
+      { theme: "dark" }
+    );
+  };
+  const deteleComment = async (commentId: string) => {
+    const res = await api.delete(API_ENDPOINTS.commentDelete + commentId, {
+      withCredentials: true,
+    });
+
+    const comments = await getComments(id!);
+    setComments(comments);
+    console.log(res);
+  };
+
+  const updateComment = async (commentId: string, content: string) => {
+    const res = await api.patch(
+      API_ENDPOINTS.commentDelete + commentId,
+      { content: content },
+      {
+        withCredentials: true,
+      }
+    );
+    const comments = await getComments(id!);
+    setComments(comments);
+    console.log(res);
+  };
 
   useEffect(() => {
     const fetchData = async (id: string) => {
@@ -69,7 +113,7 @@ export const ProfilePage = () => {
     <>
       <Header />
       {id !== "createProfile" ? (
-        <div className="w-full h-screen pt-8 bg-[#2F3136] flex justify-center">
+        <div className="h-screen pt-8 bg-[#2F3136] flex justify-center">
           <div className="container max-w-[1280px] mt-2">
             {!showError ? (
               <div className="flex">
@@ -112,28 +156,41 @@ export const ProfilePage = () => {
                     </button>
                   </div>
                 </div>
-                <div className="bg-[#36393F] flex-4/5 lg:flex-3/4 mx-4 my-4 rounded">
+                <div className="bg-[#36393F] w-[75%] mx-4 my-4 rounded">
                   <ProfileTabs />
 
                   <SteamInformation user={steamUser} />
-                  <p className="mx-4 my-4 text-2xl text-white">Comments:</p>
-                  <CommentTextArea />
 
-                  {Array.isArray(comments) &&
-                    comments?.map((comment: IComment) => (
-                      <Comment
-                        key={comment?.id}
-                        content={comment?.content}
-                        createdAt={comment?.createdAt}
-                        updatedAt={comment?.updatedAt}
-                        username={comment?.author.username}
-                        avatar={
-                          comment?.author?.steamUser?.avatar ||
-                          comment?.author?.avatar
-                        }
-                        loading={loading}
-                      />
-                    ))}
+                  {auth.isAuth && (
+                    <CommentTextArea
+                      hendlePost={hendlePost}
+                      loading={loading}
+                    />
+                  )}
+                  <div>
+                    {Array.isArray(comments) &&
+                      comments?.map((comment: IComment) => (
+                        <Comment
+                          commentId={comment.id}
+                          key={comment?.id}
+                          content={comment?.content}
+                          createdAt={comment?.createdAt}
+                          updatedAt={comment?.updatedAt}
+                          username={
+                            comment?.author?.steamUser?.personaName ||
+                            comment?.author.username
+                          }
+                          avatar={
+                            comment?.author?.steamUser?.avatar ||
+                            comment?.author?.avatar
+                          }
+                          loading={loading}
+                          steamid={comment?.author?.steamUser?.id}
+                          deteleComment={toastDelete}
+                          updateComment={updateComment}
+                        />
+                      ))}
+                  </div>
                 </div>
               </div>
             ) : (

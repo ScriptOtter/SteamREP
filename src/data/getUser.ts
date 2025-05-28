@@ -3,6 +3,7 @@ import { API_ENDPOINTS } from "../services/apiService";
 import { ISteamUser } from "../models/ISteamUser";
 import { removeUser, setUser } from "@/store/UserSlice";
 import { isTokenExpired } from "@/utils/jwt_decode";
+import { createApi } from "@/services/axios";
 
 export const refreshToken = async (dispatch: any) => {
   try {
@@ -29,8 +30,9 @@ export const getMe = async (dispatch: any, auth: any) => {
     console.log("isAuth");
     return;
   }
+  const api = createApi(dispatch);
   try {
-    const res = await axios.get(API_ENDPOINTS.me, { withCredentials: true });
+    const res = await api.get(API_ENDPOINTS.me, { withCredentials: true });
 
     if (!res) {
       console.log("!res");

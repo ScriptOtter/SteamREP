@@ -1,4 +1,5 @@
 import { useAuth } from "@/hooks/use-auth";
+import { ChevronDown } from "lucide-react";
 import React from "react";
 
 interface AvatarProps {
@@ -15,7 +16,9 @@ const Avatar: React.FC<AvatarProps> = ({ onToggleMenu }) => {
         className="w-10 h-10 rounded-full mr-2 "
       />
       <span className="mr-1 font-semibold">{auth.username}</span>
-      <span className="text-gray-600">▼</span>
+      <span className="text-gray-600">
+        <ChevronDown />
+      </span>
     </div>
   );
 };

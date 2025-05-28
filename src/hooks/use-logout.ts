@@ -9,9 +9,9 @@ export const useLogout = () => {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    navigate("/");
     dispatch(removeUser());
     await axios.get(API_ENDPOINTS.logout, { withCredentials: true });
+    navigate("/");
   };
   return { handleLogout };
 };

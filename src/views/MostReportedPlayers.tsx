@@ -1,4 +1,3 @@
-import { API_AVATAR } from "../services/apiAvatar";
 import { Link } from "react-router-dom";
 
 interface MostReportedPlayersProps {
@@ -14,7 +13,6 @@ export const MostReportedPlayers = ({
   numberofcomplains,
   lastReport,
 }: MostReportedPlayersProps) => {
-  const API_AVATAR_URL = API_AVATAR();
   if (id % 2 == 0) {
     return (
       <div className="bg-red-300 rounded-2xl p-1 mb-1">
@@ -24,7 +22,7 @@ export const MostReportedPlayers = ({
             <Link to={"/profiles/" + nickname}>
               <div className="flex items-center space-x-2">
                 <img
-                  src={API_AVATAR_URL}
+                  src={""}
                   className="inline-block h-12 w-12 rounded-full ring-1"
                 />
                 <p className="">{nickname}</p>
@@ -44,7 +42,7 @@ export const MostReportedPlayers = ({
           <p className="basis-[12%]">{id}</p>
           <div className="flex basis-[30%] items-center space-x-2">
             <img
-              src={API_AVATAR_URL}
+              src={""}
               className="inline-block h-12 w-12 rounded-full ring-1"
             />
             <p className="">{nickname}</p>

@@ -1,4 +1,5 @@
 import { IAuthor } from "./IAuthor";
+import { ISteamUser } from "./ISteamUser";
 
 export interface IComment {
   id: string;
@@ -7,4 +8,5 @@ export interface IComment {
   createdAt: string;
   updatedAt: string;
   author: IAuthor;
+  steamUser: ISteamUser;
 }

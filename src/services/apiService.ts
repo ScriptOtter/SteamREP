@@ -7,6 +7,8 @@ export const API_ENDPOINTS = {
   logout: URL + "auth/logout",
   refresh: URL + "auth/refresh",
   commentCreate: URL + "comment/create/",
+  commentDelete: URL + "comment/",
+  commentUpdate: URL + "comment/",
   comments: URL + "comments/",
   profile: URL + "profile",
   me: URL + "profile/me",

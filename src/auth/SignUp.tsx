@@ -2,16 +2,21 @@ import { Input } from "../component/Input";
 import { Header } from "../views/Header";
 import { useState } from "react";
 import z from "zod";
-import { Register } from "./Auth";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios, { AxiosError } from "axios";
+import { API_ENDPOINTS } from "@/services/apiService";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/store/UserSlice";
 
 export const SignUp = () => {
   type FormData = z.infer<typeof formDataScheme>;
 
   const initialFormData = {
-    email: "",
-    username: "",
-    password: "",
-    confirmPassword: "",
+    email: "user@gmail.com",
+    username: "user",
+    password: "passwordA1",
+    confirmPassword: "passwordA1",
     isChecked: false,
   };
 
@@ -54,7 +59,7 @@ export const SignUp = () => {
     return res.error.format();
   };
 
-  const handleSignUp = (event: React.FormEvent) => {
+  const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
 
     const errors = validate();
@@ -64,16 +69,38 @@ export const SignUp = () => {
       console.log(errors);
       return;
     } else {
-      const res = Register(formData);
+      const { isChecked, ...data } = formData;
+      try {
+        const res = await axios.post(API_ENDPOINTS.signup, data, {
+          withCredentials: true,
+        });
+        if (!res) {
+          return;
+        }
+        console.log(res.data);
+        if (!res.data.steamUser) {
+          console.log(res.data);
+          dispatch(setUser(res.data));
+          navigate("/profile/createProfile");
+        }
+        console.log(res);
+      } catch (e: unknown) {
+        if (e instanceof AxiosError) {
+          console.log("catch");
+          console.log(e.response?.data.target[0]);
+          toast(e.response?.data.target[0] + " already exists!");
+        }
+      }
     }
   };
 
   const errors = showErrors ? validate() : undefined;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <>
       <Header />
-
       <div className="w-full h-screen bg-gray-900 flex items-center justify-center">
         <div className="w-[400px]">
           <p className="text-center text-white text-2xl mb-8">
