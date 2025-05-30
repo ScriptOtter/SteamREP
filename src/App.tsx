@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { NoPage } from "./pages/NoPage.tsx";
 import { SignIn } from "./auth/SignIn.tsx";
 import { SignUp } from "./auth/SignUp.tsx";
+import { ReportPlayerPage } from "./pages/ReportPlayerPage.tsx";
 import { ProfilePage } from "./pages/ProfilePage.tsx";
 import { ToastContainer } from "react-toastify";
 
@@ -20,6 +21,7 @@ function App() {
           />
           <Route path="/auth/signup" element={<SignUp />} />
           <Route path="/auth/signin" element={<SignIn />} />
+          <Route path="/report" element={<ReportPlayerPage />} />
           <Route path="/profile/:id" element={<ProfilePage />} />
           <Route path="*" element={<NoPage />} />
         </Routes>

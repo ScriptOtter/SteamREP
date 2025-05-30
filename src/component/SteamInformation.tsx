@@ -7,7 +7,7 @@ export const SteamInformation = (user: ISteamUser) => {
   return (
     <div className="mx-4 my-4 text-xl text-white">
       {realname ? (
-        <div className="font-semibold">Realname: {" " + realname}</div>
+        <div className="font-semibold">Real Name: {" " + realname}</div>
       ) : (
         <></>
       )}

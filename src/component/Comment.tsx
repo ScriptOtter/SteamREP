@@ -84,7 +84,7 @@ export const Comment = ({
                       className="bg-orange-500 px-2 py-0.5 rounded-xl cursor-pointer "
                       onClick={() => handleUpdate(commentId)}
                     >
-                      Update comment
+                      Edit Comment
                     </button>
                   )}
                   {auth.username === username && (

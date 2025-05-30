@@ -110,8 +110,8 @@ export const Header = () => {
           </div>
         </div>
       </div>
-      <nav className="bg-[#2F3136] pb-2 pt-1">
-        <ul>
+      <nav className="bg-[#282a2e] pb-2 pt-1 shadow-xl shadow-white">
+        <ul className="shadow-2xl shadow-white">
           <div className="flex space-x-8 ml-8 text-white font-semibold">
             <li className="hover:underline underline-offset-2 cursor-pointer">
               <Link to="/">Home</Link>
@@ -126,12 +126,17 @@ export const Header = () => {
               <Link to="/Scammers">Scammers</Link>
             </li>
             <li className="hover:underline underline-offset-2 cursor-pointer">
+              <Link to="/Scammers">VAC Ban Tracking</Link>
+            </li>
+            <li className="hover:underline underline-offset-2 cursor-pointer">
+              <Link to="/report">Report User</Link>
+            </li>
+            <li className="hover:underline underline-offset-2 cursor-pointer">
               <Link to="/404">More links</Link>
             </li>
           </div>
         </ul>
       </nav>
-      <div className="bg-gray-600 p-[0.5px]"></div>
     </>
   );
 };
