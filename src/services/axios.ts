@@ -1,6 +1,5 @@
 import { refreshToken } from "@/data/getUser";
 import axios from "axios";
-import { useDispatch } from "react-redux";
 
 const URL = import.meta.env.VITE_SERVER_URL;
 

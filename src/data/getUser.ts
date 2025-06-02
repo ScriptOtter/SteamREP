@@ -2,7 +2,6 @@ import axios, { AxiosResponse } from "axios";
 import { API_ENDPOINTS } from "../services/apiService";
 import { ISteamUser } from "../models/ISteamUser";
 import { removeUser, setUser } from "@/store/UserSlice";
-import { isTokenExpired } from "@/utils/jwt_decode";
 import { createApi } from "@/services/axios";
 
 export const refreshToken = async (dispatch: any) => {
@@ -49,7 +48,7 @@ export const getMe = async (dispatch: any, auth: any) => {
 
 export const getSteamUser = async (id: string): Promise<ISteamUser> => {
   const res: AxiosResponse<ISteamUser> = await axios.post(
-    API_ENDPOINTS.API_URL + id
+    API_ENDPOINTS.steamid + id
   );
   return res.data;
 };

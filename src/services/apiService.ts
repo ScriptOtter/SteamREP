@@ -10,6 +10,7 @@ export const API_ENDPOINTS = {
   commentDelete: URL + "comment/",
   commentUpdate: URL + "comment/",
   comments: URL + "comments/",
+  steamid: URL + "steam/",
   profile: URL + "profile",
   me: URL + "profile/me",
 };
