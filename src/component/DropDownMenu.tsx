@@ -27,10 +27,7 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({
             <User size={17} /> <p className="text-[16px]">Profile</p>
           </div>
         </button>
-        <button
-          onClick
-          className="block w-full text-left px-4 py-2 text-white cursor-pointer hover:bg-gray-800"
-        >
+        <button className="block w-full text-left px-4 py-2 text-white cursor-pointer hover:bg-gray-800">
           <div className="flex items-center space-x-1 -mx-2">
             <Settings size={17} />
             <p className="text-[16px]">Settings</p>

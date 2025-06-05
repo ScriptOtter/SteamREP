@@ -6,12 +6,14 @@ import { useAuth } from "@/hooks/use-auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { MdVerified } from "react-icons/md";
 
 interface CommentProps {
   content: string;
   createdAt: string;
   commentId: string;
   updatedAt: string;
+  role: string;
   username: string;
   avatar: string;
   loading: boolean;
@@ -24,6 +26,7 @@ export const Comment = ({
   content,
   createdAt,
   updatedAt,
+  role,
   username,
   avatar,
   loading,
@@ -59,12 +62,15 @@ export const Comment = ({
           />
 
           <div className="w-full">
-            <div className="flex justify-between items-center mb-2">
+            <div className="flex justify-between items-center mb-2 ">
               <h3
                 onClick={visitProfile}
-                className="text-lg font-semibold cursor-pointer text-white"
+                className="text-lg font-semibold cursor-pointer text-white flex items-center"
               >
                 {username}
+                {role === "VERIFIED_STEAM" && (
+                  <MdVerified size={20} className="ml-1.5 text-blue-400" />
+                )}
               </h3>
 
               <div className="text-sm text-white">

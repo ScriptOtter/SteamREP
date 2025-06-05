@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { useAuth } from "@/hooks/use-auth.ts";
-import Avatar from "@/component/Avatar.tsx";
+import { ProfileButton } from "@/component/profileButton";
 import DropdownMenu from "@/component/DropDownMenu.tsx";
 import { BellDot, Bookmark, CircleHelp, Search } from "lucide-react";
 import { getMe } from "@/data/getUser.ts";
@@ -98,7 +98,7 @@ export const Header = () => {
                 className="relative flex items-center text-white"
                 ref={menuRef}
               >
-                <Avatar onToggleMenu={toggleMenu} />
+                <ProfileButton onToggleMenu={toggleMenu} />
                 {isMenuOpen && (
                   <DropdownMenu
                     onProfile={() => profileURL(navigate, auth)}

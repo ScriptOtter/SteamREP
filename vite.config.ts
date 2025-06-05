@@ -11,4 +11,9 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    allowedHosts: [
+      "fifty-ends-beam.loca.lt", // Добавьте ваш хост сюда
+    ],
+  },
 });

@@ -7,6 +7,9 @@ const URL = import.meta.env.VITE_SERVER_URL;
 export const createApi = (dispatch) => {
   const api = axios.create({
     baseURL: URL, // Укажите ваш базовый URL
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 
   // Добавляем интерсептор для обработки ошибок

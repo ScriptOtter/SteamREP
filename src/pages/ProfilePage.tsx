@@ -16,6 +16,7 @@ import { useAuth } from "@/hooks/use-auth.ts";
 import { API_ENDPOINTS } from "@/services/apiService.ts";
 import { createApi } from "@/services/axios.ts";
 import { toast } from "react-toastify";
+import { MdVerified } from "react-icons/md";
 
 export interface RouteParams {
   [key: string]: string | undefined;
@@ -30,6 +31,7 @@ export const ProfilePage = () => {
 
   const [steamUser, steamSteamUser] = useState<ISteamUser>();
   const [comments, setComments] = useState<IComment[]>([]);
+  const [isHovered, setIsHovered] = useState(false);
 
   const dispatch = useDispatch();
   const auth = useAuth();
@@ -82,6 +84,7 @@ export const ProfilePage = () => {
           const res = await getSteamUser(id);
           const comments = await getComments(id);
           console.log(res);
+          //console.log(res);
           if (!res.id) {
             console.log("User not found");
             setError("User not found!");
@@ -106,7 +109,7 @@ export const ProfilePage = () => {
   }, [id]);
 
   const handleRedirect = () => {
-    window.location.href = "http://localhost:3000/api/steam/verify";
+    window.location.href = import.meta.env.VITE_SERVER_URL + "steam/verify";
   };
 
   return (
@@ -132,9 +135,32 @@ export const ProfilePage = () => {
                     {loading ? (
                       <Skeleton className="h-7 w-[25%]" />
                     ) : (
-                      <p className="text-2xl text-bold text-white mt-2">
-                        {steamUser?.realname ? steamUser?.realname : ""}
-                      </p>
+                      <div className="flex items-center relative">
+                        <p className="text-2xl text-bold text-white mt-2 flex items-center">
+                          {steamUser?.personaName ? steamUser?.personaName : ""}
+                          {steamUser?.user?.role === "VERIFIED_STEAM" && (
+                            <div className="">
+                              <MdVerified
+                                size={22}
+                                className="ml-1.5 text-blue-400 mt-[3px] cursor-pointer"
+                                onMouseEnter={() => {
+                                  setIsHovered(true);
+                                  console.log(isHovered);
+                                }}
+                                onMouseLeave={() => {
+                                  setIsHovered(false);
+                                  console.log(isHovered);
+                                }}
+                              />
+                            </div>
+                          )}
+                        </p>
+                        {isHovered && (
+                          <span className="absolute left-25 mt-2 p-1 text-sm bg-gray-700 text-white rounded-md">
+                            Steam Verified
+                          </span>
+                        )}
+                      </div>
                     )}
                     {loading ? (
                       <Skeleton className="h-5 w-[50%] mt-2" />
@@ -176,6 +202,7 @@ export const ProfilePage = () => {
                           content={comment?.content}
                           createdAt={comment?.createdAt}
                           updatedAt={comment?.updatedAt}
+                          role={comment?.author?.role}
                           username={
                             comment?.author?.steamUser?.personaName ||
                             comment?.author.username
