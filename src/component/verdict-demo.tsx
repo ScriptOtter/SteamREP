@@ -1,9 +1,9 @@
 import { Flag } from "lucide-react";
 import { SelectOptions } from "./selecteOptions";
-import { Avatar } from "./avatar";
 import { YourubeVideo } from "./youtube-video";
 import { useAuth } from "@/hooks/use-auth";
 import { useState } from "react";
+import { Avatar } from "./avatar";
 
 export const VerdictDemos = () => {
   const auth = useAuth();
