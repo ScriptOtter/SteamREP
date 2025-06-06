@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { API_ENDPOINTS } from "@/services/apiService";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { setUser } from "@/store/UserSlice";
 
 export const SignIn = () => {
@@ -12,12 +12,7 @@ export const SignIn = () => {
   const [password, setPassword] = useState<string>("");
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const [showError, setShorwError] = useState<boolean>(false);
-
-  interface ISignIn {
-    username: string;
-    password: string;
-  }
+  const [showError, setShowError] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,6 +35,8 @@ export const SignIn = () => {
         setPassword("");
         navigate("/profile/createProfile");
       } else {
+        setShowError(true);
+        setError(res.data);
         dispatch(setUser(res.data));
         navigate("/profile/" + res.data.steamUser.id);
         return;

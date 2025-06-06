@@ -1,4 +1,4 @@
-import { MostReportedPlayersPage } from "./pages/MostReporotedPlayersPage.tsx";
+//import { MostReportedPlayersPage } from "./pages/MostReporotedPlayersPage.tsx";
 import { HomePage } from "./pages/HomePage.tsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { NoPage } from "./pages/NoPage.tsx";
@@ -15,10 +15,10 @@ function App() {
         <ToastContainer />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route
+          {/* <Route
             path="/MostReportedPlayers"
             element={<MostReportedPlayersPage />}
-          />
+          /> */}
           <Route path="/auth/signup" element={<SignUp />} />
           <Route path="/auth/signin" element={<SignIn />} />
           <Route path="/report" element={<ReportPlayerPage />} />

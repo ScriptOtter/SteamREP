@@ -1,4 +1,3 @@
-import { getMe } from "@/data/getUser";
 import { createSlice } from "@reduxjs/toolkit";
 
 let initialState = {

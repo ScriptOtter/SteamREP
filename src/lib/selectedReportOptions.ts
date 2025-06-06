@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const handleOptionClick = (value) => {
+export const handleOptionClick = (value: string) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   setSelectedOptions((prevSelectedOptions) => {
     const newSelectedOptions = prevSelectedOptions.includes(value)

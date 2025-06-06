@@ -4,7 +4,7 @@ import axios from "axios";
 const URL = import.meta.env.VITE_SERVER_URL;
 
 // Создаем экземпляр axios
-export const createApi = (dispatch) => {
+export const createApi = (dispatch: any) => {
   const api = axios.create({
     baseURL: URL, // Укажите ваш базовый URL
     headers: {

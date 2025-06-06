@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { refreshToken } from "@/data/getUser";
+
 import { useAuth } from "@/hooks/use-auth";
 import { RouteParams } from "@/pages/ProfilePage";
 import { API_ENDPOINTS } from "@/services/apiService";

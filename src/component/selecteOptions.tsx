@@ -23,7 +23,7 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({ onChange }) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const { isMenuOpen, toggleMenu, menuRef } = useDropDownMenu();
 
-  const handleOptionClick = (value) => {
+  const handleOptionClick = (value: string) => {
     setSelectedOptions((prevSelectedOptions) => {
       const newSelectedOptions = prevSelectedOptions.includes(value)
         ? prevSelectedOptions.filter((word) => word !== value) // Убираем слово

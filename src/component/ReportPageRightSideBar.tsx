@@ -6,11 +6,6 @@ import { getSteamUser } from "@/data/getUser";
 import { getUserId } from "@/utils/steamUrl";
 import { SelectOptions } from "./selecteOptions";
 
-interface Option {
-  key: number;
-  value: string;
-}
-
 export const ReportPageRightSidebar = () => {
   const [nickname, setNickname] = useState<string>("");
   const [steamUrl, setSteamUrl] = useState<string>("");

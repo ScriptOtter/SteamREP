@@ -1,6 +1,6 @@
 import { Flag } from "lucide-react";
 import { SelectOptions } from "./selecteOptions";
-import { Avatar } from "./Avatar";
+import { Avatar } from "./avatar";
 import { YourubeVideo } from "./youtube-video";
 import { useAuth } from "@/hooks/use-auth";
 import { useState } from "react";
@@ -13,17 +13,13 @@ export const VerdictDemos = () => {
   const handleSelectedOptionsChange = (options: string[]) => {
     setSelectedOptions(options);
   };
-
-  const onChange = (content: string) => {
-    setComment(content);
-    console.log(content);
-  };
+  console.log(selectedOptions);
   return (
     <div className="flex flex-col md:flex-row bg-[#282a2e] rounded-2xl mx-4 my-2">
       <div className="flex-1 p-4">
         <div className="flex items-center text-xl text-white mb-2">
           <p className="mr-2">Report owner:</p>
-          <Avatar src={auth.avatar} />
+          <Avatar src={auth.avatar || ""} />
           <p className="text-s">Username</p>
         </div>
         <div className="mb-2">
@@ -49,7 +45,7 @@ export const VerdictDemos = () => {
         <div className="p-4">
           <div className="flex items-center text-xl text-white mb-2">
             <p className="mr-2">Suspect:</p>
-            <Avatar src={auth.avatar} />
+            <Avatar src={auth.avatar || ""} />
             <p className="text-s">Username</p>
           </div>
 
@@ -72,7 +68,7 @@ export const VerdictDemos = () => {
               ></textarea>{" "}
             </div>
           )}
-          {/* <RichTextEditor content={comment} onChange={onChange} /> */}
+
           <div className="flex items-center justify-end space-x-4">
             <button className="bg-orange-500 rounded-xl cursor-pointer px-4 py-1 text-white">
               Confirm
