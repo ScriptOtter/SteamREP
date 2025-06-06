@@ -3,7 +3,7 @@ import { SelectOptions } from "./selecteOptions";
 import { YourubeVideo } from "./youtube-video";
 import { useAuth } from "@/hooks/use-auth";
 import { useState } from "react";
-import { Avatar } from "./avatar";
+import { Avatar } from "./Avatar";
 
 export const VerdictDemos = () => {
   const auth = useAuth();

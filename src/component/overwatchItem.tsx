@@ -2,7 +2,7 @@ import { useDropDownMenu } from "@/hooks/use-drop-down-menu";
 
 import { VerdictDemos } from "./verdict-demo";
 import { ArrowUp } from "lucide-react";
-import { Avatar } from "./avatar";
+import { Avatar } from "./Avatar";
 
 export const OverwatchItem = () => {
   const { isMenuOpen, toggleMenu } = useDropDownMenu();
