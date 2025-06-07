@@ -45,7 +45,7 @@ export const ReportPlayerPage = () => {
                   )}
                   onClick={() => setCurrentPage("ReviewedDemos")}
                 >
-                  Reviewed demos
+                  Reviewed Demos
                 </p>
                 <p
                   className={cn(
@@ -54,7 +54,7 @@ export const ReportPlayerPage = () => {
                   )}
                   onClick={() => setCurrentPage("MyComplaints")}
                 >
-                  My Complaints
+                  My Reports
                 </p>
               </div>
               <div>
