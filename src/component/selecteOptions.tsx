@@ -18,7 +18,9 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({ onChange }) => {
     { key: 1, value: "WALL HACKING" },
     { key: 2, value: "AIM" },
     { key: 3, value: "OTHER HACKING" },
-    { key: 4, value: "FARM BOT" },
+    { key: 4, value: "GRIFFER" },
+    { key: 5, value: "FARM BOT" },
+    { key: 6, value: "NOT ENOUGH EVIDENCE" },
   ];
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const { isMenuOpen, toggleMenu, menuRef } = useDropDownMenu();
@@ -41,13 +43,6 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({ onChange }) => {
 
   return (
     <>
-      <div className="flex justify-between mb-3">
-        <label className="text-white text-[14px]">
-          Укажите причины репорта
-        </label>
-        <label className="text-red-500 text-[12px]">1</label>
-      </div>
-
       <div ref={menuRef} className="relative mb-3">
         <Input
           variant="forAuth"
@@ -55,7 +50,7 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({ onChange }) => {
           readOnly
           onClick={toggleMenu}
           value={selectedOptions.join(", ")}
-          placeholder="Выберите слова..."
+          placeholder="Choose..."
           className="block w-full p-1 border border-gray-300 rounded-md cursor-pointer hover:outline-1 hover:outline-white"
         />
         <ListChecks

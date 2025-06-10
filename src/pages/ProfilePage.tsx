@@ -116,7 +116,7 @@ export const ProfilePage = () => {
     <>
       <Header />
       {id !== "createProfile" ? (
-        <div className="h-screen pt-8 bg-[#2F3136] flex justify-center">
+        <div className="h-full min-h-screen pt-8 bg-[#2F3136] flex justify-center  ">
           <div className="container max-w-[1280px] mt-2">
             {!showError ? (
               <div className="flex">
@@ -136,10 +136,10 @@ export const ProfilePage = () => {
                       <Skeleton className="h-7 w-[25%]" />
                     ) : (
                       <div className="flex items-center relative">
-                        <p className="text-2xl text-bold text-white mt-2 flex items-center">
+                        <div className="text-2xl text-bold text-white mt-2 flex items-center">
                           {steamUser?.personaName ? steamUser?.personaName : ""}
                           {steamUser?.user?.role === "VERIFIED_STEAM" && (
-                            <div className="">
+                            <div className="relative">
                               <MdVerified
                                 size={22}
                                 className="ml-1.5 text-blue-400 mt-[3px] cursor-pointer"
@@ -152,14 +152,14 @@ export const ProfilePage = () => {
                                   console.log(isHovered);
                                 }}
                               />
+                              {isHovered && (
+                                <p className="absolute left-8 -top-2 p-1 text-sm bg-gray-700 text-white rounded-md">
+                                  Steam Verified
+                                </p>
+                              )}
                             </div>
                           )}
-                        </p>
-                        {isHovered && (
-                          <span className="absolute left-25 mt-2 p-1 text-sm bg-gray-700 text-white rounded-md">
-                            Steam Verified
-                          </span>
-                        )}
+                        </div>
                       </div>
                     )}
                     {loading ? (

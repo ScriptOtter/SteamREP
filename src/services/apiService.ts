@@ -13,4 +13,9 @@ export const API_ENDPOINTS = {
   steamid: URL + "steam/",
   profile: URL + "profile",
   me: URL + "profile/me",
+  createReport: URL + "createReport",
+  getDemos: URL + "getDemos",
+  postVerdict: URL + "postVerdict/",
+  getMyVerdicts: URL + "getMyVerdicts",
+  getMyReports: URL + "getMyReports",
 };

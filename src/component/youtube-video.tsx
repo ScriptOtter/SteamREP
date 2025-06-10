@@ -1,6 +1,6 @@
 import ReactPlayer from "react-player/youtube";
 
-export const YourubeVideo = () => {
+export const YourubeVideo = ({ ...props }) => {
   return (
     <div className="flex border-orange-500 border-1 w-[400px]">
       <ReactPlayer
@@ -9,7 +9,7 @@ export const YourubeVideo = () => {
         light
         volume={0.05}
         controls
-        url="https://www.youtube.com/watch?v=5yCphbEGkHM&ab_channel=KIR"
+        url={props.youtubeLink}
       />
     </div>
   );

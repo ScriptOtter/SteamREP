@@ -14,6 +14,7 @@ import { getUserId, profileURL } from "@/utils/steamUrl";
 import { useProfile } from "@/hooks/use-profile.ts";
 import { useLogout } from "@/hooks/use-logout";
 import { useDropDownMenu } from "@/hooks/use-drop-down-menu";
+import { Container } from "@/component/container";
 
 export const Header = () => {
   const [searchInput, setSearchInput] = useState<string>("");
@@ -33,7 +34,7 @@ export const Header = () => {
 
   return (
     <>
-      <div className="bg-[#2F3136] w-full shadow-lg">
+      <div className="bg-[#2F3136] shadow-lg ">
         <div className="flex justify-between items-center p-3">
           {/* Логотип */}
           <div className="flex items-center mx-8 space-x-2">

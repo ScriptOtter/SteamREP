@@ -1,16 +1,39 @@
 import { Container } from "@/component/container";
 
-import { OverwatchSideBar } from "@/component/OverwatchSideBar";
-
-import { ReportPageRightSidebar } from "@/component/ReportPageRightSideBar";
+import { CreateReportSideBar } from "@/component/ReportPage/CreateReport/CreateReport";
+import { MyReportsSideBar } from "@/component/ReportPage/MyReports/MyReportsSideBar";
+import { OverwatchSideBar } from "@/component/ReportPage/OverwatchReport/OverwatchSideBar";
+import { ReviewedDemosSideBar } from "@/component/ReportPage/ReviewedDemoReport/ReviewedDemosSideBar";
 import { cn } from "@/lib/utils";
 
 import { Header } from "@/views/Header";
 import { Eye, Plus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const ReportPlayerPage = () => {
   const [currentPage, setCurrentPage] = useState<string>("Overwatch");
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace("#", ""); // Получаем хэш без #
+      if (hash) {
+        setCurrentPage(hash);
+      } else {
+        setCurrentPage("Overwatch"); // Если хэш пустой, устанавливаем значение по умолчанию
+      }
+    };
+
+    // Устанавливаем обработчик события при монтировании компонента
+    window.addEventListener("hashchange", handleHashChange);
+
+    // Вызываем функцию при первом рендере, чтобы установить начальное значение
+    handleHashChange();
+
+    // Удаляем обработчик события при размонтировании компонента
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, []);
 
   return (
     <>
@@ -26,54 +49,67 @@ export const ReportPlayerPage = () => {
             </h1>
             <nav className="flex justify-between text-white text-2xl mb-2">
               <div className="flex space-x-3">
-                <p
+                <div
                   className={cn(
                     currentPage === "Overwatch" && "text-orange-500",
                     "cursor-pointer hover:text-orange-400 duration-600"
                   )}
-                  onClick={() => setCurrentPage("Overwatch")}
+                  onClick={() => {
+                    setCurrentPage("Overwatch");
+                    window.location.hash = "#Overwatch"; // Добавляем # в URL
+                  }}
                 >
                   <div className="flex items-center space-x-1">
                     <Eye size={32} />
                     <p>Overwatch</p>
                   </div>
-                </p>
-                <p
+                </div>
+                <div
                   className={cn(
                     currentPage === "ReviewedDemos" && "text-orange-500",
                     "cursor-pointer hover:text-orange-400 duration-600"
                   )}
-                  onClick={() => setCurrentPage("ReviewedDemos")}
+                  onClick={() => {
+                    setCurrentPage("ReviewedDemos");
+                    window.location.hash = "#ReviewedDemos"; // Добавляем # в URL
+                  }}
                 >
                   Reviewed Demos
-                </p>
-                <p
+                </div>
+                <div
                   className={cn(
-                    currentPage === "MyComplaints" && "text-orange-500",
+                    currentPage === "MyReports" && "text-orange-500",
                     "cursor-pointer hover:text-orange-400 duration-600"
                   )}
-                  onClick={() => setCurrentPage("MyComplaints")}
+                  onClick={() => {
+                    setCurrentPage("MyReports");
+                    window.location.hash = "#MyReports"; // Добавляем # в URL
+                  }}
                 >
                   My Reports
-                </p>
+                </div>
               </div>
               <div>
-                <p
+                <div
                   className={cn(
                     currentPage === "CreateReport" && "text-orange-500",
                     "cursor-pointer hover:text-orange-400 duration-600"
                   )}
-                  onClick={() => setCurrentPage("CreateReport")}
+                  onClick={() => {
+                    setCurrentPage("CreateReport");
+                    window.location.hash = "#CreateReport"; // Добавляем # в URL
+                  }}
                 >
                   <div className="flex items-center space-x-2">
                     <Plus size={32} /> <p>Create Report</p>
                   </div>
-                </p>
+                </div>
               </div>
             </nav>
             {currentPage === "Overwatch" && <OverwatchSideBar />}
-
-            {currentPage === "CreateReport" && <ReportPageRightSidebar />}
+            {currentPage === "ReviewedDemos" && <ReviewedDemosSideBar />}
+            {currentPage === "MyReports" && <MyReportsSideBar />}
+            {currentPage === "CreateReport" && <CreateReportSideBar />}
           </Container>
         </div>
       </div>
