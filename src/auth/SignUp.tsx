@@ -8,8 +8,12 @@ import axios, { AxiosError } from "axios";
 import { API_ENDPOINTS } from "@/services/apiService";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/store/UserSlice";
+import { X } from "lucide-react";
 
 export const SignUp = () => {
+  const [modalVerify, setModalVerify] = useState<boolean>(false);
+  const [code, setCode] = useState<string>("");
+
   type FormData = z.infer<typeof formDataScheme>;
 
   const initialFormData = {
@@ -59,6 +63,27 @@ export const SignUp = () => {
     return res.error.format();
   };
 
+  const handleCodeVerification = async (event: any) => {
+    event.preventDefault();
+    try {
+      const res = await axios.get(API_ENDPOINTS.emailVerify + code, {
+        withCredentials: true,
+      });
+
+      if (!res) {
+        setCode("");
+        return;
+      }
+      setCode("");
+      setModalVerify(false);
+      navigate("/profile/createProfile");
+      toast.success("Your account has been activated!");
+    } catch (e: unknown) {
+      if (e instanceof AxiosError) {
+        toast.error(e.message);
+      }
+    }
+  };
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -66,7 +91,7 @@ export const SignUp = () => {
 
     if (errors) {
       setShowErrors(true);
-      console.log(errors);
+      //console.log(errors);
       return;
     } else {
       const { isChecked, ...data } = formData;
@@ -77,13 +102,10 @@ export const SignUp = () => {
         if (!res) {
           return;
         }
-        console.log(res.data);
         if (!res.data.steamUser) {
-          console.log(res.data);
           dispatch(setUser(res.data));
-          navigate("/profile/createProfile");
+          setModalVerify(true);
         }
-        console.log(res);
       } catch (e: unknown) {
         if (e instanceof AxiosError) {
           console.log("catch");
@@ -101,7 +123,53 @@ export const SignUp = () => {
   return (
     <>
       <Header />
-      <div className="w-full h-screen bg-gray-900 flex items-center justify-center">
+
+      <div className="w-full h-screen bg-gray-900 flex items-center justify-center absolute ">
+        {modalVerify && (
+          <div className="absolute w-[410px] h-[260px] bg-gray-800 rounded-xl outline-1 mb-6 backdrop-blur-3xl">
+            <X
+              onClick={() => setModalVerify(false)}
+              size={16}
+              className="absolute top-1.5 right-2.5 text-white cursor-pointer"
+            />
+            <div className="justify-center items-center my-4 text-white ">
+              <div className="text-center mb-3">
+                <label className="text-2xl font-bold">
+                  SteamRep - Account Verification
+                </label>
+              </div>
+              <div className="mb-3 mx-3">
+                <label className="mr-1">
+                  A letter with a code has been sent to your email{" "}
+                </label>{" "}
+                <label className="underline underline-offset-2">
+                  {formData.email}
+                </label>
+                <label>.</label>
+                <p className="mt-3">
+                  Please enter the code to activate your account.
+                </p>
+              </div>
+              <div className="mx-3 mb-5.5">
+                <Input
+                  variant="forAuth"
+                  value={code}
+                  maxLength={6}
+                  placeholder="XXXXXX"
+                  onChange={(e) => setCode(e.target.value)}
+                ></Input>
+              </div>
+              <div className="mx-2.5">
+                <button
+                  className="bg-indigo-600 w-full p-1.5 rounded-[8px] text-white text-[14px] cursor-pointer"
+                  onClick={handleCodeVerification}
+                >
+                  Activate Account
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="w-[400px]">
           <p className="text-center text-white text-2xl mb-8">
             Sign Up to SteamRep
@@ -202,7 +270,7 @@ export const SignUp = () => {
             </div>
             <div className="flex justify-center items-center w-full">
               <button
-                className="bg-indigo-600 w-1/1 p-1.5 rounded-[8px] text-white text-[14px]"
+                className="bg-indigo-600 w-1/1 p-1.5 rounded-[8px] text-white text-[14px] cursor-pointer"
                 type="submit"
                 disabled={!!errors || initialFormData.isChecked}
               >

@@ -1,36 +1,38 @@
 import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-
 import { useAuth } from "@/hooks/use-auth.ts";
 import { ProfileButton } from "@/component/profileButton";
 import DropdownMenu from "@/component/DropDownMenu.tsx";
 import { BellDot, Bookmark, CircleHelp, Search } from "lucide-react";
 import { getMe } from "@/data/getUser.ts";
-
 import { getUserId, profileURL } from "@/utils/steamUrl";
-import { useProfile } from "@/hooks/use-profile.ts";
-import { useLogout } from "@/hooks/use-logout";
 import { useDropDownMenu } from "@/hooks/use-drop-down-menu";
-import { Container } from "@/component/container";
+import { removeUser } from "@/store/UserSlice";
+import { API_ENDPOINTS } from "@/services/apiService";
+import axios from "axios";
 
 export const Header = () => {
-  const [searchInput, setSearchInput] = useState<string>("");
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = useAuth();
 
-  const { profile } = useProfile();
-  const { handleLogout } = useLogout();
   const { isMenuOpen, toggleMenu, menuRef } = useDropDownMenu();
+  const [searchInput, setSearchInput] = useState<string>("");
+  const [isAuthenticated, setIsAuthenticated] = useState(auth?.isAuth || false);
+
+  const handleLogout = async () => {
+    dispatch(removeUser());
+    await axios.get(API_ENDPOINTS.logout, { withCredentials: true });
+    setIsAuthenticated(false);
+    navigate("/");
+  };
 
   useEffect(() => {
-    //if (id === auth.id)
     getMe(dispatch, auth);
-  }, []);
+    setIsAuthenticated(auth?.isAuth);
+  }, [auth]);
 
   return (
     <>
@@ -87,7 +89,7 @@ export const Header = () => {
 
           {/* Профиль */}
           <div className="flex items-center mx-4">
-            {!profile?.isAuth ? (
+            {!isAuthenticated ? (
               <Link
                 to="/auth/signin"
                 className="text-white cursor-pointer hover:underline "
@@ -118,6 +120,9 @@ export const Header = () => {
               <Link to="/">Home</Link>
             </li>
             <li className="hover:underline underline-offset-2 cursor-pointer">
+              <Link to="/report">Report User</Link>
+            </li>
+            <li className="hover:underline underline-offset-2 cursor-pointer">
               <Link to="/MostReportedPlayers">Most Reported Players</Link>
             </li>
             <li className="hover:underline underline-offset-2 cursor-pointer">
@@ -129,9 +134,7 @@ export const Header = () => {
             <li className="hover:underline underline-offset-2 cursor-pointer">
               <Link to="/Scammers">VAC Ban Tracking</Link>
             </li>
-            <li className="hover:underline underline-offset-2 cursor-pointer">
-              <Link to="/report">Report User</Link>
-            </li>
+
             <li className="hover:underline underline-offset-2 cursor-pointer">
               <Link to="/404">More links</Link>
             </li>

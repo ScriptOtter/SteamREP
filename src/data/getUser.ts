@@ -9,40 +9,37 @@ export const refreshToken = async (dispatch: any) => {
     const res = await axios.get(API_ENDPOINTS.refresh, {
       withCredentials: true,
     });
-    console.log("refreshTOKEN!");
-    console.log(res);
+    //console.log("refreshTOKEN!");
+    //console.log(res);
     if (res) {
       const res = await axios.get(API_ENDPOINTS.me, { withCredentials: true });
-      console.log(res);
+      //console.log(res);
       dispatch(setUser(res.data));
     } else dispatch(removeUser());
     return res;
   } catch (e) {
-    console.log("refreshTOKEN! CATCH");
-    console.log(e);
+    //console.log("refreshTOKEN! CATCH");
+    //console.log(e);
     dispatch(removeUser());
   }
 };
 
-export const getMe = async (dispatch: any, auth: any) => {
+export const getMe = async (dispatch: any, auth: any): Promise<boolean> => {
   if (!auth.isAuth) {
-    console.log("isAuth");
-    return;
+    return true;
   }
   const api = createApi(dispatch);
   try {
     const res = await api.get(API_ENDPOINTS.me, { withCredentials: true });
 
     if (!res) {
-      console.log("!res");
-      console.log(res);
+      return false;
     } else {
-      console.log("DATA loaded");
       dispatch(setUser(res.data));
+      return true;
     }
   } catch (error) {
-    console.error(error);
-    await refreshToken(dispatch);
+    return false;
   }
 };
 

@@ -2,8 +2,9 @@ const URL = import.meta.env.VITE_SERVER_URL;
 
 export const API_ENDPOINTS = {
   API_URL: URL,
-  signin: URL + "auth/signin",
   signup: URL + "auth/signup",
+  emailVerify: URL + "auth/emailVerify/",
+  signin: URL + "auth/signin",
   logout: URL + "auth/logout",
   refresh: URL + "auth/refresh",
   commentCreate: URL + "comment/create/",

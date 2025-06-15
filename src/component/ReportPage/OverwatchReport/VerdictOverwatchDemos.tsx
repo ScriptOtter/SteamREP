@@ -29,7 +29,7 @@ export const VerdictOverwatchDemos = ({
   const dispatch = useDispatch();
   const api = createApi(dispatch);
   const postVerdict = async () => {
-    const data = { verdict: selectedOptions };
+    const data = { verdict: selectedOptions, comment: verdictComment };
     try {
       const res = await api.post(API_ENDPOINTS.postVerdict + id, data, {
         withCredentials: true,

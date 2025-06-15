@@ -17,6 +17,7 @@ export const Input = ({
   readOnly,
   value,
   disabled,
+  maxLength,
   onClick,
   onChange,
 }: InputProps) => {
@@ -36,6 +37,7 @@ export const Input = ({
       className={variantStyles[variant] + " " + className}
       placeholder={placeholder}
       type={type}
+      maxLength={maxLength}
       onClick={onClick}
       id={id}
       value={value}

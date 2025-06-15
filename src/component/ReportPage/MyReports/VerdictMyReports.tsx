@@ -44,7 +44,7 @@ export const VerdictMyReports = ({
               {demoLink}
             </a>
           </div>
-          {comment && <p>Comment by Report Owner:</p>}
+
           <div className="bg-gray-700 rounded-xl outline-orange-500 outline-1 px-2 mt-2 mb-2"></div>
           <div className="text-right text-[16px]">
             Report Created At: {Time(createdAt)}

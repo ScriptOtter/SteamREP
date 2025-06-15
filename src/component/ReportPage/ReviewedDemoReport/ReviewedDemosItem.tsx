@@ -34,9 +34,7 @@ export const ReviewedDemosItem = ({
               <h2 className="text-xl ml-2">{recipient.personaName}</h2>
             </div>
             <div className="flex-1 text-white cursor-pointer">
-              <h2 className="text-xl">
-                {verdicts && Time(verdicts[0].createdAt)}
-              </h2>
+              <h2 className="text-xl">{Time(createdAt)}</h2>
             </div>
           </>
         )}

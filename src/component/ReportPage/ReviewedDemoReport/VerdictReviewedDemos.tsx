@@ -14,6 +14,7 @@ export const VerdictReviewedDemos = ({
   recipient,
   verdicts,
 }: IDemos) => {
+  console.log(verdicts);
   return (
     <div className="flex flex-col md:flex-row bg-[#282a2e] rounded-2xl mx-4 my-2">
       <div className="flex-1 p-4">

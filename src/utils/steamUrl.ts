@@ -11,7 +11,7 @@ export const getUserId = (str: string): string => {
 };
 
 export const profileURL = (navigate: any, auth: IAuth) => {
-  if (auth.role == "VERIFIED_STEAM") {
+  if (auth.role == "VERIFIED") {
     return navigate("/profile/" + auth.id);
   } else return navigate("/profile/createProfile");
 };

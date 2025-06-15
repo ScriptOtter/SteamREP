@@ -82,6 +82,7 @@ export const ProfilePage = () => {
       try {
         if (id !== "createProfile") {
           const res = await getSteamUser(id);
+
           const comments = await getComments(id);
           console.log(res);
           //console.log(res);
@@ -138,7 +139,7 @@ export const ProfilePage = () => {
                       <div className="flex items-center relative">
                         <div className="text-2xl text-bold text-white mt-2 flex items-center">
                           {steamUser?.personaName ? steamUser?.personaName : ""}
-                          {steamUser?.user?.role === "VERIFIED_STEAM" && (
+                          {steamUser?.user?.role === "VERIFIED" && (
                             <div className="relative">
                               <MdVerified
                                 size={22}
