@@ -10,13 +10,14 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Loader } from "./Loader";
 
 interface Props {
-  loading: boolean;
-  hendlePost: (res: any) => void;
+  renderComments: () => void;
 }
 
-export const CommentTextArea = ({ loading, hendlePost }: Props) => {
+export const CommentTextArea = ({ renderComments }: Props) => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [comment, setComment] = useState<string>("");
   const [visibleArea, setVisibleArea] = useState<boolean>(false);
 
@@ -32,6 +33,7 @@ export const CommentTextArea = ({ loading, hendlePost }: Props) => {
     }
     setComment("");
     try {
+      setLoading(true);
       const res = await api.post(
         API_ENDPOINTS.commentCreate + id,
         { content: comment },
@@ -40,11 +42,13 @@ export const CommentTextArea = ({ loading, hendlePost }: Props) => {
       if (res) {
         setComment("");
         setVisibleArea(false);
-        hendlePost(res.data);
+        setLoading(false);
+        renderComments();
         return;
       }
       return undefined;
     } catch (e: unknown) {
+      setLoading(false);
       if (e instanceof AxiosError) {
         if (e.response?.data.message !== "Unauthorized")
           toast.warning(e.response?.data.message, { theme: "dark" });
@@ -54,11 +58,11 @@ export const CommentTextArea = ({ loading, hendlePost }: Props) => {
 
   return (
     <>
-      <div className="flex justify-between items-center">
-        <p className="mx-4 my-4 text-2xl text-white">Comments:</p>
+      <div className="flex justify-end items-center">
+        <p className="mx-4 my-4 text-2xl text-white"></p>
         <Plus
           size={32}
-          className="text-white mr-2 hover:text-orange-500 cursor-pointer"
+          className="text-white mr-2 hover:text-orange-500 cursor-pointer rounded-xl"
           onClick={(e) => {
             e.preventDefault();
             setVisibleArea(!visibleArea);
@@ -82,10 +86,10 @@ export const CommentTextArea = ({ loading, hendlePost }: Props) => {
                   {auth.username}
                 </h3>
                 <button
-                  className="bg-orange-500 px-2 rounded-xl cursor-pointer text-white"
+                  className="bg-orange-500 px-2 rounded-xl cursor-pointer text-white w-[121px]"
                   onClick={() => postComment(id!)}
                 >
-                  Post Comment
+                  {!loading ? "Post Comment" : <Loader />}
                 </button>
               </div>
 

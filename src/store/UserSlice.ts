@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+let data = JSON.parse(localStorage.getItem("user"));
+console.log(data.isAuth);
+
 let initialState = {
   id: null,
   avatar: null,
   username: null,
   role: null,
-  isAuth: false,
+  isAuth: data.isAuth,
 };
 // if (!localStorage.getItem("user")) {
 //   initialState = JSON.parse(localStorage.get("user"));

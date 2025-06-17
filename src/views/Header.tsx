@@ -31,6 +31,7 @@ export const Header = () => {
 
   useEffect(() => {
     getMe(dispatch, auth);
+
     setIsAuthenticated(auth?.isAuth);
   }, [auth]);
 
@@ -113,8 +114,8 @@ export const Header = () => {
           </div>
         </div>
       </div>
-      <nav className="bg-[#282a2e] pb-2 pt-1 shadow-xl shadow-white">
-        <ul className="shadow-2xl shadow-white">
+      <nav className="bg-[#282a2e] pb-2 pt-1 shadow-xl  shadow-white ">
+        <ul>
           <div className="flex space-x-8 ml-8 text-white font-semibold">
             <li className="hover:underline underline-offset-2 cursor-pointer">
               <Link to="/">Home</Link>

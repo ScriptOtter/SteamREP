@@ -1,12 +1,11 @@
 import { Pencil, X } from "lucide-react";
 import { Time } from "../data/time";
-
-import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/use-auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MdVerified } from "react-icons/md";
+import { Loader } from "./Loader";
 
 interface CommentProps {
   content: string;
@@ -16,7 +15,6 @@ interface CommentProps {
   role: string;
   username: string;
   avatar: string;
-  loading: boolean;
   steamid: string | undefined;
   deteleComment: (commentId: string) => void;
   updateComment: (commentId: string, comment: string) => void;
@@ -29,7 +27,6 @@ export const Comment = ({
   role,
   username,
   avatar,
-  loading,
   steamid,
   deteleComment,
   updateComment,
@@ -37,11 +34,15 @@ export const Comment = ({
   const auth = useAuth();
   const [comment, newComment] = useState<string>(content);
   const [updating, setUpdating] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const handleUpdate = (commentId: string) => {
+  const handleUpdate = async (commentId: string) => {
+    setLoading(true);
+    await updateComment(commentId, comment);
     setUpdating((prev) => !prev);
-    updateComment(commentId, comment);
+
+    setLoading(false);
   };
 
   const visitProfile = () => {
@@ -51,7 +52,6 @@ export const Comment = ({
 
   return (
     <div className="w-[100%]">
-      {loading && <Skeleton className="w-[250px] h-[250px]" />}
       <div className=" p-4 border-b border-gray-700">
         <div className="flex items-start">
           <img
@@ -90,7 +90,7 @@ export const Comment = ({
                       className="bg-orange-500 px-2 py-0.5 rounded-xl cursor-pointer "
                       onClick={() => handleUpdate(commentId)}
                     >
-                      Edit Comment
+                      {!loading ? "Edit Comment" : <Loader />}
                     </button>
                   )}
                   {auth.username === username && (

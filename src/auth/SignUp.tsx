@@ -8,11 +8,13 @@ import axios, { AxiosError } from "axios";
 import { API_ENDPOINTS } from "@/services/apiService";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/store/UserSlice";
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
+import { Loader } from "@/component/Loader";
 
 export const SignUp = () => {
   const [modalVerify, setModalVerify] = useState<boolean>(false);
   const [code, setCode] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   type FormData = z.infer<typeof formDataScheme>;
 
@@ -96,6 +98,7 @@ export const SignUp = () => {
     } else {
       const { isChecked, ...data } = formData;
       try {
+        setLoading(true);
         const res = await axios.post(API_ENDPOINTS.signup, data, {
           withCredentials: true,
         });
@@ -103,6 +106,7 @@ export const SignUp = () => {
           return;
         }
         if (!res.data.steamUser) {
+          setLoading(false);
           dispatch(setUser(res.data));
           setModalVerify(true);
         }
@@ -111,6 +115,7 @@ export const SignUp = () => {
           console.log("catch");
           console.log(e.response?.data.target[0]);
           toast(e.response?.data.target[0] + " already exists!");
+          setLoading(false);
         }
       }
     }
@@ -125,7 +130,7 @@ export const SignUp = () => {
       <Header />
 
       <div className="w-full h-screen bg-gray-900 flex items-center justify-center absolute ">
-        {modalVerify && (
+        {modalVerify ? (
           <div className="absolute w-[410px] h-[260px] bg-gray-800 rounded-xl outline-1 mb-6 backdrop-blur-3xl">
             <X
               onClick={() => setModalVerify(false)}
@@ -169,116 +174,119 @@ export const SignUp = () => {
               </div>
             </div>
           </div>
-        )}
-        <div className="w-[400px]">
-          <p className="text-center text-white text-2xl mb-8">
-            Sign Up to SteamRep
-          </p>
-          <form
-            className="flex flex-col space-y-4 mb-8"
-            onSubmit={handleSignUp}
-          >
-            <div className="flex justify-between mb-3">
-              <label className="text-white text-[14px]">Email</label>
-              <label className="text-red-500 text-[12px]">
-                {errors?.email?._errors}
-              </label>
-            </div>
-            <div className="flex flex-col items-center w-full">
-              <Input
-                variant="forAuth"
-                value={formData.email}
-                onChange={(e) =>
-                  setUserFormData((l) => ({
-                    ...l,
-                    email: e.target.value,
-                  }))
-                }
-              ></Input>
-            </div>
-            <div className="flex justify-between mb-3">
-              <label className="text-white text-[14px]">Username</label>
-              <label className="text-red-500 text-[12px]">
-                {errors?.username?._errors}
-              </label>
-            </div>
-            <div className="flex flex-col items-center w-full">
-              <Input
-                variant="forAuth"
-                value={formData.username}
-                onChange={(e) =>
-                  setUserFormData((l) => ({
-                    ...l,
-                    username: e.target.value,
-                  }))
-                }
-              ></Input>
-            </div>
-            <div className="flex justify-between mb-3">
-              <label className="text-white text-[14px]">Password</label>
-              <label className="text-red-500 text-[12px]">
-                {errors?.password?._errors[0]}
-              </label>
-            </div>
-            <div className="flex flex-col items-center w-full">
-              <Input
-                variant="forAuth"
-                type="password"
-                value={formData.password}
-                onChange={(e) =>
-                  setUserFormData((l) => ({
-                    ...l,
-                    password: e.target.value,
-                  }))
-                }
-              ></Input>
-            </div>
-            <div className="flex justify-between mb-3">
-              <label className="text-white text-[14px]">Confirm Password</label>
-              <label className="text-red-500 text-[12px]">
-                {errors?.confirmPassword?._errors}
-              </label>
-            </div>
-            <div className="flex flex-col items-center w-full">
-              <Input
-                variant="forAuth"
-                type="password"
-                value={formData.confirmPassword}
-                onChange={(e) =>
-                  setUserFormData((l) => ({
-                    ...l,
-                    confirmPassword: e.target.value,
-                  }))
-                }
-              ></Input>
-            </div>
-            <div className="flex justify-between">
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="mr-3"
-                  checked={formData.isChecked}
+        ) : (
+          <div className="w-[400px]">
+            <p className="text-center text-white text-2xl mb-8">
+              Sign Up to SteamRep
+            </p>
+            <form
+              className="flex flex-col space-y-4 mb-8"
+              onSubmit={handleSignUp}
+            >
+              <div className="flex justify-between mb-3">
+                <label className="text-white text-[14px]">Email</label>
+                <label className="text-red-500 text-[12px]">
+                  {errors?.email?._errors}
+                </label>
+              </div>
+              <div className="flex flex-col items-center w-full">
+                <Input
+                  variant="forAuth"
+                  value={formData.email}
                   onChange={(e) =>
                     setUserFormData((l) => ({
                       ...l,
-                      isChecked: e.target.checked,
+                      email: e.target.value,
                     }))
                   }
-                ></input>
-                <p className="text-[14px] text-white">I'm not a robot</p>
+                ></Input>
               </div>
-            </div>
-            <div className="flex justify-center items-center w-full">
-              <button
-                className="bg-indigo-600 w-1/1 p-1.5 rounded-[8px] text-white text-[14px] cursor-pointer"
-                type="submit"
-                disabled={!!errors || initialFormData.isChecked}
-              >
-                Sign In
-              </button>
-            </div>
-          </form>
-        </div>
+              <div className="flex justify-between mb-3">
+                <label className="text-white text-[14px]">Username</label>
+                <label className="text-red-500 text-[12px]">
+                  {errors?.username?._errors}
+                </label>
+              </div>
+              <div className="flex flex-col items-center w-full">
+                <Input
+                  variant="forAuth"
+                  value={formData.username}
+                  onChange={(e) =>
+                    setUserFormData((l) => ({
+                      ...l,
+                      username: e.target.value,
+                    }))
+                  }
+                ></Input>
+              </div>
+              <div className="flex justify-between mb-3">
+                <label className="text-white text-[14px]">Password</label>
+                <label className="text-red-500 text-[12px]">
+                  {errors?.password?._errors[0]}
+                </label>
+              </div>
+              <div className="flex flex-col items-center w-full">
+                <Input
+                  variant="forAuth"
+                  type="password"
+                  value={formData.password}
+                  onChange={(e) =>
+                    setUserFormData((l) => ({
+                      ...l,
+                      password: e.target.value,
+                    }))
+                  }
+                ></Input>
+              </div>
+              <div className="flex justify-between mb-3">
+                <label className="text-white text-[14px]">
+                  Confirm Password
+                </label>
+                <label className="text-red-500 text-[12px]">
+                  {errors?.confirmPassword?._errors}
+                </label>
+              </div>
+              <div className="flex flex-col items-center w-full">
+                <Input
+                  variant="forAuth"
+                  type="password"
+                  value={formData.confirmPassword}
+                  onChange={(e) =>
+                    setUserFormData((l) => ({
+                      ...l,
+                      confirmPassword: e.target.value,
+                    }))
+                  }
+                ></Input>
+              </div>
+              <div className="flex justify-between">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    className="mr-3"
+                    checked={formData.isChecked}
+                    onChange={(e) =>
+                      setUserFormData((l) => ({
+                        ...l,
+                        isChecked: e.target.checked,
+                      }))
+                    }
+                  ></input>
+                  <p className="text-[14px] text-white">I'm not a robot</p>
+                </div>
+              </div>
+              <div className="flex justify-center items-center w-full">
+                <button
+                  className="bg-indigo-600 w-full p-1.5 rounded-[8px] text-white text-[14px] cursor-pointer"
+                  type="submit"
+                  disabled={!!errors || initialFormData.isChecked}
+                >
+                  {!loading ? "Sign In" : <Loader />}
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
       </div>
     </>
   );

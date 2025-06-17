@@ -13,6 +13,7 @@ export const createApi = (dispatch: any) => {
   });
 
   // Добавляем интерсептор для обработки ошибок
+  console.log("Запрос отрравлен!");
   api.interceptors.response.use(
     (response) => response,
     async (error) => {
@@ -21,10 +22,11 @@ export const createApi = (dispatch: any) => {
       // Проверяем, что ошибка связана с истекшим токеном (например, статус 401)
       if (error.response.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true; // Устанавливаем флаг, чтобы не зациклиться
+        console.log("Истек токен!");
 
         try {
           await refreshToken(dispatch);
-
+          console.log("рефреш токен повторяем запрос!");
           // Повторяем оригинальный запрос с новым токеном
           return api(originalRequest);
         } catch (refreshError) {

@@ -4,8 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { API_ENDPOINTS } from "@/services/apiService";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { setUser } from "@/store/UserSlice";
+import { Loader } from "@/component/Loader";
 
 export const SignIn = () => {
   const [username, setUsername] = useState<string>("");
@@ -13,33 +14,46 @@ export const SignIn = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [showError, setShowError] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSignIn = async (event: React.FormEvent) => {
     event.preventDefault();
+
     if (!username || !password) {
     } else {
+      setShowError(false);
+      setError("");
+      setLoading(true);
       const data = { username: username, password: password };
-      console.log(data);
-      const res = await axios.post(API_ENDPOINTS.signin, data, {
-        withCredentials: true,
-      });
-      console.log(res.data);
-
-      if (!res.data.steamUser) {
+      try {
+        const res = await axios.post(API_ENDPOINTS.signin, data, {
+          withCredentials: true,
+        });
         console.log(res.data);
-        dispatch(setUser(res.data));
-        setUsername("");
-        setPassword("");
-        navigate("/profile/createProfile");
-      } else {
-        setShowError(true);
-        setError(res.data);
-        dispatch(setUser(res.data));
-        navigate("/profile/" + res.data.steamUser.id);
-        return;
+
+        if (!res.data.steamUser) {
+          setLoading(false);
+          console.log(res.data);
+          dispatch(setUser(res.data));
+          setUsername("");
+          setPassword("");
+          navigate("/profile/createProfile");
+        } else {
+          dispatch(setUser(res.data));
+          navigate("/profile/" + res.data.steamUser.id);
+          return;
+        }
+      } catch (e: unknown) {
+        setLoading(false);
+        if (e instanceof AxiosError) {
+          console.log(e.response?.data.message);
+          setShowError(true);
+          setError(e.response?.data.message);
+        }
+        console.log(e);
       }
     }
   };
@@ -98,10 +112,10 @@ export const SignIn = () => {
             <p className="text-red-500">{showError && error}</p>
             <div className="flex justify-center items-center w-full">
               <button
-                className="bg-indigo-600 w-1/1 p-1.5 rounded-[8px] text-white text-[14px]"
+                className="bg-indigo-600 w-1/1 p-1.5 rounded-[8px] text-white text-[14px] cursor-pointer"
                 type="submit"
               >
-                Sign In
+                {!loading ? "Sign In" : <Loader />}
               </button>
             </div>
           </form>
