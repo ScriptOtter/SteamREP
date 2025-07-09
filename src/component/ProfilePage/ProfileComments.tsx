@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { API_ENDPOINTS } from "@/services/apiService";
 import { createApi } from "@/services/axios";
 import { useDispatch } from "react-redux";
+import { PageLoader } from "../Loader";
 
 export const ProfileComments = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -23,12 +24,14 @@ export const ProfileComments = () => {
   const api = createApi(dispatch);
 
   const renderComments = async () => {
+    console.log("RENDER COMMENTS");
     const comments = await getComments(id!);
     if (comments.toString() == "") {
       setError("No comments found.");
       setShowError(true);
       setLoading(false);
     } else {
+      setShowError(false);
       setComments(comments);
       setLoading(false);
     }
@@ -73,7 +76,10 @@ export const ProfileComments = () => {
 
   return (
     <div>
-      {auth.isAuth && <CommentTextArea renderComments={renderComments} />}
+      {loading && <PageLoader />}
+      {auth.isAuth && !loading && (
+        <CommentTextArea renderComments={renderComments} />
+      )}
       {Array.isArray(comments) && !showError ? (
         comments?.map((comment: IComment) => (
           <Comment

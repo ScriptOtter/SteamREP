@@ -5,6 +5,7 @@ import { MdVerified } from "react-icons/md";
 export const ProfileLeftSide = ({ ...props }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const user: ISteamUser = props.user;
+
   return (
     <>
       <div className="ml-2 lg:w-[320px] w-[256px]">
@@ -17,7 +18,7 @@ export const ProfileLeftSide = ({ ...props }) => {
         <div className="ml-7 mt-2">
           <div className="flex items-center relative">
             <div className="text-2xl text-bold text-white mt-2 flex items-center">
-              {user?.personaName ? user?.personaName : ""}
+              {user?.personaName != "NaN" ? user?.personaName : "Unknown"}
               {user?.user?.role === "VERIFIED" && (
                 <div className="relative">
                   <MdVerified

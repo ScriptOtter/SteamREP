@@ -1,10 +1,11 @@
+import { backgroundColors } from "@/styles/colors";
 import { Header } from "../views/Header";
 
 export const HomePage = () => {
   return (
     <>
       <Header />
-      <div className="w-full h-screen bg-[#36393F]">
+      <div className={backgroundColors.main + "w-full h-screen"}>
         <div className="flex justify-center items-center">
           <div className="bg-gray-800 w-[70%] mt-6">
             <div className="text-white text-2xl">Home</div>

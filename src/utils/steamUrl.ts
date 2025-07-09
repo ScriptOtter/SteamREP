@@ -1,7 +1,7 @@
 import { IAuth } from "@/models/IAuth";
 
 export const getUserId = (str: string): string => {
-  const baseUrl = "https://steamcommunity.com/id/";
+  const baseUrl = "https://steamcommunity.com/profiles/";
 
   if (str.startsWith(baseUrl)) {
     const profileId = str.slice(baseUrl.length).replace(`//$/`, "");

@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Loader } from "./Loader";
+import { Loader, PageLoader } from "./Loader";
 
 interface Props {
   renderComments: () => void;
@@ -40,13 +40,12 @@ export const CommentTextArea = ({ renderComments }: Props) => {
         { withCredentials: true }
       );
       if (res) {
+        console.log("RES PRISHOL");
         setComment("");
         setVisibleArea(false);
         setLoading(false);
         renderComments();
-        return;
       }
-      return undefined;
     } catch (e: unknown) {
       setLoading(false);
       if (e instanceof AxiosError) {
@@ -71,7 +70,6 @@ export const CommentTextArea = ({ renderComments }: Props) => {
       </div>
 
       <div hidden={!visibleArea} className="w-[100%]">
-        {loading && <Skeleton className="w-[250px] h-[250px]" />}
         <div className=" p-4 border-b border-gray-700">
           <div className="flex items-start">
             <img

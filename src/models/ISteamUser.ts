@@ -1,4 +1,5 @@
 import { IComment } from "./IComment";
+import { ISteamBans } from "./ISteamBans";
 import { IUser } from "./IUser";
 
 export interface ISteamUser {
@@ -16,4 +17,5 @@ export interface ISteamUser {
   userId?: string;
   commentsAsRecipient?: IComment[];
   user?: IUser | undefined;
+  steamUserBans?: ISteamBans;
 }

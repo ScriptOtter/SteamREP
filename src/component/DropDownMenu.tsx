@@ -1,20 +1,28 @@
 import { useAuth } from "@/hooks/use-auth";
+import { backgroundColors } from "@/styles/colors";
 import { LogOut, Settings, User } from "lucide-react";
 import React from "react";
 
 interface DropdownMenuProps {
   onProfile: () => void;
   onLogout: () => void;
+  onSettings: () => void;
 }
 
 export const DropdownMenu: React.FC<DropdownMenuProps> = ({
   onProfile,
   onLogout,
+  onSettings,
 }) => {
   const auth = useAuth();
 
   return (
-    <div className="absolute right-0 top-8 mt-2 w-48 bg-[#363636] shadow-lg rounded-b-xl z-10 shadow-gray-600 shadow-s">
+    <div
+      className={
+        backgroundColors.main +
+        "absolute right-0 top-8 mt-2 w-48 shadow-lg rounded-b-xl z-10 shadow-gray-600 shadow-s"
+      }
+    >
       <div className="block w-full px-4 py-2 text-white">Role: {auth.role}</div>
 
       <div className="bg-gray-600 p-[0.5px]"></div>
@@ -24,10 +32,18 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({
           className="block w-full text-left px-4 py-2 text-white cursor-pointer hover:bg-gray-800"
         >
           <div className="flex items-center space-x-1 -mx-2">
-            <User size={17} /> <p className="text-[16px]">Profile</p>
+            <User size={17} />{" "}
+            {auth.role == "VERIFIED" ? (
+              <p className="text-[16px]">Profile</p>
+            ) : (
+              <p className="text-[16px] text-emerald-400">Create Profile</p>
+            )}
           </div>
         </button>
-        <button className="block w-full text-left px-4 py-2 text-white cursor-pointer hover:bg-gray-800">
+        <button
+          onClick={onSettings}
+          className="block w-full text-left px-4 py-2 text-white cursor-pointer hover:bg-gray-800"
+        >
           <div className="flex items-center space-x-1 -mx-2">
             <Settings size={17} />
             <p className="text-[16px]">Settings</p>

@@ -7,6 +7,7 @@ import { SignUp } from "./auth/SignUp.tsx";
 import { ReportPlayerPage } from "./pages/ReportPlayerPage.tsx";
 import { ProfilePage } from "./pages/ProfilePage.tsx";
 import { ToastContainer } from "react-toastify";
+import { SettingsPage } from "./pages/SettingsPage.tsx";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/auth/signup" element={<SignUp />} />
           <Route path="/auth/signin" element={<SignIn />} />
           <Route path="/report" element={<ReportPlayerPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
           <Route path="/profile/:id" element={<ProfilePage />} />
           <Route path="*" element={<NoPage />} />
         </Routes>

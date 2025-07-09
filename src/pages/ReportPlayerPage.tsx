@@ -5,6 +5,7 @@ import { MyReportsSideBar } from "@/component/ReportPage/MyReports/MyReportsSide
 import { OverwatchSideBar } from "@/component/ReportPage/OverwatchReport/OverwatchSideBar";
 import { ReviewedDemosSideBar } from "@/component/ReportPage/ReviewedDemoReport/ReviewedDemosSideBar";
 import { cn } from "@/lib/utils";
+import { backgroundColors } from "@/styles/colors";
 
 import { Header } from "@/views/Header";
 import { Eye, Plus } from "lucide-react";
@@ -39,7 +40,9 @@ export const ReportPlayerPage = () => {
     <>
       <Header />
 
-      <div className="bg-[#2F3136] h-full min-h-screen shadow-lg p-4">
+      <div
+        className={backgroundColors.main + " h-full min-h-screen shadow-lg p-4"}
+      >
         <div className="flex justify-center items-center">
           <Container>
             {/* Ограничение максимальной ширины */}

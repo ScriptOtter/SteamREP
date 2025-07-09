@@ -12,6 +12,7 @@ import { useDropDownMenu } from "@/hooks/use-drop-down-menu";
 import { removeUser } from "@/store/UserSlice";
 import { API_ENDPOINTS } from "@/services/apiService";
 import axios from "axios";
+import { backgroundColors } from "@/styles/colors";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ export const Header = () => {
 
   return (
     <>
-      <div className="bg-[#2F3136] shadow-lg ">
+      <div className={backgroundColors.header + "shadow-lg"}>
         <div className="flex justify-between items-center p-3">
           {/* Логотип */}
           <div className="flex items-center mx-8 space-x-2">
@@ -107,6 +108,7 @@ export const Header = () => {
                   <DropdownMenu
                     onProfile={() => profileURL(navigate, auth)}
                     onLogout={handleLogout}
+                    onSettings={() => navigate("/settings")}
                   />
                 )}
               </div>
@@ -114,7 +116,12 @@ export const Header = () => {
           </div>
         </div>
       </div>
-      <nav className="bg-[#282a2e] pb-2 pt-1 shadow-xl  shadow-white ">
+      <nav
+        className={
+          backgroundColors.additionalHeader +
+          "pb-2 pt-1 shadow-xl  shadow-white "
+        }
+      >
         <ul>
           <div className="flex space-x-8 ml-8 text-white font-semibold">
             <li className="hover:underline underline-offset-2 cursor-pointer">

@@ -1,15 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-let data = JSON.parse(localStorage.getItem("user"));
+let data = JSON.parse(localStorage.getItem("user")) || { isAuth: false };
+
 console.log(data.isAuth);
 
 let initialState = {
   id: null,
   avatar: null,
   username: null,
+  steamid: null,
+  country: null,
   role: null,
   isAuth: data.isAuth,
 };
+
 // if (!localStorage.getItem("user")) {
 //   initialState = JSON.parse(localStorage.get("user"));
 // }
@@ -25,6 +29,9 @@ const userSlice = createSlice({
         action.payload?.steamUser?.avatar || action.payload.avatar || null;
       state.username =
         action.payload?.steamUser?.personaName || action.payload.username;
+      state.steamid = action.payload?.steamUser?.id || action.payload.id;
+      state.country =
+        action.payload?.steamUser?.countryCode || action.payload.countryCode;
       state.role = action.payload.role;
       state.isAuth = !!action.payload.id;
 
@@ -36,7 +43,8 @@ const userSlice = createSlice({
             action.payload?.steamUser?.avatar || action.payload.avatar || null,
           username:
             action.payload?.steamUser?.personaName || action.payload?.username,
-
+          steamid: action.payload?.steamUser?.id,
+          country: action.payload?.steamUser?.countryCode,
           role: action.payload.role,
           isAuth: !!action.payload.id,
         })
@@ -46,6 +54,8 @@ const userSlice = createSlice({
       state.id = null;
       state.avatar = null;
       state.personaName = null;
+      state.steamid = null;
+      state.country = null;
       state.role = null;
       state.isAuth = false;
       localStorage.removeItem("user");

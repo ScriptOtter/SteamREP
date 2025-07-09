@@ -1,0 +1,140 @@
+import { useAuth } from "@/hooks/use-auth";
+import { cn } from "@/lib/utils";
+import { backgroundColors, color, textColors } from "@/styles/colors";
+import { rounded } from "@/styles/rounded";
+import { LogIn } from "lucide-react";
+import ReactCountryFlag from "react-country-flag";
+
+interface IProps {
+  title: string;
+  description?: string;
+  valueInput?: string;
+  placeholder?: string;
+  onClick?: () => void;
+}
+
+const handleTradeURL = () => {
+  window.location.href =
+    "https://steamcommunity.com/id/s3x4/tradeoffers/privacy#trade_offer_access_url";
+};
+
+export const SettingsProfileItems = ({ ...props }: IProps) => {
+  const auth = useAuth();
+  return (
+    <>
+      <div className="px-6 py-4">
+        <div
+          className={backgroundColors.lightMain + "w-min-max h-[1px] mb-4"}
+        ></div>
+        <div className="flex space-x-4">
+          <div className="w-[34%]">
+            <p
+              className={
+                textColors.white +
+                cn(!props.description && "text-red-200") +
+                "text-s"
+              }
+            >
+              {props.title}
+            </p>
+            <p className={textColors.gray + "text-xs"}>{props.description}</p>
+          </div>
+          {props.title != "Your country" ? (
+            <div
+              className={
+                backgroundColors.lightMain +
+                rounded.small +
+                "lg:w-full w-[420px] " +
+                cn(props.onClick ? textColors.white : textColors.gray)
+              }
+            >
+              <input
+                placeholder={props.placeholder}
+                value={props.valueInput}
+                className={
+                  "py-4 px-4 w-full h-full hover:outline-2 hover:rounded-s hover:outline-" +
+                  color.gray
+                }
+              />
+            </div>
+          ) : auth.country && auth.steamid ? (
+            <div className="flex items-center space-x-2 ">
+              <ReactCountryFlag
+                countryCode={auth.country || ""}
+                svg
+                style={{
+                  width: "1.5em",
+                  height: "1.5em",
+                }}
+                aria-label=""
+              />{" "}
+              <p className={textColors.white + "text-xl"}>{auth.country}</p>
+            </div>
+          ) : (
+            <div
+              className={
+                rounded.small +
+                "flex justify-center items-center space-x-2 bg-blue-500 px-2"
+              }
+            >
+              <button className="cursor-pointer">
+                <p className="text-xl text-white">Login via Steam</p>
+              </button>
+              <img
+                className="w-6 h-6"
+                src="https://cloud.cybershoke.net/img/socials/steam.svg"
+              />
+            </div>
+          )}
+        </div>
+        {props.title == "Your Trade-Link" && (
+          <button
+            onClick={handleTradeURL}
+            className={
+              textColors.lightGray +
+              cn(!props.description && "text-red-200") +
+              "text-s mt-0.5 underline underline-offset-2 cursor-pointer"
+            }
+          >
+            Find Trade-Link
+          </button>
+        )}
+
+        {props.onClick &&
+          props.title != "Your email" &&
+          props.title != "Your country" && (
+            <div className="mt-4">
+              <button
+                className={
+                  textColors.white +
+                  backgroundColors.lightMain +
+                  rounded.small +
+                  "items-center w-full text-s p-1"
+                }
+              >
+                Save Changes
+              </button>
+            </div>
+          )}
+
+        {props.title == "Your email" && (
+          <div className="mt-4">
+            <div
+              className={
+                backgroundColors.lightMain +
+                rounded.small +
+                "w-full text-s p-1 text-center"
+              }
+            >
+              {auth.role == "NOT_ACTIVE" ? (
+                <p className="text-red-400">Email not confirmed!</p>
+              ) : (
+                <p className="text-emerald-400">Email Verified!</p>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </>
+  );
+};

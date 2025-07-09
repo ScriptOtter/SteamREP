@@ -12,11 +12,11 @@ export const SteamInformation = (user: ISteamUser) => {
     steamId3,
     steamIdHex,
     countryCode,
+    steamUserBans,
   }: ISteamUser = user?.user || {};
-
+  console.log(steamUserBans);
   return (
     <div className="mx-4 my-4 text-xl text-white">
-      {" "}
       <div className="mb-3">STEAM ID’S:</div>
       <div className="space-y-1.5 mb-3">
         <div className="flex space-x-1">
@@ -44,11 +44,11 @@ export const SteamInformation = (user: ISteamUser) => {
       <div className="mb-3">
         <div className="flex space-x-1">
           <p className="text-gray-500 lg:w-[20%] w-[30%]"> Real Name:</p>
-          <p>{realname}</p>
+          <p>{realname ? realname : "NOT STATED"}</p>
         </div>
         <div className="flex space-x-1">
           <p className="text-gray-500 lg:w-[20%] w-[30%]"> Steam Level:</p>
-          <p>{level}</p>
+          <p>{level != "N/A" ? level : "0"}</p>
         </div>
         {countryCode && (
           <div className="flex space-x-1">
@@ -70,26 +70,44 @@ export const SteamInformation = (user: ISteamUser) => {
         )}
         <div className="flex space-x-1">
           <p className="text-gray-500 lg:w-[20%] w-[30%]"> Joined Steam:</p>
-          <p>{timeCreated}</p>
+          <p>{timeCreated != "undefined NaN NaN" ? timeCreated : "Unknown"}</p>
         </div>
       </div>
       <div className="mb-3">Steam Bans & Restrictions:</div>
       <div className="mb-3">
         <div className="flex space-x-1">
           <p className="text-gray-500 lg:w-[20%] w-[30%]"> Game Bans:</p>
-          <p className="text-red-500">Banned</p>
+
+          {steamUserBans?.gameBans ? (
+            <p className="text-red-500"> Banned </p>
+          ) : (
+            <p className="text-emerald-400"> In Good Standing </p>
+          )}
         </div>
+
         <div className="flex space-x-1">
           <p className="text-gray-500 lg:w-[20%] w-[30%]"> VAC Bans:</p>
-          <p className="text-emerald-400">In Good Standing</p>
+          {steamUserBans?.vacBanned ? (
+            <p className="text-red-500"> Banned </p>
+          ) : (
+            <p className="text-emerald-400"> In Good Standing </p>
+          )}
         </div>
         <div className="flex space-x-1">
           <p className="text-gray-500 lg:w-[20%] w-[30%]"> Community Bans:</p>
-          <p className="text-emerald-400">In Good Standing</p>
+          {steamUserBans?.communityBanned ? (
+            <p className="text-red-500"> Banned </p>
+          ) : (
+            <p className="text-emerald-400"> In Good Standing </p>
+          )}
         </div>
         <div className="flex space-x-1">
           <p className="text-gray-500 lg:w-[20%] w-[30%]"> Trade Bans:</p>
-          <p className="text-emerald-400">In Good Standing</p>
+          {steamUserBans?.economyBan != "none" ? (
+            <p className="text-red-500"> Banned </p>
+          ) : (
+            <p className="text-emerald-400"> In Good Standing </p>
+          )}
         </div>
       </div>
     </div>

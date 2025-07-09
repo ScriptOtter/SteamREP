@@ -3,7 +3,7 @@ import { RootState } from "@/store/store"; // Импортируйте RootState
 import { IAuth } from "@/models/IAuth";
 
 export function useAuth(): IAuth {
-  const { id, username, avatar, isAuth, role } = useSelector(
+  const { id, username, avatar, steamid, country, isAuth, role } = useSelector(
     (state: RootState) => state.user
   );
 
@@ -12,6 +12,8 @@ export function useAuth(): IAuth {
     id,
     avatar,
     username,
+    steamid,
+    country,
     role,
   };
 }

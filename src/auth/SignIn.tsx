@@ -40,10 +40,10 @@ export const SignIn = () => {
           dispatch(setUser(res.data));
           setUsername("");
           setPassword("");
-          navigate("/profile/createProfile");
+          navigate("/");
         } else {
           dispatch(setUser(res.data));
-          navigate("/profile/" + res.data.steamUser.id);
+          navigate("/");
           return;
         }
       } catch (e: unknown) {

@@ -10,6 +10,8 @@ import { Container } from "@/component/container.tsx";
 import { cn } from "@/lib/utils.ts";
 import { ProfileComments } from "@/component/ProfilePage/ProfileComments.tsx";
 import { ProfileCreate } from "@/component/ProfilePage/ProfileCreate.tsx";
+import { PageLoader } from "@/component/Loader.tsx";
+import { backgroundColors } from "@/styles/colors.ts";
 
 export interface RouteParams {
   [key: string]: string | undefined;
@@ -76,16 +78,35 @@ export const ProfilePage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    setLoading(true);
+  }, [location.pathname]);
   return (
     <>
       <Header />
       {id !== "createProfile" ? (
-        <div className="h-full min-h-screen pt-8 bg-[#2F3136] flex justify-center">
+        <div
+          className={
+            backgroundColors.main +
+            "h-full min-h-screen pt-8 flex justify-center"
+          }
+        >
           <Container>
             {!showError ? (
               <div className="flex">
-                <ProfileLeftSide user={steamUser} />
-                <div className="bg-[#282a2e] w-[75%] mx-4 my-2 rounded">
+                {loading ? (
+                  <div className="ml-2 lg:w-[320px] w-[256px]">
+                    <div className="lg:w-[280px] w-[225px] lg:h-[280px] h-[225px] rounded-full ring-1 ring-gray-500 animate-pulse" />
+                  </div>
+                ) : (
+                  <ProfileLeftSide user={steamUser} />
+                )}
+
+                <div
+                  className={
+                    backgroundColors.darkMain + "w-[75%] mx-4 my-2 rounded"
+                  }
+                >
                   <nav className="flex items-center mx-4 text-white text-xl my-2">
                     <div className="flex space-x-3">
                       <div
@@ -140,9 +161,12 @@ export const ProfilePage = () => {
                       </div>
                     </div>
                   </nav>
-                  {currentPage === "SteamInformation" && (
-                    <SteamInformation user={steamUser} />
-                  )}
+                  {currentPage === "SteamInformation" &&
+                    (loading ? (
+                      <PageLoader />
+                    ) : (
+                      <SteamInformation user={steamUser} />
+                    ))}
                   {currentPage === "Comments" && <ProfileComments />}
                 </div>
               </div>
