@@ -8,6 +8,7 @@ let initialState = {
   id: null,
   avatar: null,
   username: null,
+  email: null,
   steamid: null,
   country: null,
   role: null,
@@ -29,6 +30,7 @@ const userSlice = createSlice({
         action.payload?.steamUser?.avatar || action.payload.avatar || null;
       state.username =
         action.payload?.steamUser?.personaName || action.payload.username;
+      state.email = action.payload?.email;
       state.steamid = action.payload?.steamUser?.id || action.payload.id;
       state.country =
         action.payload?.steamUser?.countryCode || action.payload.countryCode;
@@ -43,6 +45,7 @@ const userSlice = createSlice({
             action.payload?.steamUser?.avatar || action.payload.avatar || null,
           username:
             action.payload?.steamUser?.personaName || action.payload?.username,
+          email: action.payload?.email,
           steamid: action.payload?.steamUser?.id,
           country: action.payload?.steamUser?.countryCode,
           role: action.payload.role,
@@ -54,6 +57,7 @@ const userSlice = createSlice({
       state.id = null;
       state.avatar = null;
       state.personaName = null;
+      state.email = null;
       state.steamid = null;
       state.country = null;
       state.role = null;

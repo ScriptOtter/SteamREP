@@ -79,7 +79,10 @@ export const SteamInformation = (user: ISteamUser) => {
           <p className="text-gray-500 lg:w-[20%] w-[30%]"> Game Bans:</p>
 
           {steamUserBans?.gameBans ? (
-            <p className="text-red-500"> Banned </p>
+            <div className="flex space-x-1">
+              <p className="text-red-500"> Banned </p>{" "}
+              <p className="text-red-500"> ({steamUserBans.gameBans} game) </p>{" "}
+            </div>
           ) : (
             <p className="text-emerald-400"> In Good Standing </p>
           )}
@@ -88,7 +91,10 @@ export const SteamInformation = (user: ISteamUser) => {
         <div className="flex space-x-1">
           <p className="text-gray-500 lg:w-[20%] w-[30%]"> VAC Bans:</p>
           {steamUserBans?.vacBanned ? (
-            <p className="text-red-500"> Banned </p>
+            <div className="flex space-x-1">
+              <p className="text-red-500"> Banned </p>{" "}
+              <p className="text-red-500"> ({steamUserBans.vacBans} game) </p>{" "}
+            </div>
           ) : (
             <p className="text-emerald-400"> In Good Standing </p>
           )}
