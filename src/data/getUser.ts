@@ -49,3 +49,10 @@ export const getSteamUser = async (id: string): Promise<ISteamUser> => {
   );
   return res.data;
 };
+
+export const getViewers = async (id: string): Promise<number> => {
+  const res: AxiosResponse<number> = await axios.get(
+    API_ENDPOINTS.getSteamViewers + id
+  );
+  return res.data;
+};

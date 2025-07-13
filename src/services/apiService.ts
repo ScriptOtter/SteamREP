@@ -4,6 +4,7 @@ export const API_ENDPOINTS = {
   API_URL: URL,
   signup: URL + "auth/signup",
   emailVerify: URL + "auth/emailVerify/",
+  staemVerify: URL + "steam/verify",
   signin: URL + "auth/signin",
   logout: URL + "auth/logout",
   refresh: URL + "auth/refresh",
@@ -12,6 +13,7 @@ export const API_ENDPOINTS = {
   commentUpdate: URL + "comment/",
   comments: URL + "comments/",
   steamid: URL + "steam/",
+  getSteamViewers: URL + "getViewers/",
   profile: URL + "profile",
   me: URL + "profile/me",
   createReport: URL + "createReport",
@@ -19,4 +21,5 @@ export const API_ENDPOINTS = {
   postVerdict: URL + "postVerdict/",
   getMyVerdicts: URL + "getMyVerdicts",
   getMyReports: URL + "getMyReports",
+  patchSocialLinks: URL + "social-links/update",
 };

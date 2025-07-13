@@ -60,7 +60,6 @@ export const Header = () => {
                 value={searchInput}
                 onChange={(e) => {
                   setSearchInput(e.target.value);
-                  console.log(searchInput);
                 }}
                 type="text"
                 placeholder="Search for a profile (Steam ID / Steam Profile Link / Custom Steam URL)"

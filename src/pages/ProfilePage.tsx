@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { Header } from "../views/Header";
 import { useEffect, useState } from "react";
-import { getSteamUser } from "../data/getUser.ts";
+import { getSteamUser, getViewers } from "../data/getUser.ts";
 import { ISteamUser } from "../models/ISteamUser.ts";
 import { SteamInformation } from "../component/ProfilePage/SteamInformation.tsx";
 import axios, { AxiosError } from "axios";
@@ -24,12 +24,14 @@ export const ProfilePage = () => {
   const [showError, setShowError] = useState<boolean>(false);
   const { id } = useParams<RouteParams>();
   const [steamUser, steamSteamUser] = useState<ISteamUser>();
+  const [viewers, setViewers] = useState<number>(0);
 
   useEffect(() => {
     const fetchData = async (id: string) => {
       try {
         if (id !== "createProfile") {
           const res = await getSteamUser(id);
+
           console.log(res);
           if (!res.id) {
             console.log("User not found");
@@ -38,6 +40,8 @@ export const ProfilePage = () => {
             setLoading(false);
             return;
           }
+          const viewers = await getViewers(res.id);
+          setViewers(viewers);
           steamSteamUser(res);
 
           setShowError(false);
@@ -133,6 +137,9 @@ export const ProfilePage = () => {
                         }}
                       >
                         Comments
+                      </div>
+                      <div>
+                        <p>{viewers} views</p>
                       </div>
                       <div
                         className={cn(

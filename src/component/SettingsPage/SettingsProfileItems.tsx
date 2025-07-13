@@ -3,7 +3,6 @@ import { steamVerification } from "@/lib/steamVerification";
 import { cn } from "@/lib/utils";
 import { backgroundColors, color, textColors } from "@/styles/colors";
 import { rounded } from "@/styles/rounded";
-import { LogIn } from "lucide-react";
 import ReactCountryFlag from "react-country-flag";
 
 interface IProps {
@@ -23,6 +22,7 @@ const handleTradeURL = () => {
 export const SettingsProfileItems = ({ ...props }: IProps) => {
   const auth = useAuth();
   console.log(props);
+
   return (
     <>
       <div className="px-6 py-4">
