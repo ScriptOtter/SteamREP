@@ -15,20 +15,20 @@ export const DropdownMenu = ({ ...props }) => {
         <div
           className={
             backgroundColors.main +
-            "absolute rounded-b-2xl shadow-white ml-2 right-2.5 -top-2.5 w-full"
+            "absolute ml-2 -right-1 -top-2 w-44 rounded-xl outline-1"
           }
         >
           <div
             onClick={() => closeMenu()}
             className={
-              "flex items-center cursor-pointer mb-1 p-1 rounded-xl hover:bg-[#2F3136]"
+              "flex items-center cursor-pointer mb-2 p-1 rounded-xl hover:outline-2"
             }
           >
             {auth.avatar && (
               <img
                 src={auth.avatar}
                 alt="Avatar"
-                className="w-10 h-10 rounded-full mr-2 "
+                className="w-12 h-12 rounded-full mr-2"
               />
             )}
             <div>
@@ -49,12 +49,12 @@ export const DropdownMenu = ({ ...props }) => {
             </span>
           </div>
 
-          <div className="bg-gray-600 p-[0.5px]"></div>
-          <div className={"mb-1"}>
+          <div className="bg-gray-600 p-[1px]"></div>
+          <div className="mb-1">
             <button
               onClick={onProfile}
               className={
-                "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-[#2F3136]"
+                "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-[#282a2e]"
               }
             >
               <div className="flex items-center space-x-1 -mx-2">
@@ -71,7 +71,7 @@ export const DropdownMenu = ({ ...props }) => {
             <button
               onClick={() => navigate("/settings")}
               className={
-                "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-[#2F3136]"
+                "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-[#282a2e]"
               }
             >
               <div className="flex items-center space-x-1 -mx-2">
@@ -82,8 +82,7 @@ export const DropdownMenu = ({ ...props }) => {
             <button
               onClick={handleLogout}
               className={
-                "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:w" +
-                backgroundColors.main
+                "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-[#282a2e]"
               }
             >
               <div className="flex items-center space-x-1 -mx-2">
@@ -94,6 +93,7 @@ export const DropdownMenu = ({ ...props }) => {
           </div>
         </div>
       </div>
+      {!auth.isAuth && <div className="bg-gray-600 p-[1px]"></div>}
     </>
   );
 };

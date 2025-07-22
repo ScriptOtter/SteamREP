@@ -1,5 +1,3 @@
-import { Skeleton } from "@/components/ui/skeleton";
-
 import { useAuth } from "@/hooks/use-auth";
 import { RouteParams } from "@/pages/ProfilePage";
 import { API_ENDPOINTS } from "@/services/apiService";
@@ -10,7 +8,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Loader, PageLoader } from "./Loader";
+import { Loader } from "./Loader";
 
 interface Props {
   renderComments: () => void;

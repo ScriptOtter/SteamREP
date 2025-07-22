@@ -64,19 +64,22 @@ export const SettingsProfileItems = ({ ...props }: IProps) => {
           )}
           {props.title == "Your country" && auth.steamid && (
             <div className="flex items-center space-x-2 ">
-              <ReactCountryFlag
-                countryCode={auth.country || ""}
-                svg
-                style={{
-                  width: "1.5em",
-                  height: "1.5em",
-                }}
-                aria-label=""
-              />{" "}
+              {auth.country && (
+                <ReactCountryFlag
+                  countryCode={auth.country || ""}
+                  svg
+                  style={{
+                    width: "1.5em",
+                    height: "1.5em",
+                  }}
+                  aria-label=""
+                />
+              )}
+
               <p className={textColors.white + "text-xl"}>{auth.country}</p>
             </div>
-          )}{" "}
-          {props.title == "Your country" && !auth.steamid && (
+          )}
+          {props.title == "Your country" && !auth.country && (
             <div
               className={
                 rounded.small +

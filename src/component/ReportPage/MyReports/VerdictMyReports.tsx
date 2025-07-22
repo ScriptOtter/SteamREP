@@ -8,7 +8,7 @@ import { Input } from "../../Input";
 export const VerdictMyReports = ({
   youtubeLink,
   demoLink,
-  comment,
+  //comment,
   createdAt,
   author,
   recipient,

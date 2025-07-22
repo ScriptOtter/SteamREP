@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-let data = JSON.parse(localStorage.getItem("user")) || { isAuth: false };
+let data = JSON.parse(localStorage.getItem("user")!) || { isAuth: false };
 
 console.log(data.isAuth);
 

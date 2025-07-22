@@ -9,7 +9,6 @@ import { useDispatch } from "react-redux";
 import { createApi } from "@/services/axios";
 import { API_ENDPOINTS } from "@/services/apiService";
 import { z } from "zod";
-import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { useDebounce } from "@/hooks/use-debounce";
 
@@ -134,7 +133,6 @@ export const CreateReportSideBar = () => {
   };
 
   const errors = showErrors ? validate() : undefined;
-  const navigate = useNavigate();
 
   const [nickname, setNickname] = useState<string>("");
   const [visible, setVisible] = useState<boolean>(false);

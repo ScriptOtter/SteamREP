@@ -1,4 +1,4 @@
-import { backgroundColors, color, textColors } from "@/styles/colors";
+import { backgroundColors, textColors } from "@/styles/colors";
 import { SettingsProfileItems } from "./SettingsProfileItems";
 import { useAuth } from "@/hooks/use-auth";
 import { useEffect } from "react";
@@ -25,7 +25,11 @@ export const SettingsProfile = () => {
           title="Unique SteamREP URL"
           disabled={true}
           description="Your Personal link to your SteamREP Profile"
-          valueInput={"https://steamrep.help/profile/" + auth.id}
+          valueInput={
+            auth.role == "ACTIVE"
+              ? "https://steamrep.help/profile/" + auth.id
+              : "You need to connect Steam Account"
+          }
         />
         <SettingsProfileItems
           key={2}

@@ -127,7 +127,7 @@ export const Header = () => {
                   <DropdownMenu
                     closeMenu={() => toggleMenu()}
                     onProfile={() => profileURL(navigate, auth)}
-                    onLogout={handleLogout}
+                    handleLogout={handleLogout}
                     onSettings={() => navigate("/settings")}
                   />
                 )}

@@ -8,7 +8,7 @@ import axios, { AxiosError } from "axios";
 import { API_ENDPOINTS } from "@/services/apiService";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/store/UserSlice";
-import { Loader2, X } from "lucide-react";
+import { X } from "lucide-react";
 import { Loader } from "@/component/Loader";
 
 export const SignUp = () => {
