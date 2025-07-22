@@ -20,7 +20,7 @@ export const SteamInformation = (user: ISteamUser) => {
       <div className="mb-3">STEAM ID’S:</div>
       <div className="space-y-1.5 mb-3">
         <div className="flex space-x-1">
-          <p className="text-gray-500 lg:w-[20%] md:w-[30%] ">SteamID:</p>
+          <p className="text-gray-500 lg:w-[20%] w-[30%] ">SteamID:</p>
           <p>{id}</p>
         </div>
         <div className="flex space-x-1">
