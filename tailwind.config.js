@@ -2,25 +2,18 @@
 module.exports = {
   content: [
     "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}", // Добавьте здесь нужные расширения
+    "./src/**/*.{js,ts,jsx,tsx}", // Добавьте здесь нужные расширения
   ],
   theme: {
     extend: {
-      main_dark_gray: "#252629",
-      main_light_gray: "",
-
-      main_dark_orange: "",
-      main_light_orange: "",
-
-      main_dark_blue: "",
-      main_light_blue: "",
-
-      main_dark_red: "",
-      main_light_red: "",
-
-      main_dark_black: "",
-      main_light_black: "",
+      screens: {
+        sm: "640px", // изначально 640px + 10px = 650px
+        md: "824px", // изначально 768px + 10px = 778px
+        lg: "1024px", // оставляем по умолчанию или меняем при необходимости
+        xl: "1280px", // изначально 1280px + 10px = 1290px
+      },
     },
   },
+
   plugins: [],
 };

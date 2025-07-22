@@ -76,15 +76,24 @@ export const Comment = ({
               <div className="text-sm text-white">
                 <div className="flex items-center space-x-2">
                   {!updating ? (
-                    <div>
-                      <span>Posted: {Time(createdAt)}</span>
-                      {createdAt !== updatedAt && (
-                        <span className="mx-2">|</span>
-                      )}
-                      {createdAt !== updatedAt && (
-                        <span>Updated: {Time(updatedAt)}</span>
-                      )}
-                    </div>
+                    <>
+                      <div className="hidden md:flex md:visible">
+                        <span>Posted: {Time(createdAt)}</span>
+                        {createdAt !== updatedAt && (
+                          <span className="mx-2">|</span>
+                        )}
+                        {createdAt !== updatedAt && (
+                          <span>Updated: {Time(updatedAt)}</span>
+                        )}
+                      </div>
+                      <div className="flex md:hidden">
+                        {createdAt == updatedAt ? (
+                          <span>Posted: {Time(createdAt)}</span>
+                        ) : (
+                          <span>Updated: {Time(updatedAt)}</span>
+                        )}
+                      </div>
+                    </>
                   ) : (
                     <button
                       className="bg-orange-500 px-2 py-0.5 rounded-xl cursor-pointer "

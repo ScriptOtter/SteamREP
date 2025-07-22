@@ -1,51 +1,60 @@
 import { backgroundColors } from "@/styles/colors";
 import { Header } from "../views/Header";
+import { Container } from "@/component/container";
+import { SiteFeature } from "@/component/HomePage/SiteFeature";
 
 export const HomePage = () => {
   return (
     <>
       <Header />
-      <div className={backgroundColors.main + "w-full h-screen"}>
-        <div className="flex justify-center items-center">
-          <div className="bg-gray-800 w-[70%] mt-6">
-            <div className="text-white text-2xl">Home</div>
-            <div>
-              <p className="text-white text-xl">
-                Check Steam User Reputation: Report Cheats and Fraud.
-              </p>
-            </div>
-            <div className="flex flex-row justify-between mx-8 space-x-8 pt-4">
-              <div className="bg-amber-200 rounded-xl py-4 w-full">
-                <p>Отслеживай игроков</p>
-                <p>
-                  Вы можете закрепить профиль игроков и отслеживать их в
-                  реальном времени
+      <div
+        className={
+          backgroundColors.main + "h-full min-h-screen pt-8 flex justify-center"
+        }
+      >
+        <Container>
+          <div className="flex justify-center items-center">
+            <div className="mx-1 md:mx-4">
+              <div className="text-white">
+                <p className=" text-4xl text-center mt-4">STEAM REP</p>
+                <p className="text-3xl text-center mt-2">Welcome</p>
+
+                <p className="text-xl text-center mt-2">
+                  Become a part of our community. Influence the reputation of
+                  Steam users: report Cheats and Fraud.
                 </p>
               </div>
-              <div className="bg-amber-200 rounded-xl py-4 w-full">
+
+              <SiteFeature
+                title="Узнавай все данные Steam"
+                description="Сайт SteamREP позволяет отображать актуальную публичную и информацию Steam, Steam Bans and Restrictions, а также количество просмотров вашего профиля через наш сайт."
+                image="/src/assets/ProfileFeature.png"
+              />
+              <SiteFeature
+                title="Оставляй комментарии пользователям"
+                description="Авторизованные пользователи сайта SteamREP имеют возможность оставлять комментарии любому Steam пользователю, даже если этот Steam профиль скрыт."
+                image="/src/assets/CommentFeature.png"
+              />
+              <SiteFeature
+                title="Система Патруля CS2"
+                description="Пользователи SteamREP могут отсматривать и загружать свои CS2 demo в нашу систему для помощи комьюнити в поиске читеров. Каждый пользователь имеет право оставить свой вердикт о подозреваемом для дальнейшего опубликования Steam аккаунта."
+                image="/src/assets/ReportFeature.png"
+              />
+              <SiteFeature
+                title=""
+                description=" Вы можете закрепить профиль игроков и отслеживать их в
+                    реальном времени"
+              />
+              <div>
                 <p>Помогай комьюнити</p>
-                <p>Пиши комментарии на людей</p>
+                <div>Оставляй репорты на игроков</div>
+                <div>Помечай скамеров</div>
               </div>
-            </div>
-            <div className="flex flex-row justify-between mx-8 space-x-8 pt-4">
-              <div className="bg-amber-200 rounded-xl py-4 w-full">
-                <p>Отслеживай репорты</p>
-                <p>Отслеживай репорты на игроков в реальном времени</p>
-              </div>
-              <div className="bg-amber-200 rounded-xl py-4 w-full">
-                <p>Titile</p>
-                <p>Description</p>
-              </div>
-            </div>
-            <div>
-              <p>Помогай комьюнити</p>
-              <div>Оставляй репорты на игроков</div>
-              <div>Помечай скамеров</div>
             </div>
           </div>
-        </div>
-        <footer>asdsadsa</footer>
+        </Container>
       </div>
+      <footer>asdsadsa</footer>
     </>
   );
 };

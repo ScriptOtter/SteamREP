@@ -75,7 +75,7 @@ export const ProfileComments = () => {
   }, []);
 
   return (
-    <div>
+    <div className={error && "pb-[100px]"}>
       {loading && <PageLoader />}
       {auth.isAuth && !loading && (
         <CommentTextArea renderComments={renderComments} />

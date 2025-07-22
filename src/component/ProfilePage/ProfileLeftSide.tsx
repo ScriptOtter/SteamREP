@@ -1,10 +1,12 @@
 import { ISteamUser } from "@/models/ISteamUser";
+import { textColors } from "@/styles/colors";
 import { useState } from "react";
 import { MdVerified } from "react-icons/md";
 
 export const ProfileLeftSide = ({ ...props }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const user: ISteamUser = props.user;
+  const viewers = props.viewers;
 
   return (
     <>
@@ -15,10 +17,13 @@ export const ProfileLeftSide = ({ ...props }) => {
             className="inline-block h-[95%] w-[95%] rounded-full ring-1 ring-gray-500"
           />
         </div>
-        <div className="ml-7 mt-2">
-          <div className="flex items-center relative">
+        <div className="md:ml-7 md:mt-2">
+          <div className="flex items-center relative justify-center md:justify-start">
             <div className="text-2xl text-bold text-white mt-2 flex items-center">
-              {user?.personaName != "NaN" ? user?.personaName : "Unknown"}
+              <p className="">
+                {user?.personaName != "NaN" ? user?.personaName : "Unknown"}
+              </p>
+
               {user?.user?.role === "VERIFIED" && (
                 <div className="relative">
                   <MdVerified
@@ -42,10 +47,18 @@ export const ProfileLeftSide = ({ ...props }) => {
               )}
             </div>
           </div>
-
-          <p className="text-s text-bold text-white mt-1">TG </p>
-
-          <p className="text-s text-bold text-white mt-1">Youtube</p>
+          <p className={textColors.gray + "text-center md:text-left mb-2"}>
+            {viewers} views
+          </p>
+          <p className="text-white text-center md:text-left text-xl">
+            Social Links:
+          </p>
+          <div className="flex flex-col justify-center text-center md:text-left">
+            <p className="text-s text-bold text-white mt-1">TG </p>
+            <p className="text-s text-bold text-white mt-1">Youtube</p>
+            <p className="text-s text-bold text-white mt-1">Twitch </p>
+            <p className="text-s text-bold text-white mt-1">Discord</p>
+          </div>
         </div>
       </div>
     </>

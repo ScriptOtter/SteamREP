@@ -97,18 +97,19 @@ export const ProfilePage = () => {
         >
           <Container>
             {!showError ? (
-              <div className="flex">
+              <div className="flex flex-col md:flex-row items-center md:items-start">
                 {loading ? (
                   <div className="ml-2 lg:w-[320px] w-[256px]">
                     <div className="lg:w-[280px] w-[225px] lg:h-[280px] h-[225px] rounded-full ring-1 ring-gray-500 animate-pulse" />
                   </div>
                 ) : (
-                  <ProfileLeftSide user={steamUser} />
+                  <ProfileLeftSide user={steamUser} viewers={viewers} />
                 )}
 
                 <div
                   className={
-                    backgroundColors.darkMain + "w-[75%] mx-4 my-2 rounded"
+                    backgroundColors.darkMain +
+                    "w-[98%] md:w-[75%] h-auto mx-4 my-2 rounded"
                   }
                 >
                   <nav className="flex items-center mx-4 text-white text-xl my-2">
@@ -138,9 +139,7 @@ export const ProfilePage = () => {
                       >
                         Comments
                       </div>
-                      <div>
-                        <p>{viewers} views</p>
-                      </div>
+
                       <div
                         className={cn(
                           currentPage === "CS2Stats" && "text-orange-500",

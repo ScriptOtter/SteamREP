@@ -37,7 +37,7 @@ export const SteamInformation = (user: ISteamUser) => {
         </div>
         <div className="flex space-x-1">
           <p className="text-gray-500 lg:w-[20%] w-[30%]"> Custom URL:</p>
-          <p>{profileUrl}</p>
+          <p className="">{profileUrl}</p>
         </div>
       </div>
       <div className="mb-3">GENERAL:</div>

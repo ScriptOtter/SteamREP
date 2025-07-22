@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "@/hooks/use-auth.ts";
 import { ProfileButton } from "@/component/profileButton";
-import DropdownMenu from "@/component/DropDownMenu.tsx";
-import { BellDot, Bookmark, CircleHelp, Search } from "lucide-react";
+import { BellDot, Bookmark, CircleHelp, LogIn, Search } from "lucide-react";
 import { getMe } from "@/data/getUser.ts";
 import { getUserId, profileURL } from "@/utils/steamUrl";
 import { useDropDownMenu } from "@/hooks/use-drop-down-menu";
@@ -13,6 +12,10 @@ import { removeUser } from "@/store/UserSlice";
 import { API_ENDPOINTS } from "@/services/apiService";
 import axios from "axios";
 import { backgroundColors } from "@/styles/colors";
+import { MenuBurger } from "@/component/Header/MenuBurger";
+import { NavigationMenu } from "@/component/Header/NavigationMenu";
+import { fontSize } from "@/styles/font";
+import { DropdownMenu } from "@/component/DropDownMenu";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -41,7 +44,7 @@ export const Header = () => {
       <div className={backgroundColors.header + "shadow-lg"}>
         <div className="flex justify-between items-center p-3">
           {/* Логотип */}
-          <div className="flex items-center mx-8 space-x-2">
+          <div className="flex items-center md:mx-2 lg:mx-8 space-x-2 mr-4">
             <CircleHelp className="size-9" />
             <Link to="/" className="text-white text-2xl font-bold">
               SteamREP
@@ -49,8 +52,8 @@ export const Header = () => {
           </div>
 
           {/* Поиск */}
-          <div className="flex grow mx-8 ">
-            <div className="w-full bg-[#282a2e] rounded-2xl flex items-center p-1.5">
+          <div className="flex grow md:mx-8 mr-4">
+            <div className="w-[95%] bg-[#282a2e] rounded-2xl flex items-center p-1.5">
               <FaSearch className="text-gray-600 mr-2" />
               <input
                 onKeyDown={(event) => {
@@ -78,8 +81,18 @@ export const Header = () => {
             </div>
           </div>
 
+          {/* MenuBurger */}
+          <div className="text-white md:hidden">
+            <MenuBurger
+              isAuthenticated={isAuthenticated}
+              onProfile={() => profileURL(navigate, auth)}
+              handleLogout={handleLogout}
+              onSettings={() => navigate("/settings")}
+            />
+          </div>
+
           {/* Уведомления */}
-          <div className="flex justify-center items-center space-x-6 mx-1">
+          <div className="lg:flex justify-center items-center space-x-6 mx-1 hidden lg:visible">
             <div>
               <Bookmark className="text-[#F04747]" />
             </div>
@@ -89,14 +102,21 @@ export const Header = () => {
           </div>
 
           {/* Профиль */}
-          <div className="flex items-center mx-4">
+          <div className="md:flex items-center mx-4 hidden md:visible">
             {!isAuthenticated ? (
-              <Link
-                to="/auth/signin"
-                className="text-white cursor-pointer hover:underline "
+              <div
+                className={
+                  fontSize.medium + "flex items-center space-x-2 text-white"
+                }
               >
-                Sign In
-              </Link>
+                <LogIn size={24} />{" "}
+                <Link
+                  to="/auth/signin"
+                  className="text-white cursor-pointer hover:underline"
+                >
+                  Sign In
+                </Link>{" "}
+              </div>
             ) : (
               <div
                 className="relative flex items-center text-white"
@@ -105,6 +125,7 @@ export const Header = () => {
                 <ProfileButton onToggleMenu={toggleMenu} />
                 {isMenuOpen && (
                   <DropdownMenu
+                    closeMenu={() => toggleMenu()}
                     onProfile={() => profileURL(navigate, auth)}
                     onLogout={handleLogout}
                     onSettings={() => navigate("/settings")}
@@ -115,39 +136,7 @@ export const Header = () => {
           </div>
         </div>
       </div>
-      <nav
-        className={
-          backgroundColors.additionalHeader +
-          "pb-2 pt-1 shadow-xl  shadow-white "
-        }
-      >
-        <ul>
-          <div className="flex space-x-8 ml-8 text-white font-semibold">
-            <li className="hover:underline underline-offset-2 cursor-pointer">
-              <Link to="/">Home</Link>
-            </li>
-            <li className="hover:underline underline-offset-2 cursor-pointer">
-              <Link to="/report">Report User</Link>
-            </li>
-            <li className="hover:underline underline-offset-2 cursor-pointer">
-              <Link to="/MostReportedPlayers">Most Reported Players</Link>
-            </li>
-            <li className="hover:underline underline-offset-2 cursor-pointer">
-              <Link to="/BannedPlayers">Banned Players</Link>
-            </li>
-            <li className="hover:underline underline-offset-2 cursor-pointer">
-              <Link to="/Scammers">Scammers</Link>
-            </li>
-            <li className="hover:underline underline-offset-2 cursor-pointer">
-              <Link to="/Scammers">VAC Ban Tracking</Link>
-            </li>
-
-            <li className="hover:underline underline-offset-2 cursor-pointer">
-              <Link to="/404">More links</Link>
-            </li>
-          </div>
-        </ul>
-      </nav>
+      <NavigationMenu />
     </>
   );
 };
