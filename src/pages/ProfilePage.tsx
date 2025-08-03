@@ -12,6 +12,7 @@ import { ProfileComments } from "@/component/ProfilePage/ProfileComments.tsx";
 import { ProfileCreate } from "@/component/ProfilePage/ProfileCreate.tsx";
 import { PageLoader } from "@/component/Loader.tsx";
 import { backgroundColors } from "@/styles/colors.ts";
+import { CS2Stats } from "@/component/ProfilePage/CS2Stats.tsx";
 
 export interface RouteParams {
   [key: string]: string | undefined;
@@ -174,6 +175,9 @@ export const ProfilePage = () => {
                       <SteamInformation user={steamUser} />
                     ))}
                   {currentPage === "Comments" && <ProfileComments />}
+                  {currentPage === "CS2Stats" && (
+                    <CS2Stats steamid={steamUser?.id} />
+                  )}
                 </div>
               </div>
             ) : (
@@ -194,3 +198,6 @@ export const ProfilePage = () => {
     </>
   );
 };
+
+//TODO:
+//Рейтинг профиля по лайку, ачиквки, список по рейтингу

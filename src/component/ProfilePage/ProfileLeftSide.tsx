@@ -2,6 +2,7 @@ import { ISteamUser } from "@/models/ISteamUser";
 import { textColors } from "@/styles/colors";
 import { useState } from "react";
 import { MdVerified } from "react-icons/md";
+import { SocialLinks } from "./SocialLinks";
 
 export const ProfileLeftSide = ({ ...props }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -50,15 +51,7 @@ export const ProfileLeftSide = ({ ...props }) => {
           <p className={textColors.gray + "text-center md:text-left mb-2"}>
             {viewers} views
           </p>
-          <p className="text-white text-center md:text-left text-xl">
-            Social Links:
-          </p>
-          <div className="flex flex-col justify-center text-center md:text-left">
-            <p className="text-s text-bold text-white mt-1">TG </p>
-            <p className="text-s text-bold text-white mt-1">Youtube</p>
-            <p className="text-s text-bold text-white mt-1">Twitch </p>
-            <p className="text-s text-bold text-white mt-1">Discord</p>
-          </div>
+          <SocialLinks />
         </div>
       </div>
     </>

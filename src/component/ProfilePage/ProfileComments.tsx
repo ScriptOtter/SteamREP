@@ -74,6 +74,11 @@ export const ProfileComments = () => {
     console.log(auth);
   }, []);
 
+  useEffect(() => {
+    setLoading(true);
+    renderComments();
+  }, [location.pathname]);
+
   return (
     <div className={error && "pb-[100px]"}>
       {loading && <PageLoader />}

@@ -3,6 +3,7 @@ import { steamVerification } from "@/lib/steamVerification";
 import { cn } from "@/lib/utils";
 import { backgroundColors, color, textColors } from "@/styles/colors";
 import { rounded } from "@/styles/rounded";
+import { useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 
 interface IProps {
@@ -11,7 +12,7 @@ interface IProps {
   description?: string;
   valueInput?: string;
   placeholder?: string;
-  onClick?: () => void;
+  onClick?: (url: string) => void;
 }
 
 const handleTradeURL = () => {
@@ -23,6 +24,8 @@ export const SettingsProfileItems = ({ ...props }: IProps) => {
   const auth = useAuth();
   console.log(props);
 
+  const [input, setInput] = useState<string>(props.valueInput || "");
+  const { onClick } = props;
   return (
     <>
       <div className="px-6 py-4">
@@ -53,7 +56,8 @@ export const SettingsProfileItems = ({ ...props }: IProps) => {
             >
               <input
                 placeholder={props.placeholder}
-                value={props.valueInput}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
                 disabled={props.disabled}
                 className={
                   "py-4 px-4 w-full h-full hover:outline-2 hover:rounded-s hover:outline-" +
@@ -89,7 +93,7 @@ export const SettingsProfileItems = ({ ...props }: IProps) => {
               <button onClick={steamVerification} className="cursor-pointer">
                 <p className="text-xl text-white">Login via Steam</p>
               </button>
-              <img className="w-6 h-6" src="/src/assets/steam.svg" />
+              <img className="w-6 h-6" src="/public/assets/steam.svg" />
             </div>
           )}
         </div>
@@ -107,11 +111,12 @@ export const SettingsProfileItems = ({ ...props }: IProps) => {
           </button>
         )}
 
-        {props.onClick &&
+        {onClick &&
           props.title != "Your email" &&
           props.title != "Your country" && (
             <div className="mt-4">
               <button
+                onClick={() => onClick(input)}
                 className={
                   textColors.white +
                   backgroundColors.lightMain +

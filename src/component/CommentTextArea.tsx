@@ -4,7 +4,7 @@ import { API_ENDPOINTS } from "@/services/apiService";
 import { createApi } from "@/services/axios";
 import { AxiosError } from "axios";
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -90,7 +90,8 @@ export const CommentTextArea = ({ renderComments }: Props) => {
               </div>
 
               <textarea
-                className="text-white break-all w-full border-orange-500 border-1 rounded-s"
+                placeholder="Enter your comment..."
+                className="text-white break-all w-full border-orange-500 border-1 rounded-s pl-1"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
               ></textarea>

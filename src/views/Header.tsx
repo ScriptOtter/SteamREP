@@ -52,7 +52,7 @@ export const Header = () => {
           </div>
 
           {/* Поиск */}
-          <div className="flex grow md:mx-8 mr-4">
+          <div className="sm:flex sm:visible hidden grow md:mx-8 mr-4">
             <div className="w-[95%] bg-[#282a2e] rounded-2xl flex items-center p-1.5">
               <FaSearch className="text-gray-600 mr-2" />
               <input

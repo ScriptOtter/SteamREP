@@ -3,6 +3,9 @@ import { SettingsProfileItems } from "./SettingsProfileItems";
 import { useAuth } from "@/hooks/use-auth";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_ENDPOINTS } from "@/services/apiService";
+import { toast } from "react-toastify";
 
 export const SettingsProfile = () => {
   const auth = useAuth();
@@ -26,7 +29,7 @@ export const SettingsProfile = () => {
           disabled={true}
           description="Your Personal link to your SteamREP Profile"
           valueInput={
-            auth.role == "ACTIVE"
+            auth.role == "VERIFIED"
               ? "https://steamrep.help/profile/" + auth.id
               : "You need to connect Steam Account"
           }

@@ -28,17 +28,17 @@ export const HomePage = () => {
               <SiteFeature
                 title="Узнавай все данные Steam"
                 description="Сайт SteamREP позволяет отображать актуальную публичную и информацию Steam, Steam Bans and Restrictions, а также количество просмотров вашего профиля через наш сайт."
-                image="/src/assets/ProfileFeature.png"
+                image="/public/assets/ProfileFeature.png"
               />
               <SiteFeature
                 title="Оставляй комментарии пользователям"
                 description="Авторизованные пользователи сайта SteamREP имеют возможность оставлять комментарии любому Steam пользователю, даже если этот Steam профиль скрыт."
-                image="/src/assets/CommentFeature.png"
+                image="/public/assets/CommentFeature.png"
               />
               <SiteFeature
                 title="Система Патруля CS2"
                 description="Пользователи SteamREP могут отсматривать и загружать свои CS2 demo в нашу систему для помощи комьюнити в поиске читеров. Каждый пользователь имеет право оставить свой вердикт о подозреваемом для дальнейшего опубликования Steam аккаунта."
-                image="/src/assets/ReportFeature.png"
+                image="/public/assets/ReportFeature.png"
               />
               <SiteFeature
                 title=""
