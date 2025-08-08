@@ -94,11 +94,12 @@ export const CS2Stats = ({ ...props }) => {
                   <p className="text-gray-500 lg:w-[30%] w-[40%] ">Winrate:</p>
                   {leetify?.winrate && leetify?.winrate > 0.49 ? (
                     <p className="text-emerald-400">
-                      {leetify?.winrate * 100 + "%"}
+                      {(leetify?.winrate * 100).toFixed(2) + "%"}
                     </p>
                   ) : (
                     <p className="text-red-400">
-                      {leetify?.winrate && leetify?.winrate * 100 + "%"}
+                      {leetify?.winrate &&
+                        (leetify?.winrate * 100).toFixed(2) + "%"}
                     </p>
                   )}
                 </div>

@@ -7,6 +7,7 @@ export interface IComment {
   recipientId: string;
   createdAt: string;
   updatedAt: string;
+  pictureUrl: string;
   author: IAuthor;
   steamUser: ISteamUser;
 }

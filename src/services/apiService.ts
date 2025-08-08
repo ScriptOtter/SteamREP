@@ -22,4 +22,6 @@ export const API_ENDPOINTS = {
   getMyVerdicts: URL + "getMyVerdicts",
   getMyReports: URL + "getMyReports",
   patchSocialLinks: URL + "social-links/update",
+  getSocialLinks: URL + "social-links/get/",
+  uploadImage: URL + "image/upload",
 };

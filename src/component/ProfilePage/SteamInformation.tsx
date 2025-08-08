@@ -1,3 +1,4 @@
+import { Copy } from "lucide-react";
 import { ISteamUser } from "../../models/ISteamUser";
 import ReactCountryFlag from "react-country-flag";
 
@@ -22,22 +23,47 @@ export const SteamInformation = (user: ISteamUser) => {
         <div className="flex space-x-1">
           <p className="text-gray-500 lg:w-[20%] w-[30%] ">SteamID:</p>
           <p>{id}</p>
+          <Copy
+            onClick={() => navigator.clipboard.writeText(id || "")}
+            size={17}
+            className="mt-1.5 cursor-pointer hover:text-orange-400"
+          />
         </div>
         <div className="flex space-x-1">
           <p className="text-gray-500 lg:w-[20%] w-[30%]">SteamID2:</p>
           <p>{steamId2}</p>
+          <Copy
+            onClick={() => navigator.clipboard.writeText(steamId2 || "")}
+            size={17}
+            className="mt-1.5 cursor-pointer hover:text-orange-400"
+          />
         </div>
         <div className="flex space-x-1">
           <p className="text-gray-500 lg:w-[20%] w-[30%]">SteamID3:</p>
           <p>{steamId3}</p>
+          <Copy
+            onClick={() => navigator.clipboard.writeText(steamId3 || "")}
+            size={17}
+            className="mt-1.5 cursor-pointer hover:text-orange-400"
+          />
         </div>
         <div className="flex space-x-1">
           <p className="text-gray-500 lg:w-[20%] w-[30%]">SteamID64 (Hex):</p>
           <p>{steamIdHex}</p>
+          <Copy
+            onClick={() => navigator.clipboard.writeText(steamIdHex || "")}
+            size={17}
+            className="mt-1.5 cursor-pointer hover:text-orange-400"
+          />
         </div>
         <div className="flex space-x-1">
           <p className="text-gray-500 lg:w-[20%] w-[30%]"> Custom URL:</p>
           <p className="">{profileUrl}</p>
+          <Copy
+            onClick={() => navigator.clipboard.writeText(profileUrl || "")}
+            size={17}
+            className="mt-1.5 cursor-pointer hover:text-orange-400"
+          />
         </div>
       </div>
       <div className="mb-3">GENERAL:</div>

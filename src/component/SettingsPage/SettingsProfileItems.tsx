@@ -5,6 +5,7 @@ import { backgroundColors, color, textColors } from "@/styles/colors";
 import { rounded } from "@/styles/rounded";
 import { useState } from "react";
 import ReactCountryFlag from "react-country-flag";
+import { MdCheck } from "react-icons/md";
 
 interface IProps {
   title: string;
@@ -28,7 +29,7 @@ export const SettingsProfileItems = ({ ...props }: IProps) => {
   const { onClick } = props;
   return (
     <>
-      <div className="px-6 py-4">
+      <div className="px-6 py-4 relative">
         <div
           className={backgroundColors.lightMain + "w-min-max h-[1px] mb-4"}
         ></div>
@@ -113,8 +114,9 @@ export const SettingsProfileItems = ({ ...props }: IProps) => {
 
         {onClick &&
           props.title != "Your email" &&
-          props.title != "Your country" && (
-            <div className="mt-4">
+          props.title != "Your country" &&
+          input != props.valueInput && (
+            <div className={"absolute right-8 top-11.5"}>
               <button
                 onClick={() => onClick(input)}
                 className={
@@ -124,7 +126,7 @@ export const SettingsProfileItems = ({ ...props }: IProps) => {
                   "items-center w-full text-s p-1 cursor-pointer"
                 }
               >
-                Save Changes
+                <MdCheck size={21} className="text-emerald-400" />
               </button>
             </div>
           )}

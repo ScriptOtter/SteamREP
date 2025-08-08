@@ -51,7 +51,7 @@ export const ProfileLeftSide = ({ ...props }) => {
           <p className={textColors.gray + "text-center md:text-left mb-2"}>
             {viewers} views
           </p>
-          <SocialLinks />
+          <SocialLinks id={props.user?.id} />
         </div>
       </div>
     </>

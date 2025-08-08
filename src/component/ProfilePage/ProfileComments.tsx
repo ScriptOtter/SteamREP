@@ -58,14 +58,32 @@ export const ProfileComments = () => {
     renderComments();
   };
 
-  const updateComment = async (commentId: string, content: string) => {
-    await api.patch(
-      API_ENDPOINTS.commentDelete + commentId,
-      { content: content },
-      {
-        withCredentials: true,
-      }
-    );
+  const updateComment = async (
+    commentId: string,
+    comment: string,
+    imageUrl?: string
+  ) => {
+    if (imageUrl) {
+      console.log("1");
+      await api.patch(
+        API_ENDPOINTS.commentDelete + commentId,
+        { content: comment, pictureUrl: imageUrl },
+        {
+          withCredentials: true,
+        }
+      );
+      return;
+    } else {
+      console.log("2");
+      await api.patch(
+        API_ENDPOINTS.commentDelete + commentId,
+        { content: comment, pictureUrl: "" },
+        {
+          withCredentials: true,
+        }
+      );
+      return;
+    }
     renderComments();
   };
 
@@ -102,6 +120,7 @@ export const ProfileComments = () => {
               comment?.author?.steamUser?.avatar || comment?.author?.avatar
             }
             steamid={comment?.author?.steamUser?.id}
+            pictureUrl={comment?.pictureUrl}
             deteleComment={toastDelete}
             updateComment={updateComment}
           />

@@ -33,15 +33,16 @@ export const ProfilePage = () => {
         if (id !== "createProfile") {
           const res = await getSteamUser(id);
 
-          console.log(res);
+          //console.log(res);
           if (!res.id) {
-            console.log("User not found");
+            //console.log("User not found");
             setError("User not found!");
             setShowError(true);
             setLoading(false);
             return;
           }
           const viewers = await getViewers(res.id);
+
           setViewers(viewers);
           steamSteamUser(res);
 
@@ -52,10 +53,11 @@ export const ProfilePage = () => {
       } catch (e: unknown) {
         if (axios.isAxiosError(e)) setError(e);
         else if (e instanceof Error) setError(e.message);
-        console.log("Ошибка, перезагрузка страницы");
-        console.log(e);
+        //console.log("Ошибка, перезагрузка страницы");
+        //console.log(e);
       }
     };
+
     if (id) fetchData(id);
   }, [id]);
 
@@ -89,6 +91,7 @@ export const ProfilePage = () => {
   return (
     <>
       <Header />
+
       {id !== "createProfile" ? (
         <div
           className={
@@ -110,7 +113,7 @@ export const ProfilePage = () => {
                 <div
                   className={
                     backgroundColors.darkMain +
-                    "w-[98%] md:w-[75%] h-auto mx-4 my-2 rounded"
+                    "w-[98%] md:w-[75%] h-auto mx-4 my-2 rounded "
                   }
                 >
                   <nav className="flex items-center mx-4 text-white text-xl my-2">
@@ -144,7 +147,7 @@ export const ProfilePage = () => {
                       <div
                         className={cn(
                           currentPage === "CS2Stats" && "text-orange-500",
-                          "cursor-pointer hover:text-orange-400 duration-600"
+                          "cursor-pointer hover:text-orange-400 duration-600 "
                         )}
                         onClick={() => {
                           setCurrentPage("CS2Stats");

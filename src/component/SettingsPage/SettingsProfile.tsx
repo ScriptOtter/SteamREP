@@ -1,20 +1,9 @@
 import { backgroundColors, textColors } from "@/styles/colors";
 import { SettingsProfileItems } from "./SettingsProfileItems";
-import { useAuth } from "@/hooks/use-auth";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { API_ENDPOINTS } from "@/services/apiService";
-import { toast } from "react-toastify";
+import { saveTradeLink } from "@/data/profileLinks";
 
-export const SettingsProfile = () => {
-  const auth = useAuth();
-  const navigate = useNavigate();
-  useEffect(() => {
-    console.log(auth.isAuth);
-    if (auth.isAuth == false) navigate("/");
-  }, [auth.isAuth]);
-
+export const SettingsProfile = ({ ...props }) => {
+  const { auth, inputValue } = props;
   return (
     <>
       <div className={backgroundColors.darkMain + "w-full rounded-t-2xl"}>
@@ -51,8 +40,9 @@ export const SettingsProfile = () => {
           key={4}
           title="Your Trade-Link"
           description="Trade Link will be displayed on SteamREP"
+          valueInput={inputValue?.tradeLink && inputValue.tradeLink}
           placeholder="steamcommunity.com/tradeoffer/new/?partner=15"
-          onClick={() => {}}
+          onClick={saveTradeLink}
         />
       </div>
     </>
