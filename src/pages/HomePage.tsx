@@ -2,8 +2,44 @@ import { backgroundColors } from "@/styles/colors";
 import { Header } from "../views/Header";
 import { Container } from "@/component/container";
 import { SiteFeature } from "@/component/HomePage/SiteFeature";
+import { useEffect } from "react";
+import { createApi } from "@/services/axios";
+import { useDispatch } from "react-redux";
+import { API_ENDPOINTS } from "@/services/apiService";
+import { redirect, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { getMe } from "@/data/getUser";
+import { useAuth } from "@/hooks/use-auth";
+import { setUser } from "@/store/UserSlice";
 
 export const HomePage = () => {
+  const dispatch = useDispatch();
+  const auth = useAuth();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const token = queryParams.get("token");
+  const navigate = useNavigate();
+  useEffect(() => {
+    const verify = async () => {
+      console.log(token);
+      const res = await axios.patch(API_ENDPOINTS.verificationEmail, null, {
+        params: {
+          token,
+          // Добавьте другие параметры, если необходимо
+        },
+        withCredentials: true,
+      });
+      if (res) {
+        console.log(res);
+        dispatch(setUser(res.data));
+        getMe(dispatch, auth);
+        toast.success("Emain verified!", res.data);
+      }
+    };
+    if (token) verify();
+    navigate("/");
+  }, [token]);
   return (
     <>
       <Header />

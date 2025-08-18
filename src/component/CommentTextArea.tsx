@@ -42,8 +42,12 @@ export const CommentTextArea = ({ renderComments }: Props) => {
       const imageUrl = res.data.filename;
       console.log("file uploaded,", imageUrl);
       await postComment(id, imageUrl);
+      setImage("");
+      setFile(undefined);
     } else {
       await postComment(id, "");
+      setImage("");
+      setFile(undefined);
     }
   };
 

@@ -3,10 +3,12 @@ const URL = import.meta.env.VITE_SERVER_URL;
 export const API_ENDPOINTS = {
   API_URL: URL,
   signup: URL + "auth/signup",
-  emailVerify: URL + "auth/emailVerify/",
+  verificationEmail: URL + "verification/email",
   staemVerify: URL + "steam/verify",
   signin: URL + "auth/signin",
   logout: URL + "auth/logout",
+  recoveryPassword: URL + "recovery/password",
+  accountRecovery: URL + "recovery/verify",
   refresh: URL + "auth/refresh",
   commentCreate: URL + "comment/create/",
   commentDelete: URL + "comment/",

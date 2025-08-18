@@ -98,7 +98,7 @@ export const Comment = ({
       fileInput.click(); // Имитируем клик по input
     }
   };
-
+  console.log(API_ENDPOINTS.API_URL + "static/" + image!);
   const visitProfile = () => {
     if (steamid !== undefined) navigate("/profile/" + steamid);
     else toast("Steam Profile not found!");

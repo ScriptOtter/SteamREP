@@ -8,6 +8,7 @@ import { ReportPlayerPage } from "./pages/ReportPlayerPage.tsx";
 import { ProfilePage } from "./pages/ProfilePage.tsx";
 import { ToastContainer } from "react-toastify";
 import { SettingsPage } from "./pages/SettingsPage.tsx";
+import { AccountRecoveryPage } from "./pages/AccountRecoveryPage.tsx";
 
 function App() {
   return (
@@ -25,6 +26,11 @@ function App() {
           <Route path="/report" element={<ReportPlayerPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/profile/:id" element={<ProfilePage />} />
+          <Route path="/account/verify" element={<HomePage />} />
+          <Route
+            path="/account/recovery/:id"
+            element={<AccountRecoveryPage />}
+          />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>

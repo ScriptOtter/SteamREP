@@ -72,6 +72,7 @@ export const ProfileComments = () => {
           withCredentials: true,
         }
       );
+      renderComments();
       return;
     } else {
       console.log("2");
@@ -82,9 +83,9 @@ export const ProfileComments = () => {
           withCredentials: true,
         }
       );
+      renderComments();
       return;
     }
-    renderComments();
   };
 
   useEffect(() => {
