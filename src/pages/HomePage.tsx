@@ -3,10 +3,10 @@ import { Header } from "../views/Header";
 import { Container } from "@/component/container";
 import { SiteFeature } from "@/component/HomePage/SiteFeature";
 import { useEffect } from "react";
-import { createApi } from "@/services/axios";
+
 import { useDispatch } from "react-redux";
 import { API_ENDPOINTS } from "@/services/apiService";
-import { redirect, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { getMe } from "@/data/getUser";

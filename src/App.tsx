@@ -2,13 +2,16 @@
 import { HomePage } from "./pages/HomePage.tsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { NoPage } from "./pages/NoPage.tsx";
-import { SignIn } from "./auth/SignIn.tsx";
-import { SignUp } from "./auth/SignUp.tsx";
+
 import { ReportPlayerPage } from "./pages/ReportPlayerPage.tsx";
 import { ProfilePage } from "./pages/ProfilePage.tsx";
 import { ToastContainer } from "react-toastify";
 import { SettingsPage } from "./pages/SettingsPage.tsx";
 import { AccountRecoveryPage } from "./pages/AccountRecoveryPage.tsx";
+
+import { SignInForm } from "./component/AuthForm/SignInForm.tsx";
+import { SignUpForm } from "./component/AuthForm/SignUpForm.tsx";
+import { PasswordRecoveryForm } from "./component/AuthForm/PasswordRecoveryForm.tsx";
 
 function App() {
   return (
@@ -21,8 +24,9 @@ function App() {
             path="/MostReportedPlayers"
             element={<MostReportedPlayersPage />}
           /> */}
-          <Route path="/auth/signup" element={<SignUp />} />
-          <Route path="/auth/signin" element={<SignIn />} />
+          <Route path="/auth/signin" element={<SignInForm />} />
+          <Route path="/auth/signup" element={<SignUpForm />} />
+          <Route path="/auth/recovery" element={<PasswordRecoveryForm />} />
           <Route path="/report" element={<ReportPlayerPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/profile/:id" element={<ProfilePage />} />

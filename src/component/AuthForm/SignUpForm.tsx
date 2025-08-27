@@ -1,49 +1,49 @@
-import { Input } from "../component/Input";
-import { Header } from "../views/Header";
+import { Input } from "../Input";
 import { useState } from "react";
 import z from "zod";
 import { toast } from "react-toastify";
 import axios, { AxiosError } from "axios";
 import { API_ENDPOINTS } from "@/services/apiService";
 import { Loader } from "@/component/Loader";
+import { AuthWraper } from "./AuthWraper";
 
-export const SignUp = () => {
+type FormData = z.infer<typeof formDataScheme>;
+
+const initialFormData = {
+  email: "user@gmail.com",
+  username: "user",
+  password: "passwordA1",
+  confirmPassword: "passwordA1",
+  isChecked: false,
+};
+
+const formDataScheme = z
+  .object({
+    email: z.string().email(),
+    username: z
+      .string()
+      .min(4)
+      .regex(/[a-z]/, "Username must contain a lowercase letter"),
+    password: z
+      .string()
+      .min(6)
+      .max(32)
+      .regex(/[A-Z]/, "Password must contain a capital letter")
+      .regex(/[a-z]/, "Password must contain a lowercase letter")
+      .regex(/[0-9]/, "Password must contain a digit"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Password don't match",
+    path: ["confirmPassword"],
+  })
+  .refine((data) => data.password !== data.username, {
+    message: "Username and password must not match",
+    path: ["password"],
+  });
+
+export const SignUpForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
-
-  type FormData = z.infer<typeof formDataScheme>;
-
-  const initialFormData = {
-    email: "user@gmail.com",
-    username: "user",
-    password: "passwordA1",
-    confirmPassword: "passwordA1",
-    isChecked: false,
-  };
-
-  const formDataScheme = z
-    .object({
-      email: z.string().email(),
-      username: z
-        .string()
-        .min(4)
-        .regex(/[a-z]/, "Username must contain a lowercase letter"),
-      password: z
-        .string()
-        .min(6)
-        .max(32)
-        .regex(/[A-Z]/, "Password must contain a capital letter")
-        .regex(/[a-z]/, "Password must contain a lowercase letter")
-        .regex(/[0-9]/, "Password must contain a digit"),
-      confirmPassword: z.string(),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-      message: "Password don't match",
-      path: ["confirmPassword"],
-    })
-    .refine((data) => data.password !== data.username, {
-      message: "Username and password must not match",
-      path: ["password"],
-    });
 
   const [userFormData, setUserFormData] = useState<Partial<FormData>>({});
   const [showErrors, setShowErrors] = useState(false);
@@ -102,10 +102,8 @@ export const SignUp = () => {
 
   return (
     <>
-      <Header />
-
-      <div className="w-full h-screen bg-gray-900 flex items-center justify-center absolute ">
-        <div className="w-[400px]">
+      <AuthWraper>
+        <div>
           <p className="text-center text-white text-2xl mb-8">
             Sign Up to SteamRep
           </p>
@@ -214,7 +212,7 @@ export const SignUp = () => {
             </div>
           </form>
         </div>
-      </div>
+      </AuthWraper>
     </>
   );
 };
