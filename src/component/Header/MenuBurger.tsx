@@ -8,7 +8,7 @@ export const MenuBurger = ({ ...props }) => {
   const { isMenuOpen, toggleMenu, menuRef } = useDropDownMenu();
   return (
     <>
-      <div ref={menuRef} className="relative">
+      <div ref={menuRef} className="relative z-999">
         {!isMenuOpen ? (
           <MenuIcon
             size={28}

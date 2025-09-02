@@ -9,35 +9,75 @@ import { toast } from "react-toastify";
 import { Header } from "@/views/Header";
 import { z } from "zod";
 
+const passwordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, {
+        message: "The minimum length of a password is 8 characters.",
+      })
+      .max(32, {
+        message: "The maximum length of a password is 32 characters.",
+      })
+      .regex(/[A-Z]/, { message: "Password must contain a capital letter" })
+      .regex(/[a-z]/, { message: "Password must contain a lowercase letter" })
+      .regex(/[0-9]/, { message: "Password must contain a digit" }),
+    confirmPassword: z
+      .string()
+      .min(8, {
+        message: "The minimum length of a password is 8 characters.",
+      })
+      .max(32, {
+        message: "The maximum length of a password is 32 characters.",
+      })
+      .regex(/[A-Z]/, { message: "Password must contain a capital letter" })
+      .regex(/[a-z]/, { message: "Password must contain a lowercase letter" })
+      .regex(/[0-9]/, { message: "Password must contain a digit" }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Password don't match",
+    path: ["confirmPassword"],
+  });
+
+type FormData = z.infer<typeof passwordSchema>;
+
 export const AccountRecoveryPage = () => {
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const initialFormData = {
+    password: "",
+    confirmPassword: "",
+  };
+  const [userFormData, setUserFormData] = useState<Partial<FormData>>({});
   const [error, setError] = useState<any>("");
   const [showError, setShowError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const { id } = useParams<RouteParams>();
   const navigate = useNavigate();
 
-  const passwordSchema = z
-    .string()
-    .min(8, { message: "The minimum length of a password is 8 characters." })
-    .max(32, { message: "The maximum length of a password is 32 characters." })
-    .regex(/[A-Z]/, { message: "Password must contain a capital letter" })
-    .regex(/[a-z]/, { message: "Password must contain a lowercase letter" })
-    .regex(/[0-9]/, { message: "Password must contain a digit" });
+  const formData = {
+    ...initialFormData,
+    ...userFormData,
+  };
+
+  const validate = () => {
+    const res = passwordSchema.safeParse(formData);
+    if (res.success) {
+      return undefined;
+    }
+    console.log(res);
+    return res.error.format();
+  };
 
   const handleAccountRecovery = async () => {
     event?.preventDefault();
-    const pass1 = passwordSchema.safeParse(password);
-    const pass2 = passwordSchema.safeParse(confirmPassword);
 
-    if (pass1.success && pass2.success) {
+    const error = validate();
+
+    if (!error) {
       setShowError(false);
       setError("");
       setLoading(true);
       const data = {
-        password: password,
-        confirmPassword: confirmPassword,
+        ...formData,
         token: id,
       };
       console.log(data);
@@ -51,8 +91,7 @@ export const AccountRecoveryPage = () => {
             "The password has been successfully changed. You can log in to your account with the new password."
           );
           setLoading(false);
-          setPassword("");
-          setConfirmPassword("");
+          setUserFormData({});
           navigate("/auth/signin");
         }
       } catch (e: unknown) {
@@ -69,9 +108,13 @@ export const AccountRecoveryPage = () => {
         setLoading(false);
         console.log(e);
       }
+    } else {
+      setError(errors);
+      setShowError(true);
     }
   };
-
+  const errors = showError ? validate() : undefined;
+  console.log(errors);
   return (
     <>
       <Header />
@@ -93,26 +136,34 @@ export const AccountRecoveryPage = () => {
             <div className="flex flex-col items-center w-full">
               <Input
                 variant="forAuth"
-                value={password}
+                value={userFormData.password}
                 onChange={(e) => {
-                  setPassword(e.target.value);
+                  setUserFormData((l) => ({ ...l, password: e.target.value }));
                 }}
               ></Input>
             </div>
-
+            <p className="text-red-500">
+              {showError && errors?.password && errors.password._errors[0]}
+            </p>
             <label className="text-white text-[14px] mb-3">2 Password</label>
             <div className="flex flex-col items-center w-full">
               <Input
                 variant="forAuth"
                 type="password"
-                value={confirmPassword}
+                value={userFormData.confirmPassword}
                 onChange={(e) => {
-                  setConfirmPassword(e.target.value);
+                  setUserFormData((l) => ({
+                    ...l,
+                    confirmPassword: e.target.value,
+                  }));
                 }}
               ></Input>
             </div>
-
-            <p className="text-red-500">{showError && error}</p>
+            <p className="text-red-500">
+              {showError &&
+                errors?.confirmPassword &&
+                errors.confirmPassword._errors[0]}
+            </p>
             <div className="flex justify-center items-center w-full">
               <button
                 className="bg-indigo-600 w-1/1 p-1.5 rounded-[8px] text-white text-[14px] cursor-pointer"
@@ -121,6 +172,7 @@ export const AccountRecoveryPage = () => {
                 {!loading ? "Change Password" : <Loader />}
               </button>
             </div>
+            <p className="text-red-500">{showError && error}</p>
           </form>
         </div>
       </div>

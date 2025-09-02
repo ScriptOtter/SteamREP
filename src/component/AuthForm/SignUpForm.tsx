@@ -79,6 +79,7 @@ export const SignUpForm = () => {
         });
         console.log(res);
         if (!res) {
+          setLoading(false);
           return;
         }
         if (res.data) {
@@ -89,9 +90,9 @@ export const SignUpForm = () => {
         console.log(e);
         if (e instanceof AxiosError) {
           console.log("catch");
-          console.log(e.response?.data.target[0]);
+          console.log(e.response?.data?.message[0]);
 
-          toast(e.response?.data.target[0] + " already exists!");
+          toast(e.response?.data?.message[0] + " already exists!");
           setLoading(false);
         }
       }

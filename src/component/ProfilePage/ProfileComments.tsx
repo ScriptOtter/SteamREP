@@ -27,7 +27,8 @@ export const ProfileComments = () => {
     console.log("RENDER COMMENTS");
     const comments = await getComments(id!);
     if (comments.toString() == "") {
-      setError("No comments found.");
+      if (auth.isAuth) setError("Leave the first comment");
+      else setError("You must be logged in to leave a comment");
       setShowError(true);
       setLoading(false);
     } else {
@@ -99,7 +100,7 @@ export const ProfileComments = () => {
   }, [location.pathname]);
 
   return (
-    <div className={error && "pb-[100px]"}>
+    <div>
       {loading && <PageLoader />}
       {auth.isAuth && !loading && (
         <CommentTextArea renderComments={renderComments} />
@@ -127,8 +128,8 @@ export const ProfileComments = () => {
           />
         ))
       ) : (
-        <div className="flex w-full text-white justify-center mt-16 text-2xl">
-          {error}
+        <div className="flex w-full justify-center py-8 items-center">
+          <p className="text-white text-2xl">{error}</p>
         </div>
       )}
     </div>

@@ -13,6 +13,7 @@ import { ProfileCreate } from "@/component/ProfilePage/ProfileCreate.tsx";
 import { PageLoader } from "@/component/Loader.tsx";
 import { backgroundColors } from "@/styles/colors.ts";
 import { CS2Stats } from "@/component/ProfilePage/CS2Stats.tsx";
+import { CS2Matches } from "@/component/CS2MatchesPage/CS2Matches.tsx";
 
 export interface RouteParams {
   [key: string]: string | undefined;
@@ -99,24 +100,28 @@ export const ProfilePage = () => {
             "h-full min-h-screen pt-8 flex justify-center"
           }
         >
-          <Container>
+          <Container
+            className={cn(
+              (currentPage === "CS2Stats" || currentPage === "CS2Matches") &&
+                "max-w-[90%]"
+            )}
+          >
             {!showError ? (
-              <div className="flex flex-col md:flex-row items-center md:items-start">
-                {loading ? (
+              <div className="flex flex-col md:flex-row items-center md:items-start w-full">
+                {loading && currentPage != "CS2Matches" ? (
                   <div className="ml-2 lg:w-[320px] w-[256px]">
                     <div className="lg:w-[280px] w-[225px] lg:h-[280px] h-[225px] rounded-full ring-1 ring-gray-500 animate-pulse" />
                   </div>
                 ) : (
                   <ProfileLeftSide user={steamUser} viewers={viewers} />
                 )}
-
-                <div
-                  className={
-                    backgroundColors.darkMain +
-                    "w-[98%] md:w-[75%] h-auto mx-4 my-2 rounded "
-                  }
-                >
-                  <nav className="flex items-center mx-4 text-white text-xl my-2">
+                <div className="md:mx-4 w-full">
+                  <nav
+                    className={
+                      backgroundColors.darkMain +
+                      "flex justify-center text-white text-md md:text-xl py-2 mt-4 md:mx-4 md:px-2 rounded-xl"
+                    }
+                  >
                     <div className="flex space-x-3">
                       <div
                         className={cn(
@@ -143,10 +148,11 @@ export const ProfilePage = () => {
                       >
                         Comments
                       </div>
-
                       <div
                         className={cn(
-                          currentPage === "CS2Stats" && "text-orange-500",
+                          (currentPage === "CS2Stats" ||
+                            currentPage === "CS2Matches") &&
+                            "text-orange-500",
                           "cursor-pointer hover:text-orange-400 duration-600 "
                         )}
                         onClick={() => {
@@ -154,9 +160,8 @@ export const ProfilePage = () => {
                           window.location.hash = "#CS2Stats"; // Добавляем # в URL
                         }}
                       >
-                        CS2 Stats
+                        CS2
                       </div>
-
                       <div
                         className={cn(
                           currentPage === "UsersComments" && "text-orange-500",
@@ -171,16 +176,61 @@ export const ProfilePage = () => {
                       </div>
                     </div>
                   </nav>
-                  {currentPage === "SteamInformation" &&
-                    (loading ? (
-                      <PageLoader />
-                    ) : (
-                      <SteamInformation user={steamUser} />
-                    ))}
-                  {currentPage === "Comments" && <ProfileComments />}
-                  {currentPage === "CS2Stats" && (
-                    <CS2Stats steamid={steamUser?.id} />
+                  {(currentPage === "CS2Stats" ||
+                    currentPage === "CS2Matches") && (
+                    <nav
+                      className={
+                        "flex text-white text-md ml-1 mt-4 px-1 w-min rounded-xl"
+                      }
+                    >
+                      <div
+                        className={cn(
+                          currentPage === "CS2Stats"
+                            ? "bg-orange-500 rounded-l-xl"
+                            : backgroundColors.darkMain + "rounded-l-xl",
+                          "cursor-pointer hover:bg-orange-400 hover:rounded-l-xl px-3 duration-300"
+                        )}
+                        onClick={() => {
+                          setCurrentPage("CS2Stats");
+                          window.location.hash = "#CS2Stats"; // Добавляем # в URL
+                        }}
+                      >
+                        Stats
+                      </div>
+                      <div
+                        className={cn(
+                          currentPage === "CS2Matches"
+                            ? "bg-orange-500 rounded-r-xl"
+                            : backgroundColors.darkMain + "rounded-r-xl",
+                          "cursor-pointer hover:bg-orange-400 hover:rounded-r-xl px-1 duration-300"
+                        )}
+                        onClick={() => {
+                          setCurrentPage("CS2Matches");
+                          window.location.hash = "#CS2Matches"; // Добавляем # в URL
+                        }}
+                      >
+                        Matches
+                      </div>
+                    </nav>
                   )}
+                  <div
+                    className={
+                      backgroundColors.darkMain +
+                      "w-full h-auto mt-4 rounded-lg py-1"
+                    }
+                  >
+                    {currentPage === "SteamInformation" &&
+                      (loading ? (
+                        <PageLoader />
+                      ) : (
+                        <SteamInformation user={steamUser} />
+                      ))}
+                    {currentPage === "Comments" && <ProfileComments />}
+                    {currentPage === "CS2Stats" && (
+                      <CS2Stats steamid={steamUser?.id} />
+                    )}
+                    {currentPage === "CS2Matches" && <CS2Matches />}
+                  </div>
                 </div>
               </div>
             ) : (
@@ -188,6 +238,7 @@ export const ProfilePage = () => {
                 <p className="text-red-600 text-3xl">{error?.toString()}</p>
               </div>
             )}
+
             {/* <p>
                   Когда зареган акк, основная инфа, сколько игр,SteamID Запреты
                   и ограничения трейд ссылка Формула для рейтинга аккаунта,

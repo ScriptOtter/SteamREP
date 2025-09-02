@@ -10,7 +10,7 @@ export const Loader = () => {
 
 export const PageLoader = () => {
   return (
-    <div className="flex justify-center mt-16">
+    <div className="flex justify-center py-8">
       <Loader2 size={100} className="animate-spin text-white" />
     </div>
   );
