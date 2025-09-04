@@ -4,7 +4,6 @@ import {
   saveTwitchLink,
   saveYoutubeLink,
 } from "@/data/profileLinks";
-import { backgroundColors, textColors } from "@/styles/colors";
 import { SettingsProfileItems } from "./SettingsProfileItems";
 import { SettingsLayout } from "./SettingsLayout";
 

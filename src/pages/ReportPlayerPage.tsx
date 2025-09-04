@@ -5,8 +5,6 @@ import { MyReportsSideBar } from "@/component/ReportPage/MyReports/MyReportsSide
 import { OverwatchSideBar } from "@/component/ReportPage/OverwatchReport/OverwatchSideBar";
 import { ReviewedDemosSideBar } from "@/component/ReportPage/ReviewedDemoReport/ReviewedDemosSideBar";
 import { cn } from "@/lib/utils";
-import { backgroundColors } from "@/styles/colors";
-
 import { Header } from "@/views/Header";
 import { Eye, Plus } from "lucide-react";
 import { useEffect, useState } from "react";

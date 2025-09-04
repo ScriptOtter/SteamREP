@@ -1,6 +1,4 @@
 import { cn } from "@/lib/utils";
-import { backgroundColors, color, textColors } from "@/styles/colors";
-import { rounded } from "@/styles/rounded";
 import { useState } from "react";
 import { MdCheck } from "react-icons/md";
 
@@ -23,9 +21,7 @@ export const SettingsProfileItems = ({ ...props }: IProps) => {
         <div className="md:flex space-x-4">
           <div className="md:w-[34%]">
             <p
-              className={
-                textColors.white + cn(!props.description && "mt-4", "text-s")
-              }
+              className={cn(!props.description && "mt-4", "text-s text-white")}
             >
               {props.title}
             </p>

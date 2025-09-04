@@ -1,7 +1,6 @@
 import { FaSteam } from "react-icons/fa";
 import { SiteFeature } from "./HomePage/SiteFeature";
 import { Bookmark, EyeIcon, LucideRadar, MessageSquare } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 export const FeaturesHomePage = () => {
   const features = [

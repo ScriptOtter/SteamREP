@@ -3,8 +3,8 @@ import { RouteParams } from "@/pages/ProfilePage";
 import { API_ENDPOINTS } from "@/services/apiService";
 import { createApi } from "@/services/axios";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { ImageUp, Plus, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ImageUp, X } from "lucide-react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -18,7 +18,7 @@ interface Props {
 export const CommentTextArea = ({ renderComments }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [comment, setComment] = useState<string>("");
-  const [visibleArea, setVisibleArea] = useState<boolean>(false);
+
   const [image, setImage] = useState<string>("");
 
   const [file, setFile] = useState<File>();
@@ -92,7 +92,7 @@ export const CommentTextArea = ({ renderComments }: Props) => {
         if (res) {
           console.log("RES PRISHOL");
           setComment("");
-          setVisibleArea(false);
+
           setImage("");
 
           renderComments();
@@ -107,7 +107,7 @@ export const CommentTextArea = ({ renderComments }: Props) => {
         if (res) {
           console.log("RES PRISHOL");
           setComment("");
-          setVisibleArea(false);
+
           setImage("");
 
           renderComments();

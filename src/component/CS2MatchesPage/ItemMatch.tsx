@@ -30,8 +30,8 @@ export const ItemMatch = ({ ...props }) => {
     kills5,
     kills4,
     kills3,
-    matchURL,
-  }: ItemMatchProps = props.match;
+  }: //matchURL,
+  ItemMatchProps = props.match;
 
   const matchResult: number =
     (score.split(":")[0] == "13" && 1) ||
