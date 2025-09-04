@@ -11,7 +11,6 @@ import { useDropDownMenu } from "@/hooks/use-drop-down-menu";
 import { removeUser } from "@/store/UserSlice";
 import { API_ENDPOINTS } from "@/services/apiService";
 import axios from "axios";
-import { backgroundColors } from "@/styles/colors";
 import { MenuBurger } from "@/component/Header/MenuBurger";
 import { NavigationMenu } from "@/component/Header/NavigationMenu";
 import { fontSize } from "@/styles/font";
@@ -41,11 +40,11 @@ export const Header = () => {
 
   return (
     <>
-      <div className={backgroundColors.header + "shadow-lg"}>
+      <div className={"bg-primary shadow-lg"}>
         <div className="flex justify-between items-center p-3">
           {/* Логотип */}
           <div className="flex items-center md:mx-2 lg:mx-8 space-x-2 mr-4">
-            <CircleHelp className="size-9" />
+            <CircleHelp className="size-9 text-light-gray" />
             <Link to="/" className="text-white text-2xl font-bold">
               SteamREP
             </Link>
@@ -53,8 +52,8 @@ export const Header = () => {
 
           {/* Поиск */}
           <div className="sm:flex sm:visible hidden grow md:mx-8 mr-4">
-            <div className="w-[95%] md:w-full bg-[#282a2e] rounded-2xl flex items-center p-1.5">
-              <FaSearch className="text-gray-600 mr-2" />
+            <div className="w-[95%] md:w-full bg-primary outline-2 outline-light-gray rounded-2xl flex items-center p-1.5">
+              <FaSearch className="text-light-gray mr-2" />
               <input
                 onKeyDown={(event) => {
                   if (event.key === "Enter")
@@ -66,7 +65,7 @@ export const Header = () => {
                 }}
                 type="text"
                 placeholder="Search for a profile (Steam ID / Steam Profile Link / Custom Steam URL)"
-                className="flex-grow bg-transparent outline-none text-white placeholder-gray-500"
+                className="flex-grow bg-transparent outline-none text-white placeholder-light-gray cursor-pointer"
               />
               <button
                 type="submit"

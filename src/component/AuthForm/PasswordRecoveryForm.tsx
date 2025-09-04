@@ -5,7 +5,9 @@ import { toast } from "react-toastify";
 import { z } from "zod";
 import { Input } from "../Input";
 import { Loader } from "../Loader";
-import { AuthWraper } from "./AuthWraper";
+import { AuthLayout } from "./AuthLayout";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export const PasswordRecoveryForm = () => {
   const handleRecoveryAccount = async (event: React.FormEvent) => {
@@ -43,40 +45,46 @@ export const PasswordRecoveryForm = () => {
   const [showError, setShowError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const emailSchema = z.string().email({ message: "Invalid email format!" });
-
+  const navigate = useNavigate();
   return (
     <>
-      <AuthWraper>
-        <div>
-          <p className="text-center text-white text-[20px] mb-2">
+      <AuthLayout>
+        <div className="relative">
+          <ArrowLeft
+            onClick={() => {
+              navigate("/auth/signin");
+            }}
+            className="text-indigo-400 cursor-pointer hover:text-indigo-500 absolute top-1 left-0"
+          />
+          <p className="text-center text-white text-[20px] mb-4">
             Reset your password
           </p>
-          <p className="text-center text-white text-[14px] mb-8">
+          <p className="text-center text-white text-[14px] mb-4">
             Enter your user account's verified email address and we will send
             you a password reset link.
           </p>
           <form
-            className="flex flex-col space-y-4 mb-8"
+            className="flex flex-col space-y-4 mb-4"
             onSubmit={handleRecoveryAccount}
           >
-            <label className="text-white text-[14px] mb-3">Email</label>
+            <label className="text-white font-semibold text-[14px] mb-3">
+              Email
+            </label>
             <div className="flex flex-col items-center w-full">
               <Input
                 variant="forAuth"
                 value={email}
+                placeholder="user@adress.com"
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
               ></Input>
             </div>
 
-            <div className="flex justify-between">
-              <div className="flex items-center"></div>
-            </div>
             <p className="text-red-500">{showError && error}</p>
             <div className="flex justify-center items-center w-full">
               <button
-                className="bg-indigo-600 w-1/1 p-1.5 rounded-[8px] text-white text-[14px] cursor-pointer"
+                className="bg-blue w-full p-2 rounded-[8px] text-white text-[14px] cursor-pointer"
                 type="submit"
               >
                 {!loading ? "Send password reset email" : <Loader />}
@@ -84,7 +92,7 @@ export const PasswordRecoveryForm = () => {
             </div>
           </form>
         </div>
-      </AuthWraper>
+      </AuthLayout>
     </>
   );
 };

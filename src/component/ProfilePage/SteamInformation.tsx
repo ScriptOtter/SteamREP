@@ -21,64 +21,66 @@ export const SteamInformation = (user: ISteamUser) => {
       <div className="mb-3">STEAM ID’S:</div>
       <div className="space-y-1.5 mb-3">
         <div className="flex space-x-1">
-          <p className="text-gray-500 lg:w-[20%] w-[30%] ">SteamID:</p>
+          <p className="text-light-gray-2 lg:w-[20%] w-[30%] ">SteamID:</p>
           <p>{id}</p>
           <Copy
             onClick={() => navigator.clipboard.writeText(id || "")}
             size={17}
-            className="mt-1.5 cursor-pointer hover:text-orange-400"
+            className="mt-1.5 cursor-pointer hover:text-light-blue-2"
           />
         </div>
         <div className="flex space-x-1">
-          <p className="text-gray-500 lg:w-[20%] w-[30%]">SteamID2:</p>
+          <p className="text-light-gray-2 lg:w-[20%] w-[30%]">SteamID2:</p>
           <p>{steamId2}</p>
           <Copy
             onClick={() => navigator.clipboard.writeText(steamId2 || "")}
             size={17}
-            className="mt-1.5 cursor-pointer hover:text-orange-400"
+            className="mt-1.5 cursor-pointer hover:text-light-blue-2"
           />
         </div>
         <div className="flex space-x-1">
-          <p className="text-gray-500 lg:w-[20%] w-[30%]">SteamID3:</p>
+          <p className="text-light-gray-2 lg:w-[20%] w-[30%]">SteamID3:</p>
           <p>{steamId3}</p>
           <Copy
             onClick={() => navigator.clipboard.writeText(steamId3 || "")}
             size={17}
-            className="mt-1.5 cursor-pointer hover:text-orange-400"
+            className="mt-1.5 cursor-pointer hover:text-light-blue-2"
           />
         </div>
         <div className="flex space-x-1">
-          <p className="text-gray-500 lg:w-[20%] w-[30%]">SteamID64 (Hex):</p>
+          <p className="text-light-gray-2 lg:w-[20%] w-[30%]">
+            SteamID64 (Hex):
+          </p>
           <p>{steamIdHex}</p>
           <Copy
             onClick={() => navigator.clipboard.writeText(steamIdHex || "")}
             size={17}
-            className="mt-1.5 cursor-pointer hover:text-orange-400"
+            className="mt-1.5 cursor-pointer hover:text-light-blue-2"
           />
         </div>
         <div className="flex space-x-1">
-          <p className="text-gray-500 lg:w-[20%] w-[30%]"> Custom URL:</p>
+          <p className="text-light-gray-2 lg:w-[20%] w-[30%]"> Custom URL:</p>
           <p className="">{profileUrl}</p>
           <Copy
             onClick={() => navigator.clipboard.writeText(profileUrl || "")}
             size={17}
-            className="mt-1.5 cursor-pointer hover:text-orange-400"
+            className="mt-1.5 cursor-pointer hover:text-light-blue-2"
           />
         </div>
       </div>
       <div className="mb-3">GENERAL:</div>
       <div className="mb-3">
         <div className="flex space-x-1">
-          <p className="text-gray-500 lg:w-[20%] w-[30%]"> Real Name:</p>
+          <p className="text-light-gray-2 lg:w-[20%] w-[30%]"> Real Name:</p>
           <p>{realname ? realname : "NOT STATED"}</p>
         </div>
         <div className="flex space-x-1">
-          <p className="text-gray-500 lg:w-[20%] w-[30%]"> Steam Level:</p>
+          <p className="text-light-gray-2 lg:w-[20%] w-[30%]"> Steam Level:</p>
           <p>{level != "N/A" ? level : "0"}</p>
         </div>
         {countryCode && (
           <div className="flex space-x-1">
-            <p className="text-gray-500 lg:w-[20%] w-[30%]"> Country:</p>
+            <p className="text-light-gray-2 lg:w-[20%] w-[30%]"> Country:</p>
             <div className="flex space-x-1">
               {" "}
               <ReactCountryFlag
@@ -95,14 +97,14 @@ export const SteamInformation = (user: ISteamUser) => {
           </div>
         )}
         <div className="flex space-x-1">
-          <p className="text-gray-500 lg:w-[20%] w-[30%]"> Joined Steam:</p>
+          <p className="text-light-gray-2 lg:w-[20%] w-[30%]"> Joined Steam:</p>
           <p>{timeCreated != "undefined NaN NaN" ? timeCreated : "Unknown"}</p>
         </div>
       </div>
       <div className="mb-3">Steam Bans & Restrictions:</div>
       <div className="mb-3">
         <div className="flex space-x-1">
-          <p className="text-gray-500 lg:w-[20%] w-[30%]"> Game Bans:</p>
+          <p className="text-light-gray-2 lg:w-[20%] w-[30%]"> Game Bans:</p>
 
           {steamUserBans?.gameBans ? (
             <div className="flex space-x-1">
@@ -115,7 +117,7 @@ export const SteamInformation = (user: ISteamUser) => {
         </div>
 
         <div className="flex space-x-1">
-          <p className="text-gray-500 lg:w-[20%] w-[30%]"> VAC Bans:</p>
+          <p className="text-light-gray-2 lg:w-[20%] w-[30%]"> VAC Bans:</p>
           {steamUserBans?.vacBanned ? (
             <div className="flex space-x-1">
               <p className="text-red-500"> Banned </p>{" "}
@@ -126,7 +128,10 @@ export const SteamInformation = (user: ISteamUser) => {
           )}
         </div>
         <div className="flex space-x-1">
-          <p className="text-gray-500 lg:w-[20%] w-[30%]"> Community Bans:</p>
+          <p className="text-light-gray-2 lg:w-[20%] w-[30%]">
+            {" "}
+            Community Bans:
+          </p>
           {steamUserBans?.communityBanned ? (
             <p className="text-red-500"> Banned </p>
           ) : (
@@ -134,7 +139,7 @@ export const SteamInformation = (user: ISteamUser) => {
           )}
         </div>
         <div className="flex space-x-1">
-          <p className="text-gray-500 lg:w-[20%] w-[30%]"> Trade Bans:</p>
+          <p className="text-light-gray-2 lg:w-[20%] w-[30%]"> Trade Bans:</p>
           {steamUserBans?.economyBan != "none" ? (
             <p className="text-red-500"> Banned </p>
           ) : (

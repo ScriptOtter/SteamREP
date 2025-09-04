@@ -4,7 +4,7 @@ import { fontSize } from "@/styles/font";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
-import { backgroundColors } from "@/styles/colors";
+
 export const MenuBurgerUser = ({ ...props }) => {
   const navigate = useNavigate();
   const auth = useAuth();
@@ -35,7 +35,7 @@ export const MenuBurgerUser = ({ ...props }) => {
                   auth.role == "VERIFIED" && navigate("/profile/" + auth.id)
                 }
                 className={
-                  "flex items-center cursor-pointer mb-2 p-1 rounded-xl hover:bg-[#2F3136]"
+                  "flex items-center cursor-pointer mb-2 p-1 rounded-xl hover:bg-light-gray"
                 }
               >
                 {auth.avatar && (
@@ -54,7 +54,10 @@ export const MenuBurgerUser = ({ ...props }) => {
                   >
                     {auth.username}
                     {auth.role === "VERIFIED" && (
-                      <MdVerified size={20} className="ml-1 text-blue-400" />
+                      <MdVerified
+                        size={20}
+                        className="ml-1 text-light-blue-2"
+                      />
                     )}
                   </p>
                   <p className={fontSize.smallMd}>{auth.role}</p>
@@ -65,17 +68,14 @@ export const MenuBurgerUser = ({ ...props }) => {
               <div className="mb-1">
                 <button
                   onClick={onProfile}
-                  className={
-                    "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:" +
-                    backgroundColors.main
-                  }
+                  className="block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-light-gray"
                 >
                   <div className="flex items-center space-x-1 -mx-2">
                     <User size={17} />{" "}
                     {auth.role == "VERIFIED" ? (
                       <p className={fontSize.medium}>Profile</p>
                     ) : (
-                      <p className={fontSize.medium + "text-emerald-400"}>
+                      <p className={fontSize.medium + "text-light-blue-2"}>
                         Create Profile
                       </p>
                     )}
@@ -84,8 +84,7 @@ export const MenuBurgerUser = ({ ...props }) => {
                 <button
                   onClick={() => navigate("/settings")}
                   className={
-                    "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:" +
-                    backgroundColors.main
+                    "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-light-gray"
                   }
                 >
                   <div className="flex items-center space-x-1 -mx-2">
@@ -96,8 +95,7 @@ export const MenuBurgerUser = ({ ...props }) => {
                 <button
                   onClick={handleLogout}
                   className={
-                    "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:" +
-                    backgroundColors.main
+                    "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-light-gray"
                   }
                 >
                   <div className="flex items-center space-x-1 -mx-2">

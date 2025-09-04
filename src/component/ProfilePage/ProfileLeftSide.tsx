@@ -15,7 +15,7 @@ export const ProfileLeftSide = ({ ...props }) => {
         <div className="flex justify-center items-center">
           <img
             src={user?.avatar}
-            className="inline-block h-[95%] w-[95%] rounded-full ring-1 ring-gray-500"
+            className="inline-block h-[95%] w-[95%] rounded-full ring-1 ring-light-gray"
           />
         </div>
         <div className="md:ml-7 md:mt-2">
@@ -29,7 +29,7 @@ export const ProfileLeftSide = ({ ...props }) => {
                 <div className="relative">
                   <MdVerified
                     size={22}
-                    className="ml-1.5 text-blue-400 mt-[3px] cursor-pointer"
+                    className="ml-1.5 text-light-blue-2 mt-[3px] cursor-pointer"
                     onMouseEnter={() => {
                       setIsHovered(true);
                       console.log(isHovered);

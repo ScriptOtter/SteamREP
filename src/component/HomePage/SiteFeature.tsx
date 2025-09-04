@@ -1,26 +1,23 @@
-import { backgroundColors, textColors } from "@/styles/colors";
-import { fontSize } from "@/styles/font";
+import { ReactNode } from "react";
 
 interface Props {
   title: string;
   description: string;
-  image?: string;
+  icon?: ReactNode;
 }
 
 export const SiteFeature = ({ ...props }: Props) => {
-  const { title, description, image } = props;
+  const { title, description, icon } = props;
   return (
-    <div
-      className={textColors.white + backgroundColors.lightMain + "py-2 my-2"}
-    >
-      <div className="flex md:flex-row flex-col justify-between mx-8 space-x-8 pt-4">
-        <div className="md:flex-1/2 rounded-xl py-4 w-full">
-          <p className={fontSize.medium + "mb-4"}>{title}</p>
-          <p className={fontSize.smallMd}>{description}</p>
-        </div>
-        <div className="md:flex-1/2">
-          {image && <img className="" src={image} />}
-        </div>
+    <div className="bg-light-gray/40 hover:bg-light-blue transition-all duration-200 py-2 rounded-xl outline-2 outline-light-gray-2 md:w-[300px] w-[280px] h-[200px]">
+      <div className="bg-secondary/50 rounded-xl m-4 p-1 w-11 text-light-gray-3">
+        {icon}
+      </div>
+      <div className="text-white mx-4 text-[18px] mb-2">
+        <p>{title}</p>
+      </div>
+      <div className="text-white mx-4 text-[14px] mb-2">
+        <p>{description}</p>
       </div>
     </div>
   );

@@ -40,9 +40,7 @@ export const ReportPlayerPage = () => {
     <>
       <Header />
 
-      <div
-        className={backgroundColors.main + " h-full min-h-screen shadow-lg p-4"}
-      >
+      <div className="bg-secondary h-full min-h-screen shadow-lg p-4">
         <div className="flex justify-center items-center">
           <Container>
             {/* Ограничение максимальной ширины */}

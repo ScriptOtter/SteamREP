@@ -12,12 +12,14 @@ import { AccountRecoveryPage } from "./pages/AccountRecoveryPage.tsx";
 import { SignInForm } from "./component/AuthForm/SignInForm.tsx";
 import { SignUpForm } from "./component/AuthForm/SignUpForm.tsx";
 import { PasswordRecoveryForm } from "./component/AuthForm/PasswordRecoveryForm.tsx";
+import { BlogPage } from "./pages/BlogPage.tsx";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <ToastContainer />
+
         <Routes>
           <Route path="/" element={<HomePage />} />
           {/* <Route
@@ -29,6 +31,7 @@ function App() {
           <Route path="/auth/recovery" element={<PasswordRecoveryForm />} />
           <Route path="/report" element={<ReportPlayerPage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/blog" element={<BlogPage />} />
           <Route path="/profile/:id" element={<ProfilePage />} />
           <Route path="/account/verify" element={<HomePage />} />
           <Route

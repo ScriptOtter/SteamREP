@@ -26,7 +26,7 @@ export const Input = ({
     forReport:
       "w-15/16 flex-grow outline-none placeholder:text-s placeholder:italic",
     forAuth:
-      "bg-gray-700 w-full outline-[0.1px] outline-gray-500 rounded-[0.5vw] p-2 text-xs text-white focus:outline-indigo-500 focus:outline-2",
+      "w-full px-2 py-2 bg-light-gray outline-1 outline-gray-shadow rounded-md text-md text-white hover:outline-2 hover:outline-blue focus:outline-blue-active focus:outline-2 cursor-pointer duration-100",
   };
 
   return (

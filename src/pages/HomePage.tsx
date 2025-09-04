@@ -1,9 +1,6 @@
-import { backgroundColors } from "@/styles/colors";
 import { Header } from "../views/Header";
 import { Container } from "@/component/container";
-import { SiteFeature } from "@/component/HomePage/SiteFeature";
 import { useEffect } from "react";
-
 import { useDispatch } from "react-redux";
 import { API_ENDPOINTS } from "@/services/apiService";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -12,6 +9,8 @@ import { toast } from "react-toastify";
 import { getMe } from "@/data/getUser";
 import { useAuth } from "@/hooks/use-auth";
 import { setUser } from "@/store/UserSlice";
+
+import { FeaturesHomePage } from "@/component/FeaturesHomePage";
 
 export const HomePage = () => {
   const dispatch = useDispatch();
@@ -42,55 +41,49 @@ export const HomePage = () => {
   }, [token]);
   return (
     <>
-      <Header />
-      <div
-        className={
-          backgroundColors.main + "h-full min-h-screen pt-8 flex justify-center"
-        }
-      >
-        <Container>
-          <div className="flex justify-center items-center">
-            <div className="mx-1 md:mx-4">
-              <div className="text-white">
-                <p className=" text-4xl text-center mt-4">STEAM REP</p>
-                <p className="text-3xl text-center mt-2">Welcome</p>
+      <div className="h-screen bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:26px_26px] backdrop-blur-2xl">
+        <Header />
 
-                <p className="text-xl text-center mt-2">
-                  Become a part of our community. Influence the reputation of
-                  Steam users: report Cheats and Fraud.
-                </p>
-              </div>
-
-              <SiteFeature
-                title="Узнавай все данные Steam"
-                description="Сайт SteamREP позволяет отображать актуальную публичную и информацию Steam, Steam Bans and Restrictions, а также количество просмотров вашего профиля через наш сайт."
-                image="/public/assets/ProfileFeature.png"
-              />
-              <SiteFeature
-                title="Оставляй комментарии пользователям"
-                description="Авторизованные пользователи сайта SteamREP имеют возможность оставлять комментарии любому Steam пользователю, даже если этот Steam профиль скрыт."
-                image="/public/assets/CommentFeature.png"
-              />
-              <SiteFeature
-                title="Система Патруля CS2"
-                description="Пользователи SteamREP могут отсматривать и загружать свои CS2 demo в нашу систему для помощи комьюнити в поиске читеров. Каждый пользователь имеет право оставить свой вердикт о подозреваемом для дальнейшего опубликования Steam аккаунта."
-                image="/public/assets/ReportFeature.png"
-              />
-              <SiteFeature
-                title=""
-                description=" Вы можете закрепить профиль игроков и отслеживать их в
-                    реальном времени"
-              />
+        <div className="flex justify-center">
+          <Container className="">
+            <div className="flex justify-center items-center inset-0 h-full w-full md:mt-32 transition-all duration-300 ">
               <div>
-                <p>Помогай комьюнити</p>
-                <div>Оставляй репорты на игроков</div>
-                <div>Помечай скамеров</div>
+                <div className="pt-16 pb-8 ">
+                  <div className="text-white">
+                    <p className="text-5xl md:text-6xl text-center mb-4 md:mb-2 fade-in-home-text-1">
+                      Become a part of our community
+                    </p>
+                    <p className="text-3xl md:text-4xl text-center mb-2 md:mb-2.5 text-light-blue-3 fade-in-feature">
+                      Influence the reputation of Steam users
+                    </p>
+                    <div className="flex justify-center items-center">
+                      <p className="md:w-[55%] text-md text-center mb-6 font-semibold text-light-gray-2 fade-in-home-text-2">
+                        Steamrep is a unique site that allows you to track the
+                        real reputation of a Steam user
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex justify-center space-x-4 text-xl text-white">
+                    <button
+                      onClick={() => navigate("/auth/signup")}
+                      className="py-1 px-12 cursor-pointer bg-light-blue hover:bg-light-blue-2 rounded-xl outline-1 outline-light-gray hover:outline-light-gray-2"
+                    >
+                      Join in
+                    </button>
+                    <button
+                      onClick={() => navigate("/blog")}
+                      className="py-1 px-9.5 cursor-pointer bg-light-gray hover:bg-light-gray-2 rounded-xl outline-1 outline-light-gray hover:outline-light-gray-2"
+                    >
+                      About Us
+                    </button>
+                  </div>
+                </div>
+                <FeaturesHomePage />
               </div>
             </div>
-          </div>
-        </Container>
+          </Container>
+        </div>
       </div>
-      <footer>asdsadsa</footer>
     </>
   );
 };

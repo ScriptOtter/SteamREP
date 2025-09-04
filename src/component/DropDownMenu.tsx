@@ -2,7 +2,6 @@ import { LogOut, Settings, User } from "lucide-react";
 import { fontSize } from "@/styles/font";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
-import { backgroundColors } from "@/styles/colors";
 export const DropdownMenu = ({ ...props }) => {
   const navigate = useNavigate();
   const auth = useAuth();
@@ -13,15 +12,14 @@ export const DropdownMenu = ({ ...props }) => {
       <div className="flex flex-col">
         <div
           className={
-            backgroundColors.main +
-            "absolute ml-2 -right-2 top-12 w-40 rounded-xl outline-1"
+            "bg-secondary absolute ml-2 -right-2 top-12 w-40 rounded-xl outline-1"
           }
         >
           <div className="mb-1">
             <button
               onClick={onProfile}
               className={
-                "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-[#282a2e] rounded-t-xl"
+                "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-gray-hover rounded-t-xl"
               }
             >
               <div className="flex items-center space-x-1 -mx-2">
@@ -29,7 +27,7 @@ export const DropdownMenu = ({ ...props }) => {
                 {auth.role == "VERIFIED" ? (
                   <p className={fontSize.medium}>Profile</p>
                 ) : (
-                  <p className={fontSize.medium + "text-emerald-400"}>
+                  <p className={fontSize.medium + "text-light-blue-2"}>
                     Create Profile
                   </p>
                 )}
@@ -38,7 +36,7 @@ export const DropdownMenu = ({ ...props }) => {
             <button
               onClick={() => navigate("/settings")}
               className={
-                "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-[#282a2e]"
+                "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-gray-hover"
               }
             >
               <div className="flex items-center space-x-1 -mx-2">
@@ -49,7 +47,7 @@ export const DropdownMenu = ({ ...props }) => {
             <button
               onClick={handleLogout}
               className={
-                "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-[#282a2e] rounded-t-xl"
+                "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-gray-hover rounded-b-xl"
               }
             >
               <div className="flex items-center space-x-1 -mx-2">

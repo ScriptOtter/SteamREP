@@ -6,8 +6,11 @@ import axios, { AxiosError } from "axios";
 import { Loader } from "@/component/Loader";
 import { RouteParams } from "./ProfilePage";
 import { toast } from "react-toastify";
-import { Header } from "@/views/Header";
 import { z } from "zod";
+import { AuthLayout } from "@/component/AuthForm/AuthLayout";
+import { cn } from "@/lib/utils";
+import { PasswordRecommendation } from "@/component/AuthForm/PasswordRecommendation";
+import { Info } from "lucide-react";
 
 const passwordSchema = z
   .object({
@@ -50,6 +53,8 @@ export const AccountRecoveryPage = () => {
   const [error, setError] = useState<any>("");
   const [showError, setShowError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [passwordRecommendation, setPasswordRecommendation] =
+    useState<boolean>(false);
   const { id } = useParams<RouteParams>();
   const navigate = useNavigate();
 
@@ -117,65 +122,88 @@ export const AccountRecoveryPage = () => {
   console.log(errors);
   return (
     <>
-      <Header />
-      <div className="w-full h-screen bg-gray-900 flex items-center justify-center">
-        <div className="w-[400px]">
-          <p className="text-center text-white text-[20px] mb-8">
-            Password Recovery
-          </p>
-          <p className="text-center text-white text-[14px] mb-8">
-            Once you change your password, you will be able to log in to your
-            account using the new password. If you have any problems recovering
-            your password, please contact our support team.
-          </p>
-          <form
-            className="flex flex-col space-y-4 mb-8"
-            onSubmit={handleAccountRecovery}
-          >
-            <label className="text-white text-[14px] mb-3">Password</label>
-            <div className="flex flex-col items-center w-full">
-              <Input
-                variant="forAuth"
-                value={userFormData.password}
-                onChange={(e) => {
-                  setUserFormData((l) => ({ ...l, password: e.target.value }));
-                }}
-              ></Input>
+      <AuthLayout>
+        <p className="text-center text-white text-2xl mb-4">
+          Password Recovery
+        </p>
+        <p className="text-center text-white text-[14px] mb-6">
+          Once you change your password, you will be able to log in to your
+          account using the new password.
+        </p>
+
+        <form
+          className="flex flex-col space-y-4"
+          onSubmit={handleAccountRecovery}
+        >
+          <label className="text-white font-semibold text-[14px] mb-3">
+            Password
+          </label>
+          <div className="flex flex-col items-center w-full relative">
+            <div className="absolute text-gray-text cursor-pointer top-2.5 right-2.5 z-15 hover:text-gray-hover">
+              <Info
+                size={18}
+                onMouseEnter={() => setPasswordRecommendation(true)}
+                onMouseLeave={() => setPasswordRecommendation(false)}
+              />
             </div>
-            <p className="text-red-500">
-              {showError && errors?.password && errors.password._errors[0]}
-            </p>
-            <label className="text-white text-[14px] mb-3">2 Password</label>
-            <div className="flex flex-col items-center w-full">
-              <Input
-                variant="forAuth"
-                type="password"
-                value={userFormData.confirmPassword}
-                onChange={(e) => {
-                  setUserFormData((l) => ({
-                    ...l,
-                    confirmPassword: e.target.value,
-                  }));
-                }}
-              ></Input>
-            </div>
-            <p className="text-red-500">
-              {showError &&
-                errors?.confirmPassword &&
-                errors.confirmPassword._errors[0]}
-            </p>
-            <div className="flex justify-center items-center w-full">
-              <button
-                className="bg-indigo-600 w-1/1 p-1.5 rounded-[8px] text-white text-[14px] cursor-pointer"
-                type="submit"
+            <Input
+              type="password"
+              placeholder="••••••••"
+              variant="forAuth"
+              value={userFormData.password}
+              onChange={(e) => {
+                setUserFormData((l) => ({ ...l, password: e.target.value }));
+              }}
+            ></Input>
+            <div className="relative w-full">
+              <div
+                className={cn(
+                  passwordRecommendation
+                    ? " absolute bg-light-gray p-3.5 outline-1 rounded-2xl text-white top-2 right-0"
+                    : "hidden"
+                )}
               >
-                {!loading ? "Change Password" : <Loader />}
-              </button>
+                <PasswordRecommendation />
+              </div>
             </div>
-            <p className="text-red-500">{showError && error}</p>
-          </form>
-        </div>
-      </div>
+          </div>
+
+          <p className="text-red-500">
+            {showError && errors?.password && errors.password._errors[0]}
+          </p>
+          <label className="text-white font-semibold text-[14px] mb-3">
+            Confirm Password
+          </label>
+          <div className="flex flex-col items-center w-full">
+            <Input
+              type="password"
+              placeholder="••••••••"
+              variant="forAuth"
+              value={userFormData.confirmPassword}
+              onChange={(e) => {
+                setUserFormData((l) => ({
+                  ...l,
+                  confirmPassword: e.target.value,
+                }));
+              }}
+            ></Input>
+          </div>
+          <p className="text-red-500">
+            {showError &&
+              errors?.confirmPassword &&
+              errors.confirmPassword._errors[0]}
+          </p>
+          <div className="flex justify-center items-center w-full">
+            <button
+              className="bg-blue w-full p-2 rounded-[8px]  text-white text-[14px] cursor-pointer"
+              type="submit"
+            >
+              {!loading ? "Change Password" : <Loader />}
+            </button>
+          </div>
+          <p className="text-red-500">{showError && error}</p>
+        </form>
+      </AuthLayout>
     </>
   );
 };

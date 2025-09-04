@@ -125,8 +125,8 @@ export const CommentTextArea = ({ renderComments }: Props) => {
 
   return (
     <>
-      <div hidden={!auth.id} className="w-[100%]">
-        <div className=" p-4 border-b border-gray-700">
+      <div hidden={!auth.id} className="w-full">
+        <div className="p-4 border-light-gray">
           <div className="flex items-start">
             <img
               src={auth.avatar!}
@@ -140,7 +140,7 @@ export const CommentTextArea = ({ renderComments }: Props) => {
                   {auth.username}
                 </h3>
                 <button
-                  className="bg-orange-500 px-2 rounded-xl cursor-pointer text-white w-[121px] hover:bg-orange-700 transition-all transform hover:translate-y-[-2px] hover:shadow-md duration-300"
+                  className="bg-light-blue px-2 rounded-xl cursor-pointer text-white  hover:bg-light-blue-2 transition-all transform hover:translate-y-[-2px] hover:shadow-md duration-100"
                   onClick={() => handlePost(id!)}
                 >
                   {!loading ? "Post Comment" : <Loader />}
@@ -149,7 +149,7 @@ export const CommentTextArea = ({ renderComments }: Props) => {
               <div className="relative">
                 <textarea
                   placeholder="Enter your comment..."
-                  className="text-white break-all w-full border-gray-300 outline-none transition-all duration-300 resize-none border-2 rounded-lg pl-4 px-4 py-3 focus:h-32 h-13 focus:border-orange-400"
+                  className="text-white break-all w-full border-gray-300 outline-none transition-all duration-200 resize-none border-2 rounded-lg pl-4 px-4 py-3 focus:h-32 h-13 focus:border-light-blue"
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
                 ></textarea>
@@ -172,7 +172,7 @@ export const CommentTextArea = ({ renderComments }: Props) => {
                     <X
                       onClick={() => setImage("")}
                       size={18}
-                      className="mt-1 text-white hover:text-orange-700 transition-all duration-300 cursor-pointer"
+                      className="mt-1 text-white hover:text-light-blue-2 transition-all duration-100 cursor-pointer"
                     />
                   </div>
                 )}
@@ -189,7 +189,7 @@ export const CommentTextArea = ({ renderComments }: Props) => {
                     <button
                       onClick={handleButtonClick}
                       id="image-upload"
-                      className="text-white absolute top-1.5 right-1.5 cursor-pointer duration-300 hover:text-orange-400"
+                      className="text-white absolute top-1.5 right-1.5 cursor-pointer duration-100 hover:text-light-blue-2"
                     >
                       <ImageUp size={16} />
                     </button>

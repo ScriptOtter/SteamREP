@@ -110,11 +110,11 @@ export const Comment = ({
         "w-full" +
         cn(
           !updating &&
-            "duration-500 transition-all hover:outline-1 hover:outline-gray-200 rounded-lg hover:bg-gray-200/10"
+            "duration-300 transition-all hover:outline-light-gray rounded-md hover:bg-gray-200/10"
         )
       }
     >
-      <div className=" p-4 border-b border-gray-700">
+      <div className="p-4 border-t border-gray-700">
         <div className="flex items-start">
           <img
             src={avatar}
@@ -200,7 +200,7 @@ export const Comment = ({
             <div className="relative">
               <textarea
                 hidden={!updating}
-                className="text-white break-all w-full border-gray-300 outline-none transition-all duration-300 resize-none border-2 rounded-lg pl-4 px-4 py-3 h-32 focus:border-orange-400"
+                className="text-white break-all w-full border-gray-300 outline-none transition-all duration-200 resize-none border-2 rounded-lg pl-4 px-4 py-3 focus:h-32 h-13 focus:border-light-blue"
                 defaultValue={comment}
                 onChange={(e) => newComment(e.target.value)}
               ></textarea>

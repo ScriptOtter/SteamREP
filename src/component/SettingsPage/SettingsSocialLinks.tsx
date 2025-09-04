@@ -6,17 +6,13 @@ import {
 } from "@/data/profileLinks";
 import { backgroundColors, textColors } from "@/styles/colors";
 import { SettingsProfileItems } from "./SettingsProfileItems";
+import { SettingsLayout } from "./SettingsLayout";
 
 export const SettingsSocialLinks = ({ ...props }) => {
   const { inputValue } = props;
   return (
     <>
-      <div className={backgroundColors.darkMain + "w-full rounded-t-2xl"}>
-        <div className={backgroundColors.lightMain + "rounded-t-2xl"}>
-          <h1 className={textColors.white + "p-6 text-xl font-bold"}>
-            Social Links
-          </h1>
-        </div>
+      <SettingsLayout header={"Social Links"}>
         <SettingsProfileItems
           key={6}
           title="Telegram link"
@@ -49,7 +45,7 @@ export const SettingsSocialLinks = ({ ...props }) => {
           placeholder="Your Discord Nickname"
           onClick={saveDiscordNickname}
         />
-      </div>
+      </SettingsLayout>
     </>
   );
 };

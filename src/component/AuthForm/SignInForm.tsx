@@ -6,7 +6,8 @@ import { API_ENDPOINTS } from "@/services/apiService";
 import axios, { AxiosError } from "axios";
 import { Input } from "../Input";
 import { Loader } from "../Loader";
-import { AuthWraper } from "./AuthWraper";
+import { AuthLayout } from "./AuthLayout";
+import { ArrowLeft } from "lucide-react";
 
 export const SignInForm = () => {
   const handleSignIn = async (event: React.FormEvent) => {
@@ -59,8 +60,14 @@ export const SignInForm = () => {
 
   return (
     <>
-      <AuthWraper>
-        <div>
+      <AuthLayout>
+        <div className="relative">
+          <ArrowLeft
+            onClick={() => {
+              navigate("/");
+            }}
+            className="text-blue hover:text-blue-active cursor-pointer absolute size-6.5 top-1 left-0"
+          />
           <p className="text-center text-white text-2xl mb-8">
             Sign in to your account
           </p>
@@ -68,22 +75,29 @@ export const SignInForm = () => {
             className="flex flex-col space-y-4 mb-8"
             onSubmit={handleSignIn}
           >
-            <label className="text-white text-[14px] mb-3">Username</label>
+            <label className="text-white font-semibold text-[14px] mb-3">
+              Username
+            </label>
             <div className="flex flex-col items-center w-full">
               <Input
                 variant="forAuth"
                 value={username}
+                placeholder="user"
                 onChange={(e) => {
                   setUsername(e.target.value);
                 }}
               ></Input>
             </div>
 
-            <label className="text-white text-[14px] mb-3">Password</label>
+            <label className="text-white text-[14px] font-semibold mb-3">
+              Password
+            </label>
             <div className="flex flex-col items-center w-full">
               <Input
                 variant="forAuth"
                 type="password"
+                placeholder="••••••••"
+                className="placeholder:text-xs"
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -104,14 +118,14 @@ export const SignInForm = () => {
                 <p className="text-[14px] text-white">Remember me</p>
               </div>
 
-              <p className="text-[14px] cursor-pointer text-indigo-500 hover:text-indigo-600 hover:underline hover:underline-2">
+              <p className="text-blue hover:text-blue-active text-[14px] cursor-pointer hover:underline hover:underline-2">
                 <Link to="/auth/recovery">Forgot password?</Link>
               </p>
             </div>
             <p className="text-red-500">{showError && error}</p>
             <div className="flex justify-center items-center w-full">
               <button
-                className="bg-indigo-600 w-1/1 p-1.5 rounded-[8px] text-white text-[14px] cursor-pointer"
+                className="bg-blue w-full p-2 rounded-[8px] text-white text-[14px] cursor-pointer"
                 type="submit"
               >
                 {!loading ? "Sign In" : <Loader />}
@@ -120,16 +134,14 @@ export const SignInForm = () => {
           </form>
           <div>
             <div className="flex justify-center space-x-2 ">
-              <p className="text-white cursor-pointer text-[14px]">
-                Not a member?
-              </p>
-              <p className="text-indigo-500 text-[14px]">
+              <p className="text-white text-[14px]">Not a member?</p>
+              <p className="text-blue hover:text-blue-active text-[14px] cursor-pointer hover:underline hover:underline-2">
                 <Link to="/auth/signup">Log Up</Link>
               </p>
             </div>
           </div>
         </div>
-      </AuthWraper>
+      </AuthLayout>
     </>
   );
 };
