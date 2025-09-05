@@ -14,6 +14,7 @@ export default defineConfig({
   server: {
     allowedHosts: [
       "fifty-ends-beam.loca.lt", // Добавьте ваш хост сюда
+      "phys-starts-modular-discrimination.trycloudflare.com",
     ],
   },
 });

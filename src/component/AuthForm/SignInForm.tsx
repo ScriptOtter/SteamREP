@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "@/store/UserSlice";
@@ -8,6 +8,7 @@ import { Input } from "../Input";
 import { Loader } from "../Loader";
 import { AuthLayout } from "./AuthLayout";
 import { ArrowLeft } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
 
 export const SignInForm = () => {
   const handleSignIn = async (event: React.FormEvent) => {
@@ -57,6 +58,14 @@ export const SignInForm = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const auth = useAuth();
+
+  useEffect(() => {
+    if (auth.isAuth) {
+      navigate("/");
+    }
+  }, [auth]);
 
   return (
     <>

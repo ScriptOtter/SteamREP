@@ -1,5 +1,5 @@
 import { Input } from "../Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import z from "zod";
 import { toast } from "react-toastify";
 import axios, { AxiosError } from "axios";
@@ -10,6 +10,7 @@ import { ArrowLeft, Info } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { PasswordRecommendation } from "./PasswordRecommendation";
+import { useAuth } from "@/hooks/use-auth";
 
 type FormData = z.infer<typeof formDataScheme>;
 
@@ -106,6 +107,15 @@ export const SignUpForm = () => {
 
   const errors = showErrors ? validate() : undefined;
   const navigate = useNavigate();
+
+  const auth = useAuth();
+
+  useEffect(() => {
+    if (auth.isAuth) {
+      navigate("/");
+    }
+  }, [auth]);
+
   return (
     <>
       <AuthLayout>

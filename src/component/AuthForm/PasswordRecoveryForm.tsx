@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from "@/services/apiService";
 import axios, { AxiosError } from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { z } from "zod";
 import { Input } from "../Input";
@@ -8,6 +8,7 @@ import { Loader } from "../Loader";
 import { AuthLayout } from "./AuthLayout";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/use-auth";
 
 export const PasswordRecoveryForm = () => {
   const handleRecoveryAccount = async (event: React.FormEvent) => {
@@ -46,6 +47,15 @@ export const PasswordRecoveryForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const emailSchema = z.string().email({ message: "Invalid email format!" });
   const navigate = useNavigate();
+
+  const auth = useAuth();
+
+  useEffect(() => {
+    if (auth.isAuth) {
+      navigate("/");
+    }
+  }, [auth]);
+
   return (
     <>
       <AuthLayout>
