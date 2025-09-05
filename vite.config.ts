@@ -15,8 +15,7 @@ export default defineConfig({
     host: true,
     port: 5173,
     allowedHosts: [
-      "fifty-ends-beam.loca.lt", // Добавьте ваш хост сюда
-      "phys-starts-modular-discrimination.trycloudflare.com",
+      "steamrep.help", // Добавьте ваш хост сюда
     ],
   },
 });
