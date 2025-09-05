@@ -32,7 +32,7 @@ COPY --from=base /app/node_modules ./node_modules
 # Указываем переменную окружения для запуска приложения
 ENV NODE_ENV=production
 
-EXPOSE 3001
+EXPOSE 5173
 
 # Команда для запуска приложения
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "serve"]
