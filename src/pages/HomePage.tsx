@@ -41,12 +41,12 @@ export const HomePage = () => {
   }, [token]);
   return (
     <>
-      <div className="h-screen bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:26px_26px] backdrop-blur-2xl">
+      <div className="h-full min-h-screen bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:26px_26px] backdrop-blur-2xl">
         <Header />
 
         <div className="flex justify-center">
           <Container className="">
-            <div className="flex justify-center items-center inset-0 h-full w-full md:mt-32 transition-all duration-300 ">
+            <div className="flex justify-center items-center inset-0 w-full md:mt-32 transition-all duration-300 ">
               <div>
                 <div className="pt-16 pb-8 ">
                   <div className="text-white">
