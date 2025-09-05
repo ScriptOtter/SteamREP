@@ -32,8 +32,5 @@ COPY --from=base /app/node_modules ./node_modules
 # Указываем переменную окружения для запуска приложения
 ENV NODE_ENV=production
 
-# Открываем порт, на котором будет работать приложение
-EXPOSE 5173
-
 # Команда для запуска приложения
 CMD ["npm", "run", "dev"]
