@@ -4,9 +4,9 @@ RUN apt-get update && apt-get install -y libc6-dev && rm -rf /var/lib/apt/lists/
 
 WORKDIR /app
 
-WORKDIR /app
-
 COPY package.json package-lock.json ./
+
+RUN npm install
 
 COPY . .
 
