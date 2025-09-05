@@ -36,4 +36,4 @@ ENV NODE_ENV=production
 EXPOSE 5173
 
 # Команда для запуска приложения
-CMD ["npm", "run", "serve"]
+CMD ["npm", "run", "dev"]
