@@ -3,6 +3,7 @@ import { textColors } from "@/styles/colors";
 import { useState } from "react";
 import { MdVerified } from "react-icons/md";
 import { SocialLinks } from "./SocialLinks";
+import { cn } from "@/lib/utils";
 
 export const ProfileLeftSide = ({ ...props }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -21,7 +22,13 @@ export const ProfileLeftSide = ({ ...props }) => {
         <div className="md:ml-7 md:mt-2">
           <div className="flex items-center relative justify-center md:justify-start">
             <div className="text-2xl text-bold text-white mt-2 flex items-center">
-              <p className="">
+              <p
+                className={cn(
+                  user?.personaName && user?.personaName.length > 10
+                    ? "w-[40%] break-words"
+                    : "w-full"
+                )}
+              >
                 {user?.personaName != "NaN" ? user?.personaName : "Unknown"}
               </p>
 

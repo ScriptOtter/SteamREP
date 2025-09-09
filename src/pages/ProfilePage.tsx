@@ -97,7 +97,7 @@ export const ProfilePage = () => {
     <>
       <Header />
 
-      <div className={"pt-8 flex justify-center"}>
+      <div className={"flex justify-center"}>
         <Container
           className={cn(
             (currentPage === "CS2" || currentPage === "CS2Matches") &&
@@ -142,9 +142,9 @@ export const ProfilePage = () => {
                     <div
                       className={cn(
                         currentPage === "CS2"
-                          ? "bg-orange-500 rounded-l-xl"
+                          ? "bg-light-blue rounded-l-xl"
                           : backgroundColors.darkMain + "rounded-l-xl",
-                        "cursor-pointer hover:bg-orange-400 hover:rounded-l-xl px-3 duration-300"
+                        "cursor-pointer hover:bg-light-blue-2 hover:rounded-l-xl px-3 duration-300"
                       )}
                       onClick={() => {
                         setCurrentPage("CS2");
@@ -156,9 +156,9 @@ export const ProfilePage = () => {
                     <div
                       className={cn(
                         currentPage === "CS2Matches"
-                          ? "bg-orange-500 rounded-r-xl"
+                          ? "bg-light-blue rounded-r-xl"
                           : backgroundColors.darkMain + "rounded-r-xl",
-                        "cursor-pointer hover:bg-orange-400 hover:rounded-r-xl px-1 duration-300"
+                        "cursor-pointer hover:bg-light-blue-2 hover:rounded-r-xl px-1 duration-300"
                       )}
                       onClick={() => {
                         setCurrentPage("CS2Matches");

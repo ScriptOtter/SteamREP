@@ -13,6 +13,7 @@ import { SignInForm } from "./component/AuthForm/SignInForm.tsx";
 import { SignUpForm } from "./component/AuthForm/SignUpForm.tsx";
 import { PasswordRecoveryForm } from "./component/AuthForm/PasswordRecoveryForm.tsx";
 import { BlogPage } from "./pages/BlogPage.tsx";
+import { TrackingUsersPage } from "./pages/TrackingUsersPage.tsx";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/profile/:id" element={<ProfilePage />} />
           <Route path="/account/verify" element={<HomePage />} />
+          <Route path="/tracking-users" element={<TrackingUsersPage />} />
           <Route
             path="/account/recovery/:id"
             element={<AccountRecoveryPage />}

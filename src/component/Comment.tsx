@@ -158,27 +158,27 @@ export const Comment = ({
                     </>
                   ) : (
                     <button
-                      className="bg-orange-500 px-2 py-0.5 rounded-xl cursor-pointer text-white w-[121px] hover:bg-orange-700 transition-all transform hover:translate-y-[-2px] hover:shadow-md duration-300"
+                      className="bg-light-blue px-2 py-0.5 rounded-xl cursor-pointer text-white w-[121px] hover:bg-light-blue-2 transition-all transform hover:translate-y-[-2px] hover:shadow-md duration-300"
                       onClick={() => handleUpdate(commentId)}
                     >
                       {!loading ? "Edit Comment" : <Loader />}
                     </button>
                   )}
                   {auth.username === username && (
-                    <>
+                    <div className="flex justify-center items-center space-x-2">
                       <Pencil
                         size={12}
                         onClick={() => setUpdating((prev) => !prev)}
-                        className="cursor-pointer hover:text-orange-500"
+                        className="cursor-pointer hover:text-light-blue"
                       />
                       <X
-                        size={14}
+                        size={16}
                         onClick={() => {
                           deteleComment(commentId);
                         }}
                         className="cursor-pointer hover:text-red-500"
                       />
-                    </>
+                    </div>
                   )}
                 </div>
               </div>
@@ -230,7 +230,7 @@ export const Comment = ({
                       setDeletedImage(true);
                     }}
                     size={18}
-                    className="mt-1 text-white hover:text-orange-700 transition-all duration-300 cursor-pointer"
+                    className="mt-1 text-white hover:text-light-blue transition-all duration-300 cursor-pointer"
                   />
                 </div>
               )}
@@ -247,7 +247,7 @@ export const Comment = ({
                   <button
                     onClick={handleButtonClick}
                     id="image-upload2"
-                    className="text-white absolute top-1.5 right-1.5 cursor-pointer duration-300 hover:text-orange-400"
+                    className="text-white absolute top-1.5 right-1.5 cursor-pointer duration-300 hover:text-light-blue"
                   >
                     <ImageUp size={16} />
                   </button>

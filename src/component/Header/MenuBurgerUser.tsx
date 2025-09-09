@@ -15,11 +15,7 @@ export const MenuBurgerUser = ({ ...props }) => {
       <div>
         <div className="flex flex-col">
           {!isAuthenticated ? (
-            <div
-              className={
-                fontSize.mediumLg + "flex items-center space-x-2 py-2 px-2"
-              }
-            >
+            <div className={"text-2xl flex items-center space-x-2 py-2 px-2"}>
               <LogIn size={24} />{" "}
               <Link
                 to="/auth/signin"
@@ -35,7 +31,7 @@ export const MenuBurgerUser = ({ ...props }) => {
                   auth.role == "VERIFIED" && navigate("/profile/" + auth.id)
                 }
                 className={
-                  "flex items-center cursor-pointer mb-2 p-1 rounded-xl hover:bg-light-gray"
+                  "flex items-center cursor-pointer mb-2 p-1 rounded-xl hover:bg-gray-hover"
                 }
               >
                 {auth.avatar && (
@@ -68,7 +64,7 @@ export const MenuBurgerUser = ({ ...props }) => {
               <div className="mb-1">
                 <button
                   onClick={onProfile}
-                  className="block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-light-gray"
+                  className="block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-gray-hover"
                 >
                   <div className="flex items-center space-x-1 -mx-2">
                     <User size={17} />{" "}
@@ -84,7 +80,7 @@ export const MenuBurgerUser = ({ ...props }) => {
                 <button
                   onClick={() => navigate("/settings")}
                   className={
-                    "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-light-gray"
+                    "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-gray-hover"
                   }
                 >
                   <div className="flex items-center space-x-1 -mx-2">
@@ -95,7 +91,7 @@ export const MenuBurgerUser = ({ ...props }) => {
                 <button
                   onClick={handleLogout}
                   className={
-                    "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-light-gray"
+                    "block w-full text-left px-4 py-1.5 text-white cursor-pointer hover:bg-gray-hover"
                   }
                 >
                   <div className="flex items-center space-x-1 -mx-2">

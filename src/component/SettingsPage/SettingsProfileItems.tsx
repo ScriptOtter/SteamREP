@@ -56,7 +56,7 @@ export const SettingsProfileItems = ({ ...props }: IProps) => {
         {onClick &&
           props.title != "Your email" &&
           input != props.valueInput && (
-            <div className={"absolute right-8 md:top-11.5 bottom-4.5"}>
+            <div className={"absolute right-8 md:top-12 bottom-4.5"}>
               <button
                 onClick={() => onClick(input)}
                 className={

@@ -87,7 +87,7 @@ export const BlogPage = () => {
   return (
     <>
       <Header />
-      <div className={"pt-8 flex justify-center"}>
+      <div className={"flex justify-center"}>
         <Container>
           <div>
             <h1 className="text-3xl font-bold mb-6 text-center text-white">

@@ -4,7 +4,14 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "@/hooks/use-auth.ts";
 import { ProfileButton } from "@/component/profileButton";
-import { BellDot, Bookmark, CircleHelp, LogIn, Search } from "lucide-react";
+import {
+  BellDot,
+  Bookmark,
+  CircleHelp,
+  LogIn,
+  Search,
+  SearchIcon,
+} from "lucide-react";
 import { getMe } from "@/data/getUser.ts";
 import { getUserId, profileURL } from "@/utils/steamUrl";
 import { useDropDownMenu } from "@/hooks/use-drop-down-menu";
@@ -15,6 +22,10 @@ import { MenuBurger } from "@/component/Header/MenuBurger";
 import { NavigationMenu } from "@/component/Header/NavigationMenu";
 import { fontSize } from "@/styles/font";
 import { DropdownMenu } from "@/component/DropDownMenu";
+import { steamVerification } from "@/lib/steamVerification";
+import { TrackingBlock } from "@/component/TrackingUsers/TrackingBlock";
+import { cn } from "@/lib/utils";
+import { NotificationsBlock } from "@/component/Notifications/NotificationsBlock";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -22,6 +33,18 @@ export const Header = () => {
   const auth = useAuth();
 
   const { isMenuOpen, toggleMenu, menuRef } = useDropDownMenu();
+  const {
+    isMenuOpen: isTrackingMenuOpen,
+    toggleMenu: trackingToggleMenu,
+    menuRef: trackingMenuRef,
+  } = useDropDownMenu();
+
+  const {
+    isMenuOpen: isNotificationMenuOpen,
+    toggleMenu: notificationToggleMenu,
+    menuRef: notificationMenuRef,
+  } = useDropDownMenu();
+
   const [searchInput, setSearchInput] = useState<string>("");
   const [isAuthenticated, setIsAuthenticated] = useState(auth?.isAuth || false);
 
@@ -43,6 +66,7 @@ export const Header = () => {
       <div className={"bg-primary shadow-lg"}>
         <div className="flex justify-between items-center p-3">
           {/* Логотип */}
+
           <div className="flex items-center md:mx-2 lg:mx-8 space-x-2 mr-4">
             <CircleHelp className="size-9 text-light-gray" />
             <Link to="/" className="text-white text-2xl font-bold">
@@ -84,7 +108,9 @@ export const Header = () => {
           <div className="text-white md:hidden">
             <MenuBurger
               isAuthenticated={isAuthenticated}
-              onProfile={() => profileURL(navigate, auth)}
+              onProfile={() =>
+                auth.steamid ? profileURL(navigate, auth) : steamVerification()
+              }
               handleLogout={handleLogout}
               onSettings={() => navigate("/settings")}
             />
@@ -92,11 +118,31 @@ export const Header = () => {
 
           {/* Уведомления */}
           <div className="lg:flex justify-center items-center space-x-6 mx-1 hidden lg:visible">
-            <div>
-              <Bookmark className="text-[#F04747]" />
+            <div className="relative " ref={trackingMenuRef}>
+              <Bookmark
+                onClick={() => trackingToggleMenu()}
+                className={cn(
+                  !isTrackingMenuOpen ? "text-[#F04747]" : "text-red-600",
+                  "cursor-pointer hover:text-red-600"
+                )}
+              />
+              {isTrackingMenuOpen && <TrackingBlock />}
             </div>
-            <div>
-              <BellDot className="text-[#7289DA]" />
+            <div className="relative " ref={notificationMenuRef}>
+              <div
+                className={cn(
+                  !auth ? "bg-green-400" : "bg-light-blue-3",
+                  "rounded-full w-[9px] h-[9px] absolute top-1 right-[2px]"
+                )}
+              ></div>
+              <BellDot
+                onClick={() => notificationToggleMenu()}
+                className={cn(
+                  !isNotificationMenuOpen ? "text-light-blue-2" : "text-blue",
+                  "cursor-pointer hover:text-blue"
+                )}
+              />
+              {isNotificationMenuOpen && <NotificationsBlock />}
             </div>
           </div>
 
@@ -125,7 +171,11 @@ export const Header = () => {
                 {isMenuOpen && (
                   <DropdownMenu
                     closeMenu={() => toggleMenu()}
-                    onProfile={() => profileURL(navigate, auth)}
+                    onProfile={() =>
+                      auth.steamid
+                        ? profileURL(navigate, auth)
+                        : steamVerification()
+                    }
                     handleLogout={handleLogout}
                     onSettings={() => navigate("/settings")}
                   />

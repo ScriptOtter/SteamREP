@@ -49,7 +49,7 @@ export const SettingsPage = () => {
     <>
       <Header />
 
-      <div className="h-full flex justify-center pt-8">
+      <div className="h-full flex justify-center">
         <Container>
           {loading ? (
             <>

@@ -1,28 +1,9 @@
+import { menu, menuUrls } from "@/data/navLinks";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const NavigationMenu = () => {
-  const menu: { [key: string]: string } = {
-    home: "Home",
-    reportUser: "Report",
-    blog: "Blog",
-    mostReportedPlayers: "Most Reported Players",
-    bannedPlayers: "Banned Players",
-    scammers: "Scammers",
-    VACTracker: "VAC Tracker",
-    morelinks: "More links",
-  };
-  const menuUrls: { [key: string]: string } = {
-    home: "/",
-    reportUser: "/report",
-    blog: "/blog",
-    mostReportedPlayers: "/MostReportedPlayers",
-    bannedPlayers: "/BannedPlayers",
-    scammers: "/Scammers",
-    VACTracker: "/VACTracker",
-    morelinks: "/404",
-  };
   const [currentPage, newPage] = useState<string>("");
   const navigate = useNavigate();
   useEffect(() => {
@@ -53,7 +34,7 @@ export const NavigationMenu = () => {
           ))}
         </div>
       </nav>
-      <div className="bg-light-gray h-[1.2px]"></div>
+      <div className="bg-light-gray h-[1.2px] mb-8"></div>
     </>
   );
 };

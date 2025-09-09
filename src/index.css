@@ -49,6 +49,11 @@
   }
 }
 
+.custom-scroll::-webkit-scrollbar {
+  width: 0; /* Скрывает полосу прокрутки */
+  background: transparent; /* Фон полосы прокрутки */
+}
+
 @keyframes fadeInFeatire {
   from {
     opacity: 0;

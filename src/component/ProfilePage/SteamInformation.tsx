@@ -60,7 +60,7 @@ export const SteamInformation = (user: ISteamUser) => {
         </div>
         <div className="flex space-x-1">
           <p className="text-light-gray-2 lg:w-[20%] w-[30%]"> Custom URL:</p>
-          <p className="">{profileUrl}</p>
+          <p>{profileUrl && profileUrl.split("/")[4]}</p>
           <Copy
             onClick={() => navigator.clipboard.writeText(profileUrl || "")}
             size={17}

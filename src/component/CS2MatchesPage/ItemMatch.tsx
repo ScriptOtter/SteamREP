@@ -41,7 +41,7 @@ export const ItemMatch = ({ ...props }) => {
     <>
       <div
         className={cn(
-          matchResult == 1 && "bg-green-700",
+          matchResult == 1 && "bg-green-400/80",
           matchResult == 0 && "bg-gray-600",
           matchResult == -1 && "bg-red-600",
           "mx-2 rounded-s mb-0.5 items-center grid grid-cols-29 gap-1 text-xs xl:text-xl"
@@ -49,10 +49,14 @@ export const ItemMatch = ({ ...props }) => {
       >
         <div className="flex items-center col-span-3 space-x-2 ml-2 col-start-1">
           <img src={`/public/map_icons/map_icon_${map}.svg`} />
-          <div>{map}</div>
+          <div>
+            <p className="text-[10px] md:text-[12px] xl:text-[16px]">{map}</p>
+          </div>
         </div>
-        <p className="col-span-4 col-start-6 text-xs xl:text-xl">{date}</p>
-        <p className="col-span-3 col-start-11">{score}</p>
+        <p className="col-span-4 col-start-6 text-xs xl:text-[14px]">{date}</p>
+        <div className="col-span-3 col-start-11 bg-amber-200 text-center w-8 md:w-13 rounded-md">
+          <p>{score}</p>
+        </div>
 
         <div className="col-span-3 col-start-14">
           <img

@@ -43,7 +43,7 @@ export const ReportPlayerPage = () => {
           <Container>
             {/* Ограничение максимальной ширины */}
 
-            <h1 className="text-2xl text-white pt-6 mb-4 text-center md:text-left">
+            <h1 className="text-2xl text-white mb-4 text-center md:text-left">
               Report (Доступно тем кто верифицировался через стим)
             </h1>
             <nav className="flex justify-between text-white text-2xl mb-2">

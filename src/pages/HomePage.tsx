@@ -46,9 +46,9 @@ export const HomePage = () => {
 
         <div className="flex justify-center">
           <Container className="">
-            <div className="flex justify-center items-center inset-0 w-full md:mt-32 transition-all duration-300 ">
+            <div className="flex justify-center items-center inset-0 w-full md:mt-24 transition-all duration-300 ">
               <div>
-                <div className="pt-16 pb-8 ">
+                <div className="pb-8 ">
                   <div className="text-white">
                     <p className="text-5xl md:text-6xl text-center mb-4 md:mb-2 fade-in-home-text-1">
                       Become a part of our community

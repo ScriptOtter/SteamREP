@@ -5,8 +5,8 @@ export const CS2Matches = () => {
   const matches = [
     {
       map: "de_dust2",
-      date: "Wed 28th Aug 25",
-      score: "13:10",
+      date: "Dec 8 2013",
+      score: "13:1",
       rank: 10,
       kills: 10,
       deaths: 2,
@@ -21,7 +21,7 @@ export const CS2Matches = () => {
     {
       map: "de_mirage",
       date: "Wed 27th Aug 25",
-      score: "11:13",
+      score: "1:13",
       rank: 10,
       kills: 10,
       deaths: 2,
@@ -128,8 +128,8 @@ export const CS2Matches = () => {
     <>
       <div className="h-full text-white">
         <CS2HeaderTable />
-        {matches.map((match) => (
-          <ItemMatch match={match} />
+        {matches.map((match, key) => (
+          <ItemMatch match={match} key={key} />
         ))}
       </div>
     </>
