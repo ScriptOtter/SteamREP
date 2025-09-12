@@ -1,6 +1,6 @@
 import { menu, menuUrls } from "@/data/navLinks";
 import { getUserId } from "@/utils/steamUrl";
-import { ChevronRight, Search } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 

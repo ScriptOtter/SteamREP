@@ -1,4 +1,5 @@
 import { IAuthor } from "./IAuthor";
+import { IImages } from "./IImages";
 import { ISteamUser } from "./ISteamUser";
 
 export interface IComment {
@@ -7,7 +8,7 @@ export interface IComment {
   recipientId: string;
   createdAt: string;
   updatedAt: string;
-  pictureUrl: string;
+  images?: IImages[];
   author: IAuthor;
   steamUser: ISteamUser;
 }

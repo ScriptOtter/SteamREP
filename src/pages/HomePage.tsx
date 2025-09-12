@@ -7,14 +7,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { getMe } from "@/data/getUser";
-import { useAuth } from "@/hooks/use-auth";
+
 import { setUser } from "@/store/UserSlice";
 
 import { FeaturesHomePage } from "@/component/FeaturesHomePage";
 
 export const HomePage = () => {
   const dispatch = useDispatch();
-  const auth = useAuth();
+
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const token = queryParams.get("token");
@@ -32,7 +32,7 @@ export const HomePage = () => {
       if (res) {
         console.log(res);
         dispatch(setUser(res.data));
-        getMe(dispatch, auth);
+        getMe(dispatch);
         toast.success("Emain verified!", res.data);
       }
     };

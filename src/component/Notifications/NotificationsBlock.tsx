@@ -1,53 +1,38 @@
-import { Sword } from "lucide-react";
 import { NotificationItem } from "./NotificationItem";
 import { useEffect, useState } from "react";
 import { PageLoader } from "../Loader";
-const Notifications = [
-  {
-    isViewed: false,
-    icon: <Sword />,
-    title: "Welcome!",
-    descriptions: "You have successfully created an account.",
-    date: "12-12-2002 18:30",
-  },
-  {
-    isViewed: false,
-    icon: <Sword />,
-    title: "Welcome!",
-    descriptions: "You have successfully created an account.",
-    date: "12-12-2002 18:30",
-  },
-  {
-    isViewed: false,
-    icon: <Sword />,
-    title: "Welcome!",
-    descriptions: "You have successfully created an account.",
-    date: "12-12-2002 18:30",
-  },
-  {
-    isViewed: true,
-    icon: <Sword />,
-    title: "Welcome!",
-    descriptions: "You have successfully created an account.",
-    date: "12-12-2002 18:30",
-  },
-];
+import { INotifications } from "@/models/INotifications";
+import { createApi } from "@/services/axios";
+import { useDispatch } from "react-redux";
+import { API_ENDPOINTS } from "@/services/apiService";
 
-const getNotifications = (): number => {
+const getValueNewNotifications = (notifications: INotifications[]) => {
   return (
-    Notifications.filter((notification) => {
+    notifications.filter((notification) => {
       return notification.isViewed == false;
     }).length || 0
   );
 };
 
 export const NotificationsBlock = () => {
-  const [newNotifications, setNewNotifications] = useState<number>(0);
+  const [newNotifications, setNewNotifications] = useState<number>();
+  const [notifications, setNotifications] = useState<INotifications[]>();
   const [loading, setLoading] = useState<boolean>(true);
-
+  const dispatch = useDispatch();
+  const api = createApi(dispatch);
+  const getMyNotifications = async () => {
+    const res = await api.get(API_ENDPOINTS.getMyNotifications, {
+      withCredentials: true,
+    });
+    console.log(res.data);
+    if (res) {
+      setNotifications(res.data);
+      setNewNotifications(getValueNewNotifications(res.data));
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    setNewNotifications(getNotifications());
-    setLoading(false);
+    getMyNotifications();
   }, []);
 
   return (
@@ -68,9 +53,13 @@ export const NotificationsBlock = () => {
               <p className="text-xs text-light-gray-3 mb-3.5">notifications</p>
             </div>
             <div className="space-y-1">
-              {Notifications.map((notification) => (
-                <NotificationItem notification={notification} />
-              ))}
+              {notifications &&
+                notifications.map((notification) => (
+                  <NotificationItem
+                    notification={notification}
+                    getMyNotifications={getMyNotifications}
+                  />
+                ))}
             </div>
           </>
         ) : (

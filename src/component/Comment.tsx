@@ -3,13 +3,14 @@ import { Time } from "../data/time";
 import { useAuth } from "@/hooks/use-auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { MdVerified } from "react-icons/md";
 import { Loader } from "./Loader";
 import { cn } from "@/lib/utils";
-import axios, { AxiosResponse } from "axios";
-import { API_ENDPOINTS } from "@/services/apiService";
-import { IImage } from "@/models/IImage";
+import { IImages } from "@/models/IImages";
+import { UseUploadFile } from "@/hooks/use-upload-file";
+import { UploadedImage } from "./Comment/UploadedImage";
+import { CommentImages } from "./Comment/CommentImages";
+import { ToastWarning } from "./Toasts/ToastWarning";
 
 interface CommentProps {
   content: string;
@@ -20,9 +21,9 @@ interface CommentProps {
   username: string;
   avatar: string;
   steamid: string | undefined;
-  pictureUrl: string | null;
+  images?: IImages[];
   deteleComment: (commentId: string) => void;
-  updateComment: (commentId: string, comment: string, imageUrl: string) => void;
+  renderComments: () => void;
 }
 export const Comment = ({
   commentId,
@@ -33,86 +34,47 @@ export const Comment = ({
   username,
   avatar,
   steamid,
-  pictureUrl,
+  images,
   deteleComment,
-  updateComment,
+  renderComments,
 }: CommentProps) => {
   const auth = useAuth();
   const [comment, newComment] = useState<string>(content);
   const [updating, setUpdating] = useState<boolean>(false);
-  const [image, setImage] = useState<string>(pictureUrl ? pictureUrl : "");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [deletedImage, setDeletedImage] = useState<boolean>(false);
-  const [file, setFile] = useState<File>();
+  const [commentImages, setCommentImages] = useState<IImages[]>(images || []);
+  console.log("commentImages=", commentImages);
+  const [deletedImages, setDeletedImages] = useState<string[]>([]);
+
+  const deteleImage = (image: string) => {
+    const prevImages = commentImages.filter((i) => {
+      return i.id != image;
+    });
+    setCommentImages(prevImages || []);
+    setDeletedImages((prevDeleted) => [...prevDeleted, image]);
+  };
+  const type = "update";
+  const {
+    files,
+    handleButtonClick,
+    handleFileChange,
+    deleteUploadedImage,
+    updateComment,
+    loading,
+  } = UseUploadFile(type, comment, renderComments);
+
   const navigate = useNavigate();
-  console.log(
-    "image ==",
-    image.slice(0, 20),
-    "UPDATE=",
-    updating,
-    "FILE=",
-    file
-  );
-  const handleUpdate = async (commentId: string) => {
-    setLoading(true);
-    const formData = new FormData();
-    console.log(formData);
-    if (file && deletedImage) {
-      formData.append("image", file);
-      const res: AxiosResponse<IImage> = await axios.post(
-        API_ENDPOINTS.uploadImage,
-        formData,
-        { withCredentials: true }
-      );
-      const imageUrl = res.data.filename;
-      console.log("file uploaded,", imageUrl);
-      await updateComment(commentId, comment, imageUrl);
-    } else {
-      await updateComment(commentId, comment, image);
-    }
 
-    setUpdating((prev) => !prev);
-
-    setLoading(false);
-  };
-
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-
-    setFile(event.target.files?.[0]);
-    if (file) {
-      setImage(file.name);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleButtonClick = () => {
-    const fileInput = document.getElementById(
-      "image-upload2"
-    ) as HTMLInputElement;
-    if (fileInput) {
-      fileInput.click(); // Имитируем клик по input
-    }
-  };
-  console.log(API_ENDPOINTS.API_URL + "static/" + image!);
   const visitProfile = () => {
     if (steamid !== undefined) navigate("/profile/" + steamid);
-    else toast("Steam Profile not found!");
+    else ToastWarning("Steam Profile not found!");
   };
 
   return (
     <div
-      className={
-        "w-full" +
-        cn(
-          !updating &&
-            "duration-300 transition-all hover:outline-light-gray rounded-md hover:bg-gray-200/10"
-        )
-      }
+      className={cn(
+        !updating &&
+          "w-full duration-300 transition-all hover:outline-light-gray rounded-md hover:bg-gray-200/10"
+      )}
     >
       <div className="p-4 border-t border-gray-700">
         <div className="flex items-start">
@@ -159,7 +121,16 @@ export const Comment = ({
                   ) : (
                     <button
                       className="bg-light-blue px-2 py-0.5 rounded-xl cursor-pointer text-white w-[121px] hover:bg-light-blue-2 transition-all transform hover:translate-y-[-2px] hover:shadow-md duration-300"
-                      onClick={() => handleUpdate(commentId)}
+                      onClick={() => {
+                        updateComment(
+                          commentId,
+                          comment,
+                          deletedImages,
+                          commentImages
+                        );
+                        setUpdating(false);
+                        renderComments();
+                      }}
                     >
                       {!loading ? "Edit Comment" : <Loader />}
                     </button>
@@ -184,19 +155,6 @@ export const Comment = ({
               </div>
             </div>
 
-            <div hidden={updating} className="text-white break-all max-w-full">
-              {comment}
-              {image && (
-                <img
-                  src={
-                    (image.startsWith("data:") && image) ||
-                    API_ENDPOINTS.API_URL + "static/" + image
-                  }
-                  alt="1"
-                  className="w-[50%] mr-4"
-                />
-              )}
-            </div>
             <div className="relative">
               <textarea
                 hidden={!updating}
@@ -204,49 +162,64 @@ export const Comment = ({
                 defaultValue={comment}
                 onChange={(e) => newComment(e.target.value)}
               ></textarea>
-              {image && (
-                <div
-                  hidden={!updating}
-                  className="flex justify-end space-x-1 items-center"
-                >
-                  <img
-                    onClick={() => {
-                      window.open(API_ENDPOINTS.API_URL + "static/" + image!);
-                    }}
-                    src={
-                      (image.startsWith("data:") && image) ||
-                      API_ENDPOINTS.API_URL + "static/" + image
-                    }
-                    alt="1"
-                    className="w-[5%] rounded-lg cursor-pointer hover:blur-[0.5px]"
-                  />
-                  <p className="text-blue-200 text-xs">
-                    {image.slice(0, 40) + "..." + image.slice(-7)}
-                  </p>
-                  <X
-                    onClick={() => {
-                      setImage("");
-                      setFile(undefined);
-                      setDeletedImage(true);
-                    }}
-                    size={18}
-                    className="mt-1 text-white hover:text-light-blue transition-all duration-300 cursor-pointer"
-                  />
+
+              <div
+                hidden={updating}
+                className="text-white break-all max-w-full"
+              >
+                {comment}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {commentImages.map((image) => (
+                    <div
+                      key={image.id}
+                      className="overflow-hidden rounded-lg shadow-lg"
+                    >
+                      <img
+                        src={image.url}
+                        alt=""
+                        className="w-full object-cover transition-transform duration-300 transform hover:scale-105"
+                      />
+                    </div>
+                  ))}
                 </div>
-              )}
-              {image == "" && updating && (
-                <div className="image-upload2">
+              </div>
+
+              <div className={cn(!updating && "hidden")}>
+                {commentImages &&
+                  commentImages.map((image, index) => (
+                    <CommentImages
+                      key={index}
+                      image={image}
+                      deteleImage={deteleImage}
+                    />
+                  ))}
+              </div>
+              <div className={cn(!updating && "hidden")}>
+                {files &&
+                  files.map((file) => (
+                    <>
+                      <UploadedImage
+                        key={file.name}
+                        file={file}
+                        deleteUploadedImage={deleteUploadedImage}
+                      />
+                    </>
+                  ))}
+              </div>
+              {updating && (
+                <div className={type}>
                   <input
                     type="file"
+                    multiple
                     name="image"
-                    accept="image/png, image/jpeg"
-                    onChange={handleImageChange}
+                    accept="image/jpg, image/jpeg, image/png, image/gif, image/webp"
+                    onChange={handleFileChange}
                     className="hidden"
-                    id="image-upload2"
+                    id={type}
                   />
                   <button
                     onClick={handleButtonClick}
-                    id="image-upload2"
+                    id={type}
                     className="text-white absolute top-1.5 right-1.5 cursor-pointer duration-300 hover:text-light-blue"
                   >
                     <ImageUp size={16} />

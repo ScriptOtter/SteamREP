@@ -18,7 +18,7 @@ export const ProfileComments = () => {
   const [error, setError] = useState<string>("");
   const [showError, setShowError] = useState<boolean>(false);
   const { id } = useParams<RouteParams>();
-
+  console.log("comments=", comments);
   const dispatch = useDispatch();
   const auth = useAuth();
   const api = createApi(dispatch);
@@ -59,36 +59,6 @@ export const ProfileComments = () => {
     renderComments();
   };
 
-  const updateComment = async (
-    commentId: string,
-    comment: string,
-    imageUrl?: string
-  ) => {
-    if (imageUrl) {
-      console.log("1");
-      await api.patch(
-        API_ENDPOINTS.commentDelete + commentId,
-        { content: comment, pictureUrl: imageUrl },
-        {
-          withCredentials: true,
-        }
-      );
-      renderComments();
-      return;
-    } else {
-      console.log("2");
-      await api.patch(
-        API_ENDPOINTS.commentDelete + commentId,
-        { content: comment, pictureUrl: "" },
-        {
-          withCredentials: true,
-        }
-      );
-      renderComments();
-      return;
-    }
-  };
-
   useEffect(() => {
     renderComments();
     console.log(auth);
@@ -122,9 +92,9 @@ export const ProfileComments = () => {
               comment?.author?.steamUser?.avatar || comment?.author?.avatar
             }
             steamid={comment?.author?.steamUser?.id}
-            pictureUrl={comment?.pictureUrl}
+            images={comment?.images}
             deteleComment={toastDelete}
-            updateComment={updateComment}
+            renderComments={renderComments}
           />
         ))
       ) : (

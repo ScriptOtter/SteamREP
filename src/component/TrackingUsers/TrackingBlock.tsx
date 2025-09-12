@@ -1,75 +1,31 @@
+import { useEffect, useState } from "react";
 import { TrackingUser } from "./TrackingUser";
+import { ITrackingUser } from "@/models/ITrackingUsers";
+import { createApi } from "@/services/axios";
+import { useDispatch } from "react-redux";
+import { API_ENDPOINTS } from "@/services/apiService";
+import { PageLoader } from "../Loader";
 
 export const TrackingBlock = () => {
-  const Users = [
-    {
-      imageUrl:
-        "https://avatars.akamai.steamstatic.com/629afd3cbe533f238c6ddfed1300dc342544062f_full.jpg",
-      name: "BAnananannaanannaananna",
-      steamid: "76561198117401376",
-      dateBanned: "13-13-13",
-    },
-    {
-      imageUrl:
-        "https://avatars.akamai.steamstatic.com/629afd3cbe533f238c6ddfed1300dc342544062f_full.jpg",
-      name: "Ban",
-      steamid: "76561198117401376",
-      dateBanned: "13-13-13",
-    },
-    {
-      imageUrl:
-        "https://avatars.akamai.steamstatic.com/629afd3cbe533f238c6ddfed1300dc342544062f_full.jpg",
-      name: "banan",
-      steamid: "76561198117401376",
-    },
-    {
-      imageUrl:
-        "https://avatars.akamai.steamstatic.com/629afd3cbe533f238c6ddfed1300dc342544062f_full.jpg",
-      name: "gavno",
-      steamid: "76561198117401376",
-    },
-    {
-      imageUrl:
-        "https://avatars.akamai.steamstatic.com/629afd3cbe533f238c6ddfed1300dc342544062f_full.jpg",
-      name: "BAnananannaanannaananna",
-      dateBanned: "13-13-13",
-      steamid: "76561198117401376",
-    },
-    {
-      imageUrl:
-        "https://avatars.akamai.steamstatic.com/629afd3cbe533f238c6ddfed1300dc342544062f_full.jpg",
-      name: "BAnananannaanannaananna",
-      steamid: "76561198117401376",
-      dateBanned: "13-13-13",
-    },
-    {
-      imageUrl:
-        "https://avatars.akamai.steamstatic.com/629afd3cbe533f238c6ddfed1300dc342544062f_full.jpg",
-      name: "Ban",
-      steamid: "76561198117401376",
-      dateBanned: "13-13-13",
-    },
-    {
-      imageUrl:
-        "https://avatars.akamai.steamstatic.com/629afd3cbe533f238c6ddfed1300dc342544062f_full.jpg",
-      name: "banan",
-      steamid: "76561198117401376",
-    },
-    {
-      imageUrl:
-        "https://avatars.akamai.steamstatic.com/629afd3cbe533f238c6ddfed1300dc342544062f_full.jpg",
-      name: "gavno",
-      steamid: "76561198117401376",
-    },
-    {
-      imageUrl:
-        "https://avatars.akamai.steamstatic.com/629afd3cbe533f238c6ddfed1300dc342544062f_full.jpg",
-      name: "BAnananannaanannaananna",
-      dateBanned: "13-13-13",
-      steamid: "76561198117401376",
-    },
-  ];
+  const [trackingUsers, setTrackingUsers] = useState<ITrackingUser[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const dispatch = useDispatch();
+  const api = createApi(dispatch);
+  const getTrackingUsers = async () => {
+    const res = await api.get(API_ENDPOINTS.getTrackingUsers, {
+      withCredentials: true,
+    });
 
+    if (res.data) {
+      console.log(res);
+      setTrackingUsers(res.data);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getTrackingUsers();
+  }, []);
   return (
     <>
       <div
@@ -78,11 +34,19 @@ export const TrackingBlock = () => {
         }
       >
         <p className="mb-3 text-xl">Tracking Users:</p>
-        <div className="space-y-1">
-          {Users.map((user) => (
-            <TrackingUser key={user.steamid} user={user} />
-          ))}
-        </div>
+        {!loading ? (
+          <div className="space-y-1">
+            {trackingUsers.map((user) => (
+              <TrackingUser
+                key={user.steamid}
+                user={user}
+                getTrackingUsers={getTrackingUsers}
+              />
+            ))}
+          </div>
+        ) : (
+          <PageLoader />
+        )}
       </div>
     </>
   );

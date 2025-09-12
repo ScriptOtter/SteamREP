@@ -49,6 +49,11 @@ export const SignInForm = () => {
     }
   };
 
+  const SignInWithSteam = async () => {
+    window.location.href =
+      import.meta.env.VITE_SERVER_URL + "auth/steam/signin";
+  };
+
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -134,10 +139,21 @@ export const SignInForm = () => {
             <p className="text-red-500">{showError && error}</p>
             <div className="flex justify-center items-center w-full">
               <button
-                className="bg-blue w-full p-2 rounded-[8px] text-white text-[14px] cursor-pointer"
+                className="bg-blue w-full p-2 rounded-[8px] text-white text-[14px] font-semibold cursor-pointer"
                 type="submit"
               >
                 {!loading ? "Sign In" : <Loader />}
+              </button>
+            </div>
+            <div className="flex justify-center items-center w-full">
+              <button
+                className="bg-secondary hover:bg-blue transition-all duration-200 w-full p-2 rounded-[8px] text-white text-[14px] font-semibold outline-1 outline-light-gray-2 cursor-pointer"
+                onClick={() => SignInWithSteam()}
+              >
+                <div className="flex items-center justify-center space-x-2">
+                  <img className="w-6 h-6" src="/public/assets/steam.svg" />
+                  <p>Sign In with Steam</p>
+                </div>
               </button>
             </div>
           </form>

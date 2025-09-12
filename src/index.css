@@ -7,10 +7,11 @@
 
   --color-primary: #020409;
   --color-secondary: #0e1117;
-  --color-gray: #4caf50;
+  --color-gray: #212830;
   --color-light-gray: #3f444d;
   --color-light-gray-2: #6a7282;
   --color-light-gray-3: #7d8799;
+  --color-light-gray-4: #282c36;
   --color-gray-shadow: #2c3038;
   --color-gray-hover: #17191e;
   --color-gray-text: #f0f6fc;
@@ -37,6 +38,10 @@
   height: 2px; /* Высота подчеркивания */
   background-color: var(--color-header-underline); /* Цвет подчеркивания */
   width: 100%; /* Увеличьте ширину по желанию */
+}
+.custom-bg {
+  background-image: url("/public/maps/de_dust2.jpg");
+  background-size: contain; /* или contain */
 }
 
 @layer base {

@@ -4,34 +4,27 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "@/hooks/use-auth.ts";
 import { ProfileButton } from "@/component/profileButton";
-import {
-  BellDot,
-  Bookmark,
-  CircleHelp,
-  LogIn,
-  Search,
-  SearchIcon,
-} from "lucide-react";
+import { BellDot, Bookmark, CircleHelp, LogIn, Search } from "lucide-react";
 import { getMe } from "@/data/getUser.ts";
 import { getUserId, profileURL } from "@/utils/steamUrl";
 import { useDropDownMenu } from "@/hooks/use-drop-down-menu";
 import { removeUser } from "@/store/UserSlice";
 import { API_ENDPOINTS } from "@/services/apiService";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { MenuBurger } from "@/component/Header/MenuBurger";
 import { NavigationMenu } from "@/component/Header/NavigationMenu";
-import { fontSize } from "@/styles/font";
 import { DropdownMenu } from "@/component/DropDownMenu";
 import { steamVerification } from "@/lib/steamVerification";
 import { TrackingBlock } from "@/component/TrackingUsers/TrackingBlock";
 import { cn } from "@/lib/utils";
 import { NotificationsBlock } from "@/component/Notifications/NotificationsBlock";
+import { INotifications } from "@/models/INotifications";
 
 export const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = useAuth();
-
+  const [newNotifications, setNewNotifications] = useState<boolean>();
   const { isMenuOpen, toggleMenu, menuRef } = useDropDownMenu();
   const {
     isMenuOpen: isTrackingMenuOpen,
@@ -45,6 +38,18 @@ export const Header = () => {
     menuRef: notificationMenuRef,
   } = useDropDownMenu();
 
+  const {
+    isMenuOpen: isTrackingMenuOpen2,
+    toggleMenu: trackingToggleMenu2,
+    menuRef: trackingMenuRef2,
+  } = useDropDownMenu();
+
+  const {
+    isMenuOpen: isNotificationMenuOpen2,
+    toggleMenu: notificationToggleMenu2,
+    menuRef: notificationMenuRef2,
+  } = useDropDownMenu();
+
   const [searchInput, setSearchInput] = useState<string>("");
   const [isAuthenticated, setIsAuthenticated] = useState(auth?.isAuth || false);
 
@@ -54,10 +59,26 @@ export const Header = () => {
     setIsAuthenticated(false);
     navigate("/");
   };
+  const notifications = async () => {
+    const res: AxiosResponse<INotifications[]> = await axios.get(
+      API_ENDPOINTS.getMyNotifications,
+      {
+        withCredentials: true,
+      }
+    );
+    if (res.data) {
+      const newNot = res.data.filter((notification) => {
+        return notification.isViewed == false;
+      });
 
+      newNot.toString()
+        ? setNewNotifications(true)
+        : setNewNotifications(false);
+    }
+  };
   useEffect(() => {
-    getMe(dispatch, auth);
-
+    getMe(dispatch);
+    notifications();
     setIsAuthenticated(auth?.isAuth);
   }, [auth]);
 
@@ -75,8 +96,8 @@ export const Header = () => {
           </div>
 
           {/* Поиск */}
-          <div className="sm:flex sm:visible hidden grow md:mx-8 mr-4">
-            <div className="w-[95%] md:w-full bg-primary outline-2 outline-light-gray rounded-2xl flex items-center p-1.5">
+          <div className="md:flex md:visible hidden grow md:mx-8 mr-4">
+            <div className="w-[95%] sm:w-full bg-primary outline-2 outline-light-gray rounded-2xl flex items-center p-1.5">
               <FaSearch className="text-light-gray mr-2" />
               <input
                 onKeyDown={(event) => {
@@ -104,12 +125,46 @@ export const Header = () => {
             </div>
           </div>
 
+          {auth.id && (
+            <div className="flex justify-end w-full items-center space-x-8 mr-8 mt-0.5 md:hidden">
+              <div className="relative" ref={trackingMenuRef}>
+                <Bookmark
+                  size={24.5}
+                  onClick={() => trackingToggleMenu()}
+                  className={cn(
+                    !isTrackingMenuOpen ? "text-[#F04747]" : "text-red-600",
+                    "cursor-pointer hover:text-red-600"
+                  )}
+                />
+                {isTrackingMenuOpen && <TrackingBlock />}
+              </div>
+              <div className="relative " ref={notificationMenuRef}>
+                <div
+                  onClick={() => notificationToggleMenu()}
+                  className={cn(
+                    newNotifications ? "bg-green-400" : "bg-light-blue-3",
+                    "rounded-full w-[9px] h-[9px] absolute top-1 right-[2px] cursor-pointer"
+                  )}
+                ></div>
+                <BellDot
+                  onClick={() => notificationToggleMenu()}
+                  className={cn(
+                    !isNotificationMenuOpen ? "text-light-blue-2" : "text-blue",
+                    "cursor-pointer hover:text-blue"
+                  )}
+                />
+                {isNotificationMenuOpen && <NotificationsBlock />}
+              </div>
+            </div>
+          )}
           {/* MenuBurger */}
           <div className="text-white md:hidden">
             <MenuBurger
               isAuthenticated={isAuthenticated}
               onProfile={() =>
-                auth.steamid ? profileURL(navigate, auth) : steamVerification()
+                auth.role == "VERIFIED"
+                  ? profileURL(navigate, auth)
+                  : steamVerification()
               }
               handleLogout={handleLogout}
               onSettings={() => navigate("/settings")}
@@ -117,48 +172,50 @@ export const Header = () => {
           </div>
 
           {/* Уведомления */}
-          <div className="lg:flex justify-center items-center space-x-6 mx-1 hidden lg:visible">
-            <div className="relative " ref={trackingMenuRef}>
-              <Bookmark
-                onClick={() => trackingToggleMenu()}
-                className={cn(
-                  !isTrackingMenuOpen ? "text-[#F04747]" : "text-red-600",
-                  "cursor-pointer hover:text-red-600"
-                )}
-              />
-              {isTrackingMenuOpen && <TrackingBlock />}
+          {auth.id && (
+            <div className="md:flex justify-center items-center space-x-6 mx-2 hidden md:visible">
+              <div className="relative " ref={trackingMenuRef2}>
+                <Bookmark
+                  onClick={() => trackingToggleMenu2()}
+                  className={cn(
+                    !isTrackingMenuOpen ? "text-[#F04747]" : "text-red-600",
+                    "cursor-pointer hover:text-red-600"
+                  )}
+                />
+                {isTrackingMenuOpen2 && <TrackingBlock />}
+              </div>
+              <div className="relative " ref={notificationMenuRef2}>
+                <div
+                  onClick={() => notificationToggleMenu2()}
+                  className={cn(
+                    newNotifications ? "bg-green-400" : "bg-light-blue-3",
+                    "rounded-full w-[9px] h-[9px] absolute top-1 right-[2px] cursor-pointer"
+                  )}
+                ></div>
+                <BellDot
+                  onClick={() => notificationToggleMenu2()}
+                  className={cn(
+                    !isNotificationMenuOpen2
+                      ? "text-light-blue-2"
+                      : "text-blue",
+                    "cursor-pointer hover:text-blue"
+                  )}
+                />
+                {isNotificationMenuOpen2 && <NotificationsBlock />}
+              </div>
             </div>
-            <div className="relative " ref={notificationMenuRef}>
-              <div
-                className={cn(
-                  !auth ? "bg-green-400" : "bg-light-blue-3",
-                  "rounded-full w-[9px] h-[9px] absolute top-1 right-[2px]"
-                )}
-              ></div>
-              <BellDot
-                onClick={() => notificationToggleMenu()}
-                className={cn(
-                  !isNotificationMenuOpen ? "text-light-blue-2" : "text-blue",
-                  "cursor-pointer hover:text-blue"
-                )}
-              />
-              {isNotificationMenuOpen && <NotificationsBlock />}
-            </div>
-          </div>
+          )}
 
           {/* Профиль */}
           <div className="md:flex items-center mx-4 hidden md:visible">
             {!isAuthenticated ? (
               <div
                 className={
-                  fontSize.medium + "flex items-center space-x-2 text-white"
+                  "flex items-center space-x-2 text-[18px] text-white hover:bg-gray-hover py-0.5 px-4 duration-100 rounded-md cursor-pointer"
                 }
               >
                 <LogIn size={24} />{" "}
-                <Link
-                  to="/auth/signin"
-                  className="text-white cursor-pointer hover:underline"
-                >
+                <Link to="/auth/signin" className="text-white ">
                   Sign In
                 </Link>{" "}
               </div>
@@ -172,7 +229,7 @@ export const Header = () => {
                   <DropdownMenu
                     closeMenu={() => toggleMenu()}
                     onProfile={() =>
-                      auth.steamid
+                      auth.role == "VERIFIED"
                         ? profileURL(navigate, auth)
                         : steamVerification()
                     }

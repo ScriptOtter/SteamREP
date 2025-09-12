@@ -18,7 +18,7 @@ export const ProfileButton: React.FC<Props> = ({ onToggleMenu }) => {
           className="w-10 h-10 rounded-full mr-2 "
         />
       )}
-      <span className="mr-1 font-semibold flex items-center-safe">
+      <span className="mr-1 font-semibold hidden lg:flex items-center-safe">
         {auth.username}{" "}
         {auth.role === "VERIFIED" && (
           <MdVerified size={20} className="ml-1 text-blue-400" />

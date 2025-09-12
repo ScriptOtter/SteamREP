@@ -105,13 +105,19 @@ export const ProfilePage = () => {
           )}
         >
           {!showError ? (
-            <div className="flex flex-col md:flex-row items-center md:items-start w-full mb-4">
+            <div
+              className={
+                "flex flex-col items-center md:flex-row md:items-start w-full mb-4"
+              }
+            >
               {loading && currentPage != "CS2Matches" ? (
                 <div className="ml-2 lg:w-[280px] w-[225px] lg:h-[280px] h-[225px]">
                   <div className="lg:w-[280px] w-[225px] lg:h-[280px] h-[225px] rounded-full ring-1 ring-light-gray animate-pulse" />
                 </div>
               ) : (
-                <ProfileLeftSide user={steamUser} viewers={viewers} />
+                currentPage != "CS2Matches" && (
+                  <ProfileLeftSide user={steamUser} viewers={viewers} />
+                )
               )}
               <div className="md:mx-4 w-full">
                 <nav className="flex justify-center text-white text-md md:text-xl py-2 mt-4 md:mx-4 md:px-2 rounded-xl outline-1 outline-light-gray">

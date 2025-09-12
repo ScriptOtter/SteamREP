@@ -1,5 +1,5 @@
 import { useDropDownMenu } from "@/hooks/use-drop-down-menu";
-import { MenuIcon, Search, X } from "lucide-react";
+import { MenuIcon, X } from "lucide-react";
 import { MenuBurgerUser } from "./MenuBurgerUser";
 import { MenuBurgerNavigation } from "./MenuBurgerNavigation";
 

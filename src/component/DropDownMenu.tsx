@@ -9,7 +9,7 @@ export const DropdownMenu = ({ ...props }) => {
 
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex flex-col z-999">
         <div
           className={
             "bg-secondary absolute -right-2 top-12 w-40 rounded-xl outline-1"

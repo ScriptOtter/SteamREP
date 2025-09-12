@@ -6,6 +6,7 @@ export const API_ENDPOINTS = {
   verificationEmail: URL + "verification/email",
   staemVerify: URL + "steam/verify",
   signin: URL + "auth/signin",
+  steam_signin: URL + "auth/steam/signin",
   logout: URL + "auth/logout",
   recoveryPassword: URL + "recovery/password",
   accountRecovery: URL + "recovery/verify",
@@ -25,5 +26,14 @@ export const API_ENDPOINTS = {
   getMyReports: URL + "getMyReports",
   patchSocialLinks: URL + "social-links/update",
   getSocialLinks: URL + "social-links/get/",
+  getMyNotifications: URL + "getMyNotifications",
+  setViewedNotification: URL + "setViewedNotification",
   uploadImage: URL + "image/upload",
+  addTrackingUser: URL + "tracking-users/addUser",
+  deleteTrackingUser: URL + "tracking-users/deleteUser/",
+  getTrackingUsers: URL + "tracking-users/getUsers",
+};
+
+export const S3 = {
+  images: "http://s3.steamrep.help/steamrep/",
 };

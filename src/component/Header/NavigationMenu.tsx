@@ -26,7 +26,7 @@ export const NavigationMenu = () => {
                   currentPage === menuUrls[key] && "text-header-underline"
                 )}
               >
-                <li className="hover:bg-gray-hover py-0.5  text-white px-4 duration-100 rounded-md cursor-pointer">
+                <li className="hover:bg-gray-hover py-0.5 px-4 duration-100 rounded-md cursor-pointer text-white text-[12px] xl:text-[14px] ">
                   {menu[key]}
                 </li>
               </div>

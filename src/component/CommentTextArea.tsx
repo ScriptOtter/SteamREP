@@ -1,127 +1,29 @@
 import { useAuth } from "@/hooks/use-auth";
 import { RouteParams } from "@/pages/ProfilePage";
-import { API_ENDPOINTS } from "@/services/apiService";
-import { createApi } from "@/services/axios";
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { ImageUp, X } from "lucide-react";
+import { ImageUp } from "lucide-react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import { Loader } from "./Loader";
-import { IImage } from "@/models/IImage";
+import { UploadedImage } from "./Comment/UploadedImage";
+import { UseUploadFile } from "@/hooks/use-upload-file";
 
 interface Props {
   renderComments: () => void;
 }
 
 export const CommentTextArea = ({ renderComments }: Props) => {
-  const [loading, setLoading] = useState<boolean>(false);
   const [comment, setComment] = useState<string>("");
-
-  const [image, setImage] = useState<string>("");
-
-  const [file, setFile] = useState<File>();
-
-  const { id } = useParams<RouteParams>();
-  const dispatch = useDispatch();
-  const api = createApi(dispatch);
   const auth = useAuth();
-
-  const handlePost = async (id: string) => {
-    setLoading(true);
-    const formData = new FormData();
-    console.log(formData);
-    if (file) {
-      formData.append("image", file);
-      const res: AxiosResponse<IImage> = await axios.post(
-        API_ENDPOINTS.uploadImage,
-        formData,
-        { withCredentials: true }
-      );
-      const imageUrl = res.data.filename;
-      console.log("file uploaded,", imageUrl);
-      await postComment(id, imageUrl);
-      setImage("");
-      setFile(undefined);
-    } else {
-      await postComment(id, "");
-      setImage("");
-      setFile(undefined);
-    }
-  };
-
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    setFile(file);
-    if (file) {
-      setFile(event.target.files?.[0]);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleButtonClick = () => {
-    const fileInput = document.getElementById(
-      "image-upload"
-    ) as HTMLInputElement;
-    if (fileInput) {
-      fileInput.click(); // Имитируем клик по input
-    }
-  };
-
-  const postComment = async (id: string, imageUrl: string) => {
-    if (comment === "" || comment.trimStart() == "") {
-      toast.warning("Comment is empty!", { theme: "dark" });
-      setLoading(false);
-      return;
-    }
-
-    try {
-      setLoading(true);
-
-      if (imageUrl == "") {
-        const res = await api.post(
-          API_ENDPOINTS.commentCreate + id,
-          { content: comment },
-          { withCredentials: true }
-        );
-        if (res) {
-          console.log("RES PRISHOL");
-          setComment("");
-
-          setImage("");
-
-          renderComments();
-          setLoading(false);
-        }
-      } else {
-        const res = await api.post(
-          API_ENDPOINTS.commentCreate + id,
-          { content: comment, pictureUrl: imageUrl },
-          { withCredentials: true }
-        );
-        if (res) {
-          console.log("RES PRISHOL");
-          setComment("");
-
-          setImage("");
-
-          renderComments();
-          setLoading(false);
-        }
-      }
-    } catch (e: unknown) {
-      setLoading(false);
-      if (e instanceof AxiosError) {
-        if (e.response?.data.message !== "Unauthorized")
-          toast.warning(e.response?.data.message, { theme: "dark" });
-      }
-    }
-  };
+  const { id } = useParams<RouteParams>();
+  const type = "create";
+  const {
+    files,
+    handleButtonClick,
+    handleFileChange,
+    deleteUploadedImage,
+    sendComment,
+    loading,
+  } = UseUploadFile(type, comment, renderComments);
 
   return (
     <>
@@ -141,7 +43,10 @@ export const CommentTextArea = ({ renderComments }: Props) => {
                 </h3>
                 <button
                   className="bg-light-blue px-2 rounded-xl cursor-pointer text-white  hover:bg-light-blue-2 transition-all transform hover:translate-y-[-2px] hover:shadow-md duration-100"
-                  onClick={() => handlePost(id!)}
+                  onClick={() => {
+                    sendComment(id!);
+                    setComment("");
+                  }}
                 >
                   {!loading ? "Post Comment" : <Loader />}
                 </button>
@@ -153,48 +58,36 @@ export const CommentTextArea = ({ renderComments }: Props) => {
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
                 ></textarea>
-                {image && (
-                  <div className="flex justify-end space-x-1 items-center">
-                    <img
-                      onClick={() => {
-                        window.open(API_ENDPOINTS.API_URL + "static/" + image!);
-                      }}
-                      src={
-                        (image.startsWith("data:") && image) ||
-                        API_ENDPOINTS.API_URL + "static/" + image
-                      }
-                      alt="1"
-                      className="w-[5%] rounded-lg cursor-pointer hover:blur-[0.5px]"
-                    />
-                    <p className="text-blue-200 text-xs">
-                      {image.slice(0, 40) + "..." + image.slice(-7)}
-                    </p>
-                    <X
-                      onClick={() => setImage("")}
-                      size={18}
-                      className="mt-1 text-white hover:text-light-blue-2 transition-all duration-100 cursor-pointer"
-                    />
-                  </div>
-                )}
-                {image == "" && (
-                  <div className="image-upload">
-                    <input
-                      type="file"
-                      name="image"
-                      accept="image/png, image/jpeg"
-                      onChange={handleImageChange}
-                      className="hidden"
-                      id="image-upload"
-                    />
-                    <button
-                      onClick={handleButtonClick}
-                      id="image-upload"
-                      className="text-white absolute top-1.5 right-1.5 cursor-pointer duration-100 hover:text-light-blue-2"
-                    >
-                      <ImageUp size={16} />
-                    </button>
-                  </div>
-                )}
+
+                {files &&
+                  files.map((file) => (
+                    <>
+                      <UploadedImage
+                        key={file.name}
+                        file={file}
+                        deleteUploadedImage={deleteUploadedImage}
+                      />
+                    </>
+                  ))}
+
+                <div className={type}>
+                  <input
+                    type="file"
+                    multiple
+                    name="image"
+                    accept="image/jpg, image/jpeg, image/png, image/gif, image/webp"
+                    onChange={handleFileChange}
+                    className="hidden"
+                    id={type}
+                  />
+                  <button
+                    onClick={handleButtonClick}
+                    id={type}
+                    className="text-white absolute top-1.5 right-1.5 cursor-pointer duration-100 hover:text-light-blue-2"
+                  >
+                    <ImageUp size={16} />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
