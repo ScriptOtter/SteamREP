@@ -22,6 +22,15 @@
   --color-red: #de4e49;
   --color-light-red: #35282e;
 
+  --color-green-win-match: var(--color-green-400);
+  --color-green-win-match-hover: var(--color-green-500);
+
+  --color-red-lose-match: var(--color-red-400);
+  --color-red-lose-match-hover: var(--color-red-500);
+
+  --color-gray-draw-match: var(--color-gray-400);
+  --color-gray-draw-match-hover: var(--color-gray-500);
+
   --color-blue: #4e63d0;
   --color-light-blue: #1f6feb;
   --color-light-blue-2: #4493f8;

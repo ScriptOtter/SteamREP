@@ -14,6 +14,7 @@ import { SignUpForm } from "./component/AuthForm/SignUpForm.tsx";
 import { PasswordRecoveryForm } from "./component/AuthForm/PasswordRecoveryForm.tsx";
 import { BlogPage } from "./pages/BlogPage.tsx";
 import { TrackingUsersPage } from "./pages/TrackingUsersPage.tsx";
+import { MatchPage } from "./pages/MatchPage.tsx";
 
 function App() {
   return (
@@ -28,18 +29,20 @@ function App() {
             element={<MostReportedPlayersPage />}
           /> */}
           <Route path="/auth/signin" element={<SignInForm />} />
+          <Route path="/profile/:id" element={<ProfilePage />} />
           <Route path="/auth/signup" element={<SignUpForm />} />
           <Route path="/auth/recovery" element={<PasswordRecoveryForm />} />
-          <Route path="/report" element={<ReportPlayerPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/profile/:id" element={<ProfilePage />} />
-          <Route path="/account/verify" element={<HomePage />} />
-          <Route path="/tracking-users" element={<TrackingUsersPage />} />
           <Route
             path="/account/recovery/:id"
             element={<AccountRecoveryPage />}
           />
+          <Route path="/report" element={<ReportPlayerPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/match/:id" element={<MatchPage />} />
+          <Route path="/account/verify" element={<HomePage />} />
+          <Route path="/tracking-users" element={<TrackingUsersPage />} />
+
           <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>
