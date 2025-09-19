@@ -9,9 +9,9 @@ import { ToastContainer } from "react-toastify";
 import { SettingsPage } from "./pages/SettingsPage.tsx";
 import { AccountRecoveryPage } from "./pages/AccountRecoveryPage.tsx";
 
-import { SignInForm } from "./component/AuthForm/SignInForm.tsx";
-import { SignUpForm } from "./component/AuthForm/SignUpForm.tsx";
-import { PasswordRecoveryForm } from "./component/AuthForm/PasswordRecoveryForm.tsx";
+import { SignInForm } from "./components/AuthForm/SignInForm.tsx";
+import { SignUpForm } from "./components/AuthForm/SignUpForm.tsx";
+import { PasswordRecoveryForm } from "./components/AuthForm/PasswordRecoveryForm.tsx";
 import { BlogPage } from "./pages/BlogPage.tsx";
 import { TrackingUsersPage } from "./pages/TrackingUsersPage.tsx";
 import { MatchPage } from "./pages/MatchPage.tsx";

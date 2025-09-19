@@ -1,4 +1,4 @@
-import { Container } from "@/component/container";
+import { Container } from "@/components/container";
 import { cn } from "@/lib/utils";
 import { Header } from "@/views/Header";
 

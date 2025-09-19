@@ -1,9 +1,9 @@
-import { ToastWarning } from "@/component/Toasts/ToastWarning";
+import { ToastWarning } from "@/components/Toasts/ToastWarning";
 import { createApi } from "@/services/axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { API_ENDPOINTS } from "@/services/apiService";
-import { ToastSuccess } from "@/component/Toasts/ToastSuccess";
+import { ToastSuccess } from "@/components/Toasts/ToastSuccess";
 import { AxiosError } from "axios";
 import { IImages } from "@/models/IImages";
 

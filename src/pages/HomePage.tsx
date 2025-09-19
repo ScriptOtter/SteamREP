@@ -1,5 +1,5 @@
 import { Header } from "../views/Header";
-import { Container } from "@/component/container";
+import { Container } from "@/components/container";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { API_ENDPOINTS } from "@/services/apiService";
@@ -10,7 +10,7 @@ import { getMe } from "@/data/getUser";
 
 import { setUser } from "@/store/UserSlice";
 
-import { FeaturesHomePage } from "@/component/FeaturesHomePage";
+import { FeaturesHomePage } from "@/components/FeaturesHomePage";
 
 export const HomePage = () => {
   const dispatch = useDispatch();

@@ -1,15 +1,15 @@
-import { Input } from "../component/Input";
+import { Input } from "../components/Input";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { API_ENDPOINTS } from "@/services/apiService";
 import axios, { AxiosError } from "axios";
-import { Loader } from "@/component/Loader";
+import { Loader } from "@/components/Loader";
 import { RouteParams } from "./ProfilePage";
 import { toast } from "react-toastify";
 import { z } from "zod";
-import { AuthLayout } from "@/component/AuthForm/AuthLayout";
+import { AuthLayout } from "@/components/AuthForm/AuthLayout";
 import { cn } from "@/lib/utils";
-import { PasswordRecommendation } from "@/component/AuthForm/PasswordRecommendation";
+import { PasswordRecommendation } from "@/components/AuthForm/PasswordRecommendation";
 import { Info } from "lucide-react";
 
 const passwordSchema = z

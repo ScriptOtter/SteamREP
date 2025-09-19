@@ -1,8 +1,8 @@
-import { Container } from "@/component/container";
-import { PageLoader } from "@/component/Loader";
-import { CS2Tracker } from "@/component/SettingsPage/CS2Tracker";
-import { SettingsProfile } from "@/component/SettingsPage/SettingsProfile";
-import { SettingsSocialLinks } from "@/component/SettingsPage/SettingsSocialLinks";
+import { Container } from "@/components/container";
+import { PageLoader } from "@/components/Loader";
+import { CS2Tracker } from "@/components/SettingsPage/CS2Tracker";
+import { SettingsProfile } from "@/components/SettingsPage/SettingsProfile";
+import { SettingsSocialLinks } from "@/components/SettingsPage/SettingsSocialLinks";
 import { getMySocialLinks } from "@/data/socialLinks";
 import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";

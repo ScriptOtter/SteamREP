@@ -35,5 +35,5 @@ export const API_ENDPOINTS = {
 };
 
 export const S3 = {
-  images: "http://s3.steamrep.help/steamrep/",
+  image: import.meta.env.VITE_S3_IMAGE_URL,
 };

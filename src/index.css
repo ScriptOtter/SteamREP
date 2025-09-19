@@ -22,8 +22,8 @@
   --color-red: #de4e49;
   --color-light-red: #35282e;
 
-  --color-green-win-match: var(--color-green-400);
-  --color-green-win-match-hover: var(--color-green-500);
+  --color-green-win-match: var(--color-green-600);
+  --color-green-win-match-hover: var(--color-green-700);
 
   --color-red-lose-match: var(--color-red-400);
   --color-red-lose-match-hover: var(--color-red-500);

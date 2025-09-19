@@ -3,16 +3,16 @@ import { Header } from "../views/Header";
 import { useEffect, useState } from "react";
 import { getSteamUser, getViewers } from "../data/getUser.ts";
 import { ISteamUser } from "../models/ISteamUser.ts";
-import { SteamInformation } from "../component/ProfilePage/SteamInformation.tsx";
+import { SteamInformation } from "../components/ProfilePage/SteamInformation.tsx";
 import axios, { AxiosError } from "axios";
-import { ProfileLeftSide } from "@/component/ProfilePage/ProfileLeftSide.tsx";
-import { Container } from "@/component/container.tsx";
+import { ProfileLeftSide } from "@/components/ProfilePage/ProfileLeftSide.tsx";
+import { Container } from "@/components/container.tsx";
 import { cn } from "@/lib/utils.ts";
-import { ProfileComments } from "@/component/ProfilePage/ProfileComments.tsx";
-import { PageLoader } from "@/component/Loader.tsx";
+import { ProfileComments } from "@/components/ProfilePage/ProfileComments.tsx";
+import { PageLoader } from "@/components/Loader.tsx";
 import { backgroundColors } from "@/styles/colors.ts";
-import { CS2Stats } from "@/component/ProfilePage/CS2Stats.tsx";
-import { CS2Matches } from "@/component/CS2MatchesPage/CS2Matches.tsx";
+import { CS2Stats } from "@/components/ProfilePage/CS2Stats.tsx";
+import { CS2Matches } from "@/components/CS2MatchesPage/CS2Matches.tsx";
 
 export interface RouteParams {
   [key: string]: string | undefined;

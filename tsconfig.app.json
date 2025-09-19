@@ -27,5 +27,12 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "src/components/Comment",
+    "src/components/CS2MatchesPage",
+    "src/components/Header",
+    "src/components/HomePage",
+    "src/components/Match"
+  ]
 }

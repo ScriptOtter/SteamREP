@@ -1,9 +1,9 @@
-import { Container } from "@/component/container";
+import { Container } from "@/components/container";
 
-import { CreateReportSideBar } from "@/component/ReportPage/CreateReport/CreateReport";
-import { MyReportsSideBar } from "@/component/ReportPage/MyReports/MyReportsSideBar";
-import { OverwatchSideBar } from "@/component/ReportPage/OverwatchReport/OverwatchSideBar";
-import { ReviewedDemosSideBar } from "@/component/ReportPage/ReviewedDemoReport/ReviewedDemosSideBar";
+import { CreateReportSideBar } from "@/components/ReportPage/CreateReport/CreateReport";
+import { MyReportsSideBar } from "@/components/ReportPage/MyReports/MyReportsSideBar";
+import { OverwatchSideBar } from "@/components/ReportPage/OverwatchReport/OverwatchSideBar";
+import { ReviewedDemosSideBar } from "@/components/ReportPage/ReviewedDemoReport/ReviewedDemosSideBar";
 import { cn } from "@/lib/utils";
 import { Header } from "@/views/Header";
 import { Eye, Plus } from "lucide-react";

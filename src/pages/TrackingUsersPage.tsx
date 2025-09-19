@@ -1,4 +1,4 @@
-import { Container } from "@/component/container";
+import { Container } from "@/components/container";
 import { useAuth } from "@/hooks/use-auth";
 import { Header } from "@/views/Header";
 import { InfoIcon, X } from "lucide-react";

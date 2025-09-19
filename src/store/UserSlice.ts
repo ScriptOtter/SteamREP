@@ -1,8 +1,10 @@
+import { IAuth } from "@/models/IAuth";
 import { createSlice } from "@reduxjs/toolkit";
 
-let data = JSON.parse(localStorage.getItem("user")!) || { isAuth: false };
+// Тип для localUser
+type LocalUserType = IAuth | null | undefined;
 
-console.log(data.isAuth);
+const localUser: LocalUserType = { isAuth: false };
 
 let initialState = {
   id: null,
@@ -12,12 +14,8 @@ let initialState = {
   steamid: null,
   country: null,
   role: null,
-  isAuth: data.isAuth,
+  isAuth: localUser.isAuth,
 };
-
-// if (!localStorage.getItem("user")) {
-//   initialState = JSON.parse(localStorage.get("user"));
-// }
 
 const userSlice = createSlice({
   name: "user",

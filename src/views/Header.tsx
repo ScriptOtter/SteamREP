@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "@/hooks/use-auth.ts";
-import { ProfileButton } from "@/component/profileButton";
+import { ProfileButton } from "@/components/profileButton";
 import { BellDot, Bookmark, CircleHelp, LogIn, Search } from "lucide-react";
 import { getMe } from "@/data/getUser.ts";
 import { getUserId, profileURL } from "@/utils/steamUrl";
@@ -11,13 +11,13 @@ import { useDropDownMenu } from "@/hooks/use-drop-down-menu";
 import { removeUser } from "@/store/UserSlice";
 import { API_ENDPOINTS } from "@/services/apiService";
 import axios, { AxiosResponse } from "axios";
-import { MenuBurger } from "@/component/Header/MenuBurger";
-import { NavigationMenu } from "@/component/Header/NavigationMenu";
-import { DropdownMenu } from "@/component/DropDownMenu";
+import { MenuBurger } from "@/components/Header/MenuBurger";
+import { NavigationMenu } from "@/components/Header/NavigationMenu";
+import { DropdownMenu } from "@/components/DropDownMenu";
 import { steamVerification } from "@/lib/steamVerification";
-import { TrackingBlock } from "@/component/TrackingUsers/TrackingBlock";
+import { TrackingBlock } from "@/components/TrackingUsers/TrackingBlock";
 import { cn } from "@/lib/utils";
-import { NotificationsBlock } from "@/component/Notifications/NotificationsBlock";
+import { NotificationsBlock } from "@/components/Notifications/NotificationsBlock";
 import { INotifications } from "@/models/INotifications";
 
 export const Header = () => {

@@ -1,0 +1,16 @@
+export const background_maps: { [key: string]: string } = {
+  de_dust2: "bg-[url(/maps/de_dust2.jpg)]",
+  de_nuke: `bg-[url(/maps/de_nuke.jpg)]`,
+  de_vertigo: `bg-[url(/maps/de_vertigo.jpg)]`,
+  cs_agency: `bg-[url(/maps/cs_agency.jpg)]`,
+  cs_italy: `bg-[url(/maps/cs_italy.jpg)]`,
+  cs_office: `bg-[url(/maps/cs_office.jpg)]`,
+  de_ancient: `bg-[url(/maps/de_ancient.jpg)]`,
+  de_anubis: `bg-[url(/maps/de_anubis.jpg)]`,
+  de_brewery: `bg-[url(/maps/de_brewery.jpg)]`,
+  de_grail: `bg-[url(/maps/de_grail.jpg)]`,
+  de_inferno: `bg-[url(/maps/de_inferno.jpg)]`,
+  de_mirage: `bg-[url(/maps/de_mirage.jpg)]`,
+  de_overpass: `bg-[url(/maps/de_overpass.jpg)]`,
+  de_train: `bg-[url(/maps/de_train.jpg)]`,
+};
