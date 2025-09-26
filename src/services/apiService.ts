@@ -32,8 +32,11 @@ export const API_ENDPOINTS = {
   addTrackingUser: URL + "tracking-users/addUser",
   deleteTrackingUser: URL + "tracking-users/deleteUser/",
   getTrackingUsers: URL + "tracking-users/getUsers",
+  getCS2Stats: URL + "cs2stats/get/",
+  getCS2AccountData: URL + "cs2/userdata",
 };
 
 export const S3 = {
   image: import.meta.env.VITE_S3_IMAGE_URL,
+  medal: import.meta.env.VITE_S3_MEDAL_URL,
 };

@@ -9,6 +9,7 @@ import { createApi } from "@/services/axios";
 import { API_ENDPOINTS } from "@/services/apiService";
 import { ITrackingUser } from "@/models/ITrackingUsers";
 import { useAuth } from "@/hooks/use-auth";
+import { CS2UserData } from "./CS2UserData";
 
 export const ProfileLeftSide = ({ ...props }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -84,7 +85,7 @@ export const ProfileLeftSide = ({ ...props }) => {
           </p>
           {!isFollowed && auth.steamid != user?.id && auth.isAuth && (
             <button
-              className="bg-gray hover:bg-light-gray-4 w-full px-2 py-1 rounded-md text-white outline-1 outline-light-gray cursor-pointer"
+              className="bg-gray text-[14px] hover:bg-light-gray-4 w-full px-2 py-0.5 rounded-md text-white outline-1 outline-light-gray cursor-pointer"
               onClick={async () => {
                 api.post(
                   API_ENDPOINTS.addTrackingUser,
@@ -99,7 +100,7 @@ export const ProfileLeftSide = ({ ...props }) => {
           )}
           {isFollowed && auth.steamid != user?.id && auth.isAuth && (
             <button
-              className="bg-gray hover:bg-light-gray-4 w-full px-2 py-1 rounded-md text-white outline-1 outline-light-gray cursor-pointer"
+              className="bg-gray text-[14px] hover:bg-light-gray-4 w-full px-2 py-0.5 rounded-md text-white outline-1 outline-light-gray cursor-pointer"
               onClick={async () => {
                 api.delete(API_ENDPOINTS.deleteTrackingUser + user.id, {
                   withCredentials: true,
@@ -111,6 +112,8 @@ export const ProfileLeftSide = ({ ...props }) => {
             </button>
           )}
           <SocialLinks id={props.user?.id} />
+
+          <CS2UserData id={props.user?.id} />
         </div>
       </div>
     </>

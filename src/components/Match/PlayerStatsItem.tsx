@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { IMatchPlayer } from "@/models/IMatchPlayer";
 import { Lightbulb } from "lucide-react";
 import { useState } from "react";
 import { FaCrosshairs } from "react-icons/fa";
@@ -16,7 +15,7 @@ export const PlayerStatsItem = ({ ...props }) => {
     death,
     assists,
     mvp,
-    damage,
+    //damage,
     hs,
     adr,
   } = props.player;

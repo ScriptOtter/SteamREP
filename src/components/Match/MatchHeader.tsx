@@ -13,15 +13,18 @@ export const MatchHeader = ({ ...props }) => {
     "0": "text-gray",
     "1": "text-green-win-match",
   };
-  const { teamName, matchResult } = props;
+  const { teamName, matchResult, className } = props;
   return (
     <>
-      <div className="grid grid-cols-15 text-md">
-        <p className="col-start-1 text-xl">Team {teamName}</p>
+      <div className={cn("grid grid-cols-15 text-md", className)}>
+        <div className="col-start-1 col-end-2 md:col-end-1 text-xl flex space-x-2">
+          <p>Team</p>
+          <p>{teamName}</p>
+        </div>
         <p
           className={cn(
             typeResultColor[matchResult],
-            "col-start-2 font-semibold ml-2 text-xl"
+            "md:col-start-2 col-start-3 font-semibold ml-2 text-xl"
           )}
         >
           {typeResult[matchResult]}

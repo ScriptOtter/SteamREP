@@ -31,7 +31,7 @@ export const SocialLinks = ({ ...props }) => {
     <>
       {!loading && socialLinks && (
         <div>
-          <p className="text-white text-center md:text-left text-xl">
+          <p className="text-white text-center md:text-left text-md">
             Social Links:
           </p>
 
@@ -134,6 +134,7 @@ export const SocialLinks = ({ ...props }) => {
           </div>
         </div>
       )}
+      <div className="bg-gray w-full h-[0.5px] mt-4"></div>
     </>
   );
 };

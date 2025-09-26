@@ -6,7 +6,7 @@ import { IMatchPlayer } from "@/models/IMatchPlayer";
 import { Header } from "@/views/Header";
 
 export const MatchPage = () => {
-  const matchData = { map: "de_dust2" };
+  //const matchData = { map: "de_dust2" };
   const team1: IMatchPlayer[] = [
     {
       suspense: false,
@@ -148,7 +148,7 @@ export const MatchPage = () => {
       <MatchResultWithImg teamName={"A"} team1={team1} team2={team2} />
 
       <div className="flex justify-center mt-6">
-        <Container className="text-white ">
+        <Container className="text-white">
           <MatchPlayersStats teamName={"A"} matchResult={1} team={team1} />
           <MatchPlayersStats teamName={"B"} matchResult={-1} team={team2} />
         </Container>

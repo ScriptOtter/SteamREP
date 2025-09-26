@@ -13,18 +13,19 @@ import { useDispatch } from "react-redux";
 import { PageLoader } from "../Loader";
 
 export const ProfileComments = () => {
+  const [firstLoad, setFirstLoad] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [comments, setComments] = useState<IComment[]>([]);
   const [error, setError] = useState<string>("");
   const [showError, setShowError] = useState<boolean>(false);
   const { id } = useParams<RouteParams>();
-  console.log("comments=", comments);
   const dispatch = useDispatch();
   const auth = useAuth();
   const api = createApi(dispatch);
 
   const renderComments = async () => {
-    console.log("RENDER COMMENTS");
+    setLoading(true);
+    setFirstLoad(true);
     const comments = await getComments(id!);
     if (comments.toString() == "") {
       if (auth.isAuth) setError("Leave the first comment");
@@ -71,11 +72,11 @@ export const ProfileComments = () => {
 
   return (
     <div>
-      {loading && <PageLoader />}
+      {loading && !firstLoad && <PageLoader />}
       {auth.isAuth && !loading && (
         <CommentTextArea renderComments={renderComments} />
       )}
-      {Array.isArray(comments) && !showError ? (
+      {!showError && !loading ? (
         comments?.map((comment: IComment) => (
           <Comment
             commentId={comment.id}

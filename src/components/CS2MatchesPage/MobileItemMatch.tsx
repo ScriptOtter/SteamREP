@@ -1,12 +1,12 @@
 import { cn } from "@/lib/utils";
 import { ItemMatchProps } from "./ItemMatch";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { background_maps } from "@/styles/bg_maps";
 
 export const MobileItemMatch = ({ ...props }) => {
   const [mouseHover, setMouseHover] = useState<boolean>(false);
-
+  const ref = useRef(null);
   const {
     map,
     date,
@@ -15,14 +15,30 @@ export const MobileItemMatch = ({ ...props }) => {
     kills,
     deaths,
     assists,
-    HS,
-    damage,
-    kills5,
-    kills4,
-    kills3,
     matchURL,
   }: //matchURL,
   ItemMatchProps = props.match;
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setMouseHover(true);
+          observer.disconnect(); // Отключаем наблюдателя после появления
+        }
+      },
+      { threshold: 0.1 } // Настройка порога видимости
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
 
   const matchResult: number =
     (score.split(":")[0] == "13" && 1) ||
@@ -33,6 +49,7 @@ export const MobileItemMatch = ({ ...props }) => {
 
   return (
     <div
+      ref={ref}
       onClick={() => navigate(`/match/${matchURL}`)}
       onMouseEnter={() => setMouseHover(true)}
       onMouseLeave={() => setMouseHover(false)}

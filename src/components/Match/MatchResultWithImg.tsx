@@ -4,7 +4,7 @@ import { background_maps } from "@/styles/bg_maps";
 import { Container } from "../container";
 
 export const MatchResultWithImg = ({
-  teamName,
+  //teamName,
   team1,
   team2,
 }: {
@@ -20,7 +20,7 @@ export const MatchResultWithImg = ({
       <div
         className={cn(
           background_maps[map],
-          `w-full h-[120px] md:h-[180px] xl:h-[225px] bg-cover bg-center relative`
+          `w-full sm:h-[120px] md:h-[180px] xl:h-[225px] bg-cover bg-center relative`
         )}
       >
         <div className="w-full h-full bg-gray/70">

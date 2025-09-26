@@ -14,14 +14,18 @@ export const MatchPlayersStats = ({
 }) => {
   return (
     <>
-      <div className="space-y-2 mb-4 ">
-        <MatchHeader teamName={teamName} matchResult={matchResult} />
+      <div className="space-y-2 mb-4">
+        <MatchHeader
+          teamName={teamName}
+          matchResult={matchResult}
+          className={"md:overflow-x-auto w-[700px] md:w-full"}
+        />
         <div
           className={cn(
             matchResult == 1 && "border-green-win-match",
             matchResult == 0 && "border-light-gray-2",
             matchResult == -1 && "border-red-lose-match",
-            "rounded-2xl pt-1 pb-2 px-2 outline-1 border-l-4"
+            "rounded-2xl pt-1 pb-2 px-2 outline-1 border-l-4 md:overflow-x-auto w-[700px] md:w-full"
           )}
         >
           {team &&

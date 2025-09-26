@@ -43,7 +43,7 @@ export const Comment = ({
   const [comment, newComment] = useState<string>(content);
   const [updating, setUpdating] = useState<boolean>(false);
   const [commentImages, setCommentImages] = useState<IImages[]>(images || []);
-  console.log("commentImages=", commentImages);
+
   const [deletedImages, setDeletedImages] = useState<string[]>([]);
 
   const deteleImage = (image: string) => {
@@ -129,8 +129,6 @@ export const Comment = ({
                           deletedImages,
                           commentImages
                         );
-                        setUpdating(false);
-                        renderComments();
                       }}
                     >
                       {!loading ? "Edit Comment" : <Loader />}
