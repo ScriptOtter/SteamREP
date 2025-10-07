@@ -1,61 +1,33 @@
 export const privateRanks: { [key: number]: string } = {
   "1": "Recruit Rank 1",
-
   "2": "Private Rank 2",
-
   "3": "Private Rank 3",
-
   "4": "Private Rank 4",
-
   "5": "Corporal Rank 5",
-
   "6": "Corporal Rank 6",
-
   "7": "Corporal Rank 7",
-
   "8": "Corporal Rank 8",
-
   "9": "Sergeant Rank 9",
-
   "10": "Sergeant Rank 10",
-
   "11": "Sergeant Rank 11",
-
   "12": "Sergeant Rank 12",
-
   "13": "Master Sergeant Rank 13",
-
   "14": "Master Sergeant Rank 14",
   "15": "Master Sergeant Rank 15",
-
   "16": "Master Sergeant Rank 16",
-
   "17": "Sergeant Major Rank 17",
-
   "18": "Sergeant Major Rank 18",
-
   "19": "Sergeant Major Rank 19",
-
   "20": "Sergeant Major Rank 20",
-
   "21": "Lieutenant Rank 21",
-
   "22": "Lieutenant Rank 22",
-
   "23": "Lieutenant Rank 23",
-
   "24": "Lieutenant Rank 24",
-
   "25": "Captain Rank 25",
-
   "26": "Captain Rank 26",
-
   "27": "Captain Rank 27",
-
   "28": "Captain Rank 28",
-
   "29": "Major Rank 29",
-
   "30": "Major Rank 30",
   "31": "Major Rank 31",
   "32": "Major Rank 32",
@@ -63,7 +35,6 @@ export const privateRanks: { [key: number]: string } = {
   "34": "Colonel Rank 34",
   "35": "Colonel Rank 35",
   "36": "Brigadier General Rank 36",
-
   "37": "Major General Rank 37",
   "38": "Lieutenant General Rank 38",
   "39": "General Rank 39",

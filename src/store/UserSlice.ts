@@ -50,6 +50,7 @@ const userSlice = createSlice({
           isAuth: !!action.payload.id,
         })
       );
+      localStorage.setItem("auth", "true");
     },
     removeUser(state: any) {
       state.id = null;
@@ -61,6 +62,7 @@ const userSlice = createSlice({
       state.role = null;
       state.isAuth = false;
       localStorage.removeItem("user");
+      localStorage.removeItem("auth");
     },
   },
 });

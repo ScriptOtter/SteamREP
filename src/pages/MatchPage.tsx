@@ -1,158 +1,62 @@
-import { Container } from "@/components/container";
+import { IMatches } from "@/components/CS2MatchesPage/CS2Matches";
 import { MatchInformation } from "@/components/Match/MatchInformation";
-import { MatchPlayersStats } from "@/components/Match/MatchPlayersStats";
+
 import { MatchResultWithImg } from "@/components/Match/MatchResultWithImg";
-import { IMatchPlayer } from "@/models/IMatchPlayer";
+
+import { API_ENDPOINTS } from "@/services/apiService";
 import { Header } from "@/views/Header";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { RouteParams } from "./ProfilePage";
+import { PageLoader } from "@/components/Loader";
 
 export const MatchPage = () => {
-  //const matchData = { map: "de_dust2" };
-  const team1: IMatchPlayer[] = [
-    {
-      suspense: false,
-      image: "/map_icons/map_icon_cs_office.svg",
-      nickname: "Player 1",
-      rank: 7,
-      kills: 12,
-      death: 15,
-      assists: 2,
-      mvp: 7,
-      damage: 2002,
-      adr: 42,
-      hs: 52,
-    },
-    {
-      suspense: true,
-      image: "/map_icons/map_icon_cs_office.svg",
-      nickname: "Player 1",
-      rank: 4,
-      kills: 12,
-      death: 1,
-      assists: 2,
-      mvp: 6,
-      damage: 2002,
-      adr: 46,
-      hs: 52,
-    },
-    {
-      suspense: false,
-      image: "/map_icons/map_icon_cs_office.svg",
-      nickname: "Player 1",
-      rank: 8,
-      kills: 16,
-      death: 5,
-      assists: 10,
-      mvp: 1,
-      damage: 2002,
-      adr: 42,
-      hs: 52,
-    },
-    {
-      suspense: true,
-      image: "/map_icons/map_icon_cs_office.svg",
-      nickname: "Player 1",
-      rank: 7,
-      kills: 10,
-      death: 5,
-      assists: 10,
-      mvp: 4,
-      damage: 2002,
-      adr: 42,
-      hs: 52,
-    },
-    {
-      suspense: false,
-      image: "/map_icons/map_icon_cs_office.svg",
-      nickname: "Player 1",
-      rank: 13,
-      kills: 24,
-      death: 5,
-      assists: 10,
-      mvp: 7,
-      damage: 2002,
-      adr: 42,
-      hs: 52,
-    },
-  ];
-  const team2: IMatchPlayer[] = [
-    {
-      suspense: true,
-      image: "/map_icons/map_icon_cs_office.svg",
-      nickname: "Player 1",
-      rank: 7,
-      kills: 23,
-      death: 53,
-      assists: 12,
-      mvp: 15,
-      damage: 2002,
-      adr: 42,
-      hs: 52,
-    },
-    {
-      suspense: true,
-      image: "/map_icons/map_icon_cs_office.svg",
-      nickname: "Player 1",
-      rank: 4,
-      kills: 14,
-      death: 7,
-      assists: 0,
-      mvp: 6,
-      damage: 2002,
-      adr: 46,
-      hs: 52,
-    },
-    {
-      suspense: true,
-      image: "/map_icons/map_icon_cs_office.svg",
-      nickname: "Player 1",
-      rank: 8,
-      kills: 16,
-      death: 5,
-      assists: 10,
-      mvp: 1,
-      damage: 2002,
-      adr: 42,
-      hs: 52,
-    },
-    {
-      suspense: true,
-      image: "/map_icons/map_icon_cs_office.svg",
-      nickname: "Player 1",
-      rank: 7,
-      kills: 10,
-      death: 5,
-      assists: 10,
-      mvp: 4,
-      damage: 2002,
-      adr: 42,
-      hs: 52,
-    },
-    {
-      suspense: false,
-      image: "/map_icons/map_icon_cs_office.svg",
-      nickname: "Player 1",
-      rank: 13,
-      kills: 24,
-      death: 5,
-      assists: 10,
-      mvp: 7,
-      damage: 2002,
-      adr: 42,
-      hs: 52,
-    },
-  ];
+  const [match, setMatch] = useState<IMatches>();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>();
+  const { id } = useParams<RouteParams>();
+  useEffect(() => {
+    const fetchMatch = async () => {
+      const res = await axios.get(API_ENDPOINTS.getMatch + id);
+      if (res.data) {
+        setMatch(res.data);
+        setLoading(false);
+      } else {
+        setError("Match not found");
+        setLoading(false);
+      }
+    };
+    fetchMatch();
+  }, []);
+  console.log(match);
   return (
     <>
       <Header />
-      <MatchInformation />
-      <MatchResultWithImg teamName={"A"} team1={team1} team2={team2} />
+      {loading && <PageLoader />}
+      {!loading && match ? (
+        <>
+          <MatchInformation match={match} />
+          <MatchResultWithImg
+            map={match.map}
+            teams={match.playersStatistic}
+            participants={match.participants}
+          />
 
-      <div className="flex justify-center mt-6">
-        <Container className="text-white">
-          <MatchPlayersStats teamName={"A"} matchResult={1} team={team1} />
-          <MatchPlayersStats teamName={"B"} matchResult={-1} team={team2} />
-        </Container>
-      </div>
+          {/* <div className="flex justify-center mt-6">
+            <Container className="text-white">
+              <MatchPlayersStats teamName={"A"} matchResult={1} team={team1} />
+              <MatchPlayersStats teamName={"B"} matchResult={-1} team={team2} />
+            </Container>
+          </div> */}
+        </>
+      ) : (
+        <div className="w-full h-full">
+          <div className="flex flex-col items-center font-mono space-y-2 mt-[10%]">
+            <p className="text-white text-5xl sm:text-7xl">{error}</p>
+          </div>
+        </div>
+      )}
     </>
   );
 };

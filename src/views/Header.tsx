@@ -77,6 +77,8 @@ export const Header = () => {
     }
   };
   useEffect(() => {
+    const isAuth = localStorage.getItem("auth");
+    if (!isAuth) return;
     getMe(dispatch);
     notifications();
     setIsAuthenticated(auth?.isAuth);

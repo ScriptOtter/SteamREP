@@ -27,13 +27,16 @@ export const CS2UserData = ({ ...props }) => {
           currentXp={cs2UserData?.player_cur_xp - 327680000}
         />
       )}
-      <div className="text-white mt-2 text-md">CS2 Commendations</div>
       {cs2UserData?.commendation && (
-        <CS2Commendation
-          friendly={cs2UserData?.commendation?.cmd_friendly}
-          teaching={cs2UserData?.commendation?.cmd_teaching}
-          leader={cs2UserData?.commendation?.cmd_leader}
-        />
+        <>
+          <div className="text-white mt-2 text-md">CS2 Commendations</div>
+
+          <CS2Commendation
+            friendly={cs2UserData?.commendation?.cmd_friendly}
+            teaching={cs2UserData?.commendation?.cmd_teaching}
+            leader={cs2UserData?.commendation?.cmd_leader}
+          />
+        </>
       )}
       {cs2UserData?.medals && (
         <div className="text-white mt-2 text-md mb-2">CS2 Medals</div>

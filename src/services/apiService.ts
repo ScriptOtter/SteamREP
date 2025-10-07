@@ -34,6 +34,8 @@ export const API_ENDPOINTS = {
   getTrackingUsers: URL + "tracking-users/getUsers",
   getCS2Stats: URL + "cs2stats/get/",
   getCS2AccountData: URL + "cs2/userdata",
+  getMatches: URL + "cs2/getMatches/",
+  getMatch: URL + "cs2/getMatch/",
 };
 
 export const S3 = {

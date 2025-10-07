@@ -4,8 +4,6 @@ import { useState } from "react";
 import { FaCrosshairs } from "react-icons/fa";
 
 export const PlayerStatsItem = ({ ...props }) => {
-  console.log("props=>", props);
-
   const {
     suspense,
     image,

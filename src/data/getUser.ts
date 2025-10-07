@@ -23,19 +23,21 @@ export const refreshToken = async (dispatch: any) => {
 
 export const getMe = async (dispatch: any): Promise<boolean> => {
   const api = createApi(dispatch);
+  const isAuth = localStorage.getItem("auth");
+  if (isAuth) {
+    try {
+      const res = await api.get(API_ENDPOINTS.me, { withCredentials: true });
 
-  try {
-    const res = await api.get(API_ENDPOINTS.me, { withCredentials: true });
-
-    if (!res) {
+      if (!res) {
+        return false;
+      } else {
+        dispatch(setUser(res.data));
+        return true;
+      }
+    } catch (error) {
       return false;
-    } else {
-      dispatch(setUser(res.data));
-      return true;
     }
-  } catch (error) {
-    return false;
-  }
+  } else return false;
 };
 
 export const getSteamUser = async (id: string): Promise<ISteamUser> => {

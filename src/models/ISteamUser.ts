@@ -3,7 +3,7 @@ import { ISteamBans } from "./ISteamBans";
 import { IUser } from "./IUser";
 
 export interface ISteamUser {
-  id?: string;
+  id: string;
   steamId2?: string;
   steamId3?: string;
   steamIdHex?: string;

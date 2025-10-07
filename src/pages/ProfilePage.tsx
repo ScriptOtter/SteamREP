@@ -191,7 +191,9 @@ export const ProfilePage = () => {
                   {currentPage === "CS2" && (
                     <CS2Stats steamid={steamUser?.id} />
                   )}
-                  {currentPage === "CS2Matches" && <CS2Matches />}
+                  {currentPage === "CS2Matches" && (
+                    <CS2Matches steamid={steamUser?.id} />
+                  )}
                 </div>
               </div>
             </div>

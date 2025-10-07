@@ -18,7 +18,7 @@ export const NavigationMenu = () => {
       >
         <div className="flex space-x-4 ml-8 text-gray-text">
           {Object.keys(menu).map((key) => (
-            <ul>
+            <ul key={key}>
               <div
                 onClick={() => navigate(menuUrls[key])}
                 className={cn(
