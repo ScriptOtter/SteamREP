@@ -16,6 +16,6 @@ export interface ISteamUser {
   timeCreated?: string;
   userId?: string;
   commentsAsRecipient?: IComment[];
-  user?: IUser | undefined;
+  user?: IUser | null;
   steamUserBans?: ISteamBans;
 }

@@ -34,7 +34,7 @@ export const ProfileLeftSide = ({ ...props }) => {
   };
 
   useEffect(() => {
-    getTrackingUsers();
+    if (localStorage.getItem("auth")) getTrackingUsers();
   }, []);
 
   return (

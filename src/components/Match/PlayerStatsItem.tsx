@@ -2,89 +2,166 @@ import { cn } from "@/lib/utils";
 import { Lightbulb } from "lucide-react";
 import { useState } from "react";
 import { FaCrosshairs } from "react-icons/fa";
+import { IPlayerStatisticInMatch } from "../CS2MatchesPage/CS2Matches";
+import { ISteamUser } from "@/models/ISteamUser";
+import { playerColors } from "@/lib/playerColors";
+import { ToastSuccess } from "../Toasts/ToastSuccess";
+import { IScoreboard } from "@/pages/MatchPage";
 
-export const PlayerStatsItem = ({ ...props }) => {
+interface IPlayerStatsItem {
+  player: IScoreboard;
+  matchScore: string;
+  participants: ISteamUser[];
+  className?: string;
+  team: IPlayerStatisticInMatch[];
+}
+
+export const PlayerStatsItem = ({ ...props }: IPlayerStatsItem) => {
+  const { player, participants, team, className } = props;
   const {
-    suspense,
-    image,
-    nickname,
+    ace_rounds_total,
+    assists_total,
+    clutchV2,
+    clutchV3,
+    clutchV4,
+    clutchV5,
+    //comp_wins,
+    crosshair_code,
+    //damage_total,
+    deaths_total,
+    //headshot_kills_total,
+    isSuspicious,
+    k3_rounds_total,
+    k4_rounds_total,
+    kills_total,
+    mvps,
+    name,
+    player_color,
     rank,
-    kills,
-    death,
-    assists,
-    mvp,
-    //damage,
-    hs,
+    score,
+    //team_score_first_half,
+    //team_score_second_half,
+    utility_damage_total,
+    result,
+    steamid,
+    diff_kd,
     adr,
-  } = props.player;
-  const differenceKD = kills - death;
+    kd,
+    matchHS,
+  } = player;
   const [lightbulbDesc, setLightbulbDesc] = useState<boolean>(false);
+  console.log(player);
+
   return (
-    <div className="grid grid-cols-15 mt-4">
-      <div className="col-start-1 col-end-4">
-        <div className="flex items-center space-x-2">
-          {suspense && (
-            <div className="relative">
-              <Lightbulb
-                size={20}
-                className="cursor-pointer text-red-600"
-                onMouseEnter={() => setLightbulbDesc(true)}
-                onMouseLeave={() => setLightbulbDesc(false)}
-              />
-              {lightbulbDesc && (
-                <div className="absolute top-0 right-6 text-xs bg-gray outline-1 outline-light-gray-2 p-1 rounded-md">
-                  Suspicious
-                </div>
-              )}
-            </div>
-          )}
-          {image && (
+    <div className={className}>
+      <div className={cn("grid grid-cols-24 mt-4")}>
+        <div className="col-start-1 col-end-4">
+          <div className="flex items-center space-x-2">
+            {isSuspicious && (
+              <div className="relative">
+                <Lightbulb
+                  size={20}
+                  className="cursor-pointer text-red-600"
+                  onMouseEnter={() => setLightbulbDesc(true)}
+                  onMouseLeave={() => setLightbulbDesc(false)}
+                />
+                {lightbulbDesc && (
+                  <div className="absolute top-0 left-7 text-xs bg-gray outline-1 outline-light-gray-2 p-1 rounded-md">
+                    Suspicious
+                  </div>
+                )}
+              </div>
+            )}
+
             <img
-              className={cn(!suspense && "ml-7", "w-7 h-7 rounded-full")}
-              src={image}
+              className={cn(
+                player_color && `outline-1 ${playerColors[player_color]}`,
+                !isSuspicious && "ml-7",
+                "w-7 h-7 rounded-full"
+              )}
+              src={
+                participants.find((i) => i.id === steamid)?.avatar ||
+                "https://avatars.steamstatic.com/600a54e62405d2696730eabca74233adfd9aea7e_full.jpg"
+              }
             />
-          )}
-          <p>{nickname}</p>
+            <p className={cn("line-clamp-1 break-words")}>{name}</p>
+            {team[0].result === "WIN" && result === "LOSE" && (
+              <p className={cn("font-mono text-red-500")}>LEFT</p>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="col-start-5 col-end-6">
-        <img className="size-10 -mt-2" src={`/ranks/skillgroup${rank}.svg`} />
-      </div>
-      <div className="col-start-6 col-end-7">
-        <div className="flex justify-center mt-1 items-center">
-          <FaCrosshairs size={17} />
+        <div className="col-start-5 col-end-6">
+          <img className="size-10 -mt-2" src={`/ranks/skillgroup${rank}.svg`} />
         </div>
-      </div>
-      <div className="col-start-7 col-end-8">
-        <p>{kills}</p>
-      </div>
-      <div className="col-start-8 col-end-9">
-        <p>{death}</p>
-      </div>
-      <div className="col-start-9 col-end-10">
-        <p>{assists}</p>
-      </div>
-      <div className="col-start-10 col-end-11 ml-1">
-        <p
-          className={cn(
-            differenceKD > 0 && "text-green-400",
-            differenceKD < 0 && "text-red-400"
-          )}
-        >
-          {differenceKD}
-        </p>
-      </div>
-      <div className="col-start-11 col-end-12 ml-1">
-        <p>{mvp}</p>
-      </div>
-      <div className="col-start-12 col-end-13 ml-0.5">
-        <p>{(kills / death).toFixed(2)}</p>
-      </div>
-      <div className="col-start-13 col-end-14 ml-2">
-        <p>{adr}</p>
-      </div>
-      <div className="col-start-14 col-end-15 ml-2">
-        <p>{hs}</p>
+        <div className="col-start-6 col-end-7">
+          <div
+            onClick={() => {
+              navigator.clipboard.writeText(crosshair_code || "");
+              ToastSuccess(`Crosshair code copied`);
+            }}
+            className="flex justify-center mt-1 items-center relative cursor-pointer"
+          >
+            <FaCrosshairs size={17} />
+          </div>
+        </div>
+        <div className="col-start-7 col-end-8">
+          <p>{kills_total}</p>
+        </div>
+        <div className="col-start-8 col-end-9">
+          <p>{deaths_total}</p>
+        </div>
+        <div className="col-start-9 col-end-10">
+          <p>{assists_total}</p>
+        </div>
+        <div className="col-start-10 col-end-11 ml-1">
+          <p
+            className={cn(
+              diff_kd > 0 && "text-green-400",
+              diff_kd < 0 && "text-red-400"
+            )}
+          >
+            {diff_kd}
+          </p>
+        </div>
+        <div className="ml-1">
+          <p>{mvps}</p>
+        </div>
+        <div className="ml-2.5">
+          <p>{score}</p>
+        </div>
+        <div className="">
+          <p>{kd}</p>
+        </div>
+        <div className="ml-1">
+          <p>{adr}</p>
+        </div>
+        <div className="ml-1">
+          <p>{utility_damage_total}</p>
+        </div>
+        <div className="ml-2">
+          <p>{matchHS}</p>
+        </div>
+        <div className="ml-2">
+          <p>{k3_rounds_total}</p>
+        </div>
+        <div className="ml-2">
+          <p>{k4_rounds_total}</p>
+        </div>
+        <div className="ml-3">
+          <p>{ace_rounds_total}</p>
+        </div>
+        <div className="ml-3">
+          <p>{clutchV2}</p>
+        </div>
+        <div className="ml-3">
+          <p>{clutchV3}</p>
+        </div>
+        <div className="ml-4">
+          <p>{clutchV4}</p>
+        </div>
+        <div className="ml-4">
+          <p>{clutchV5}</p>
+        </div>
       </div>
     </div>
   );

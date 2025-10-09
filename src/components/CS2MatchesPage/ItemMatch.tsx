@@ -52,8 +52,7 @@ export const ItemMatch = ({ ...props }) => {
 
   const navigate = useNavigate();
   const matchHS = (
-    (Number(headshot_kills_total) / Number(kills_total)) *
-    100
+    (Number(headshot_kills_total) / Number(kills_total) || 0) * 100
   ).toFixed(0);
 
   return (

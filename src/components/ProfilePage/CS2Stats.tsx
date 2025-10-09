@@ -7,11 +7,10 @@ import { API_ENDPOINTS } from "@/services/apiService";
 import { ICS2Stats } from "@/models/ICS2Stats";
 
 const getLeefityStats = async (steamid: string): Promise<ICS2Stats> => {
-  console.log(steamid);
   const res: AxiosResponse<ICS2Stats> = await axios.get(
     API_ENDPOINTS.getCS2Stats + steamid
   );
-  console.log(res);
+
   return res.data;
 };
 export const CS2Stats = ({ ...props }) => {
@@ -81,12 +80,14 @@ export const CS2Stats = ({ ...props }) => {
                   </p>
                   <p>{cs2Stats?.inGameSinse && Time(cs2Stats?.inGameSinse)}</p>
                 </div>
-                <div className="flex space-x-1">
-                  <p className="text-gray-500 lg:w-[30%] w-[40%] ">
-                    Premier Rating:
-                  </p>
-                  <PremierRating rating={cs2Stats?.premier} />
-                </div>
+                {cs2Stats?.premier && (
+                  <div className="flex space-x-1">
+                    <p className="text-gray-500 lg:w-[30%] w-[40%] ">
+                      Premier Rating:
+                    </p>
+                    <PremierRating rating={cs2Stats?.premier} />
+                  </div>
+                )}
                 <div className="flex space-x-1 mb-3">
                   <p className="text-gray-500 lg:w-[30%] w-[40%] ">
                     Wingman Rank:

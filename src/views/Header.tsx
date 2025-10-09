@@ -86,7 +86,7 @@ export const Header = () => {
 
   return (
     <>
-      <div className={"bg-primary shadow-lg"}>
+      <div className={cn("bg-primary shadow-lg sticky z-50 top-0")}>
         <div className="flex justify-between items-center p-3">
           {/* Логотип */}
 
@@ -144,7 +144,9 @@ export const Header = () => {
                 <div
                   onClick={() => notificationToggleMenu()}
                   className={cn(
-                    newNotifications ? "bg-green-400" : "bg-light-blue-3",
+                    newNotifications
+                      ? "bg-green-400 animate-pulse"
+                      : "bg-light-blue-3",
                     "rounded-full w-[9px] h-[9px] absolute top-1 right-[2px] cursor-pointer"
                   )}
                 ></div>
@@ -190,7 +192,9 @@ export const Header = () => {
                 <div
                   onClick={() => notificationToggleMenu2()}
                   className={cn(
-                    newNotifications ? "bg-green-400" : "bg-light-blue-3",
+                    newNotifications
+                      ? "bg-green-400 animate-pulse"
+                      : "bg-light-blue-3",
                     "rounded-full w-[9px] h-[9px] absolute top-1 right-[2px] cursor-pointer"
                   )}
                 ></div>
@@ -212,6 +216,7 @@ export const Header = () => {
           <div className="md:flex items-center mx-4 hidden md:visible">
             {!isAuthenticated ? (
               <div
+                onClick={() => navigate("/auth/signin")}
                 className={
                   "flex items-center space-x-2 text-[18px] text-white hover:bg-gray-hover py-0.5 px-4 duration-100 rounded-md cursor-pointer"
                 }

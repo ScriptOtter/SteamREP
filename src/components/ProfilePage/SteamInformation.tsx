@@ -1,8 +1,10 @@
 import { Copy } from "lucide-react";
 import { ISteamUser } from "../../models/ISteamUser";
 import ReactCountryFlag from "react-country-flag";
-
-export const SteamInformation = (user: ISteamUser) => {
+interface ISteamInformation {
+  user: ISteamUser;
+}
+export const SteamInformation = ({ user }: ISteamInformation) => {
   const {
     realname,
     timeCreated,
@@ -14,15 +16,22 @@ export const SteamInformation = (user: ISteamUser) => {
     steamIdHex,
     countryCode,
     steamUserBans,
-  }: ISteamUser = user?.user || {};
-  console.log(steamUserBans);
+  } = user || {};
+
   return (
     <div className="mx-4 my-4 text-xl text-white">
       <div className="mb-3">STEAM ID’S:</div>
       <div className="space-y-1.5 mb-3">
         <div className="flex space-x-1">
           <p className="text-light-gray-2 lg:w-[20%] w-[30%] ">SteamID:</p>
-          <p>{id}</p>
+          <p
+            className="cursor-pointer"
+            onClick={() =>
+              (window.location.href = `https://steamcommunity.com/profiles/${id}`)
+            }
+          >
+            {id}
+          </p>
           <Copy
             onClick={() => navigator.clipboard.writeText(id || "")}
             size={17}

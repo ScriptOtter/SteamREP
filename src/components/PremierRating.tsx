@@ -1,15 +1,20 @@
 export const PremierRating = ({ ...props }) => {
   return (
     <>
-      {props.rating == null && (
+      {!props.rating && (
         <div>
-          <p className="">No Rating</p>
+          <div className="relative">
+            <img className="w-[80px]" src={"/rating_bg/common.png"} />
+            <p className="absolute top-0 left-7 text-[#B1C3D9]">
+              {props.rating}
+            </p>
+          </div>
         </div>
       )}
       {props.rating > 0 && props.rating < 5000 && (
         <div className="relative">
           <img className="w-[80px]" src={"/rating_bg/common.png"} />
-          <p className="absolute top-0 left-5 text-[#B1C3D9]">{props.rating}</p>
+          <p className="absolute top-0 left-4 text-[#B1C3D9]">{props.rating}</p>
         </div>
       )}
       {props.rating > 4999 && props.rating < 10000 && (

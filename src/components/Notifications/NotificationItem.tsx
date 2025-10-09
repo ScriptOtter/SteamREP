@@ -45,7 +45,7 @@ export const NotificationItem = ({ ...props }) => {
           <div className="flex items-center space-x-1">
             <div
               className={cn(
-                !isViewed ? "bg-green-400" : "bg-light-gray-2",
+                !isViewed ? "bg-green-400 animate-pulse" : "bg-light-gray-2",
                 "rounded-full min-w-2 min-h-2"
               )}
             ></div>

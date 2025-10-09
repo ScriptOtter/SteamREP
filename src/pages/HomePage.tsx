@@ -39,16 +39,20 @@ export const HomePage = () => {
     if (token) verify();
     navigate("/");
   }, [token]);
+
+  useEffect(() => {
+    getMe(dispatch, true);
+  }, []);
   return (
     <>
-      <div className="h-full min-h-screen bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:26px_26px] backdrop-blur-2xl">
+      <div className="h-full min-h-screen bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:26px_26px]">
         <Header />
 
         <div className="flex justify-center">
           <Container className="">
             <div className="flex justify-center items-center inset-0 w-full md:mt-24 transition-all duration-300 ">
               <div>
-                <div className="pb-8 ">
+                <div className="pb-8">
                   <div className="text-white">
                     <p className="text-5xl md:text-6xl text-center mb-4 md:mb-2 fade-in-home-text-1">
                       Become a part of our community

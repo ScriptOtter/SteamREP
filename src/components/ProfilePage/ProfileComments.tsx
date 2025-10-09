@@ -62,7 +62,7 @@ export const ProfileComments = () => {
     setLoading(true);
     renderComments();
   }, [location.pathname]);
-  console.log(comments);
+
   return (
     <div>
       {loading && <PageLoader />}

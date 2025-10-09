@@ -21,10 +21,14 @@ export const refreshToken = async (dispatch: any) => {
   }
 };
 
-export const getMe = async (dispatch: any): Promise<boolean> => {
+export const getMe = async (
+  dispatch: any,
+  home?: boolean
+): Promise<boolean> => {
   const api = createApi(dispatch);
+
   const isAuth = localStorage.getItem("auth");
-  if (isAuth) {
+  if (isAuth || home) {
     try {
       const res = await api.get(API_ENDPOINTS.me, { withCredentials: true });
 

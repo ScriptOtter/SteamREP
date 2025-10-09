@@ -42,9 +42,8 @@ export const FeaturesHomePage = () => {
     <div className="flex justify-center mt-4 mx-4 lg:mt-16">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {features.map((feature, index) => (
-          <div className={"p-4 fade-in-feature"}>
+          <div className={"p-4 fade-in-feature"} key={index}>
             <SiteFeature
-              key={index}
               icon={feature.icon}
               title={feature.title}
               description={feature.description}

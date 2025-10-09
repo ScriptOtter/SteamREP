@@ -12,7 +12,7 @@ export const DropdownMenu = ({ ...props }) => {
       <div className="flex flex-col z-999">
         <div
           className={
-            "bg-secondary absolute -right-2 top-12 w-40 rounded-xl outline-1"
+            "bg-secondary absolute -right-2 top-12 w-40 rounded-xl outline-1 "
           }
         >
           <div className="h-full">

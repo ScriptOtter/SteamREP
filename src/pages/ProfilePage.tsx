@@ -28,10 +28,9 @@ export const ProfilePage = () => {
   const [viewers, setViewers] = useState<number>(0);
 
   const menu: { [key: string]: string } = {
-    SteamInformation: "Steam Information",
-    Comments: "Comments",
     CS2: "CS2",
-    UsersComments: "Users Comments",
+    Comments: "Comments",
+    SteamInformation: "Steam Information",
   };
 
   useEffect(() => {
@@ -66,7 +65,7 @@ export const ProfilePage = () => {
     if (id) fetchData(id);
   }, [id]);
 
-  const [currentPage, setCurrentPage] = useState<string>("SteamInformation");
+  const [currentPage, setCurrentPage] = useState<string>("CS2");
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -74,7 +73,7 @@ export const ProfilePage = () => {
       if (hash) {
         setCurrentPage(hash);
       } else {
-        setCurrentPage("SteamInformation"); // Если хэш пустой, устанавливаем значение по умолчанию
+        setCurrentPage("CS2"); // Если хэш пустой, устанавливаем значение по умолчанию
       }
     };
 
@@ -124,9 +123,11 @@ export const ProfilePage = () => {
                   <div className="flex">
                     {Object.keys(menu).map((key) => (
                       <div
+                        key={key}
                         className={cn(
                           currentPage === menu[key].replace(/\s+/g, "") &&
                             "text-light-blue",
+
                           "cursor-pointer hover:text-light-blue-2 duration-100 px-2"
                         )}
                         onClick={() => {
@@ -182,6 +183,7 @@ export const ProfilePage = () => {
                   )}
                 >
                   {currentPage === "SteamInformation" &&
+                    steamUser &&
                     (loading ? (
                       <PageLoader />
                     ) : (
