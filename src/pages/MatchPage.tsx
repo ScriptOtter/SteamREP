@@ -38,6 +38,7 @@ export const MatchPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>();
   const { id } = useParams<RouteParams>();
+
   useEffect(() => {
     const fetchMatch = async () => {
       const res = await axios.get(API_ENDPOINTS.getMatch + id);
@@ -97,7 +98,7 @@ export const MatchPage = () => {
       Number(match.score.split(":")[1])
     ).toFixed(0),
   }));
-  const teamLoseScoreboard = teamWin.map((item) => ({
+  const teamLoseScoreboard = teamLose.map((item) => ({
     ...item,
     diff_kd: item.kills_total - item.deaths_total,
     matchHS: (
@@ -111,6 +112,7 @@ export const MatchPage = () => {
       Number(match.score.split(":")[1])
     ).toFixed(0),
   }));
+  console.log(match);
   return (
     <>
       <Header />

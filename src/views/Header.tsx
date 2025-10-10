@@ -234,6 +234,7 @@ export const Header = () => {
                 <ProfileButton onToggleMenu={toggleMenu} />
                 {isMenuOpen && (
                   <DropdownMenu
+                    isMenuOpen={isMenuOpen}
                     closeMenu={() => toggleMenu()}
                     onProfile={() =>
                       auth.role == "VERIFIED"

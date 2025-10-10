@@ -93,39 +93,53 @@ export const CS2Matches = ({ ...props }) => {
   useEffect(() => {
     setLoading(true);
   }, [location.pathname]);
+
   return (
     <>
-      {!loading && matches ? (
+      {!loading ? (
         <div className="text-white">
-          <CS2HeaderTable
-            currentView={currentView}
-            setCurrentView={setCurrentView}
-          />
-          <div>
-            {matches.map((match) => (
+          {matches.length > 0 ? (
+            <div>
+              <CS2HeaderTable
+                currentView={currentView}
+                setCurrentView={setCurrentView}
+              />
+              <div>
+                {matches.map((match) => (
+                  <div
+                    onClick={() => navigate(`/match/${match.id}`)}
+                    className={cn(
+                      currentView == "raws"
+                        ? "hidden xl:grid grid-cols-31 gap-4 mx-4 mb-0.5 items-center hover:bg-gray cursor-pointer"
+                        : "hidden"
+                    )}
+                  >
+                    <ItemMatch match={match} key={match.id} />
+                  </div>
+                ))}
+              </div>
               <div
-                onClick={() => navigate(`/match/${match.id}`)}
                 className={cn(
-                  currentView == "raws"
-                    ? "hidden xl:grid grid-cols-31 gap-4 mx-4 mb-0.5 items-center hover:bg-gray cursor-pointer"
+                  currentView == "blocks"
+                    ? "text-xs xl:grid-cols-4 grid grid-cols-1 sm:grid-cols-2 gap-4 mx-4 "
                     : "hidden"
                 )}
               >
-                <ItemMatch match={match} key={match.id} />
+                {matches.map((match) => (
+                  <MobileItemMatch match={match} key={match.id} />
+                ))}
               </div>
-            ))}
-          </div>
-          <div
-            className={cn(
-              currentView == "blocks"
-                ? "text-xs xl:grid-cols-4 grid grid-cols-1 sm:grid-cols-2 gap-4 mx-4 "
-                : "hidden"
-            )}
-          >
-            {matches.map((match) => (
-              <MobileItemMatch match={match} key={match.id} />
-            ))}
-          </div>
+            </div>
+          ) : (
+            <div className="w-full h-[600px]">
+              <div className="flex flex-col items-center font-mono space-y-2 mt-[10%]">
+                <p className="text-white text-7xl sm:text-9xl">404</p>
+                <p className="text-white text-5xl sm:text-7xl">
+                  PAGE NOT FOUND!
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <PageLoader />

@@ -20,7 +20,6 @@ export const SettingsPage = () => {
     cstracker: "CSTracker",
   };
   const [currentPage, setCurrentPage] = useState<string>(rightSide.profile);
-  console.log(currentPage);
   const navigate = useNavigate();
 
   const auth = useAuth();
@@ -40,24 +39,29 @@ export const SettingsPage = () => {
     fetchData();
   }, []);
 
+  const render = () => {
+    setLoading(true);
+    setLoading(false);
+  };
+
   useEffect(() => {
     console.log(auth.isAuth);
     if (auth.isAuth == false) navigate("/");
   }, [auth.isAuth]);
-
+  console.log("useEffect");
   return (
     <>
       <Header />
 
-      <div className="h-full flex justify-center">
-        <Container>
-          {loading ? (
-            <>
-              <PageLoader />
-            </>
-          ) : (
-            <div className="md:flex justify-center space-x-4 mx-4">
-              <div className=" md:w-1/3 h-full w-full mb-4 py-2 md:px-2 rounded-md outline-1 outline-light-gray text-white">
+      <div className="h-full flex justify-center mt-16">
+        {loading ? (
+          <>
+            <PageLoader />
+          </>
+        ) : (
+          <Container className="max-w-[1280px]">
+            <div className="md:flex justify-center space-x-12">
+              <div className="h-full w-full md:w-1/5 mb-4 py-2 md:px-2 rounded-md outline-1 outline-light-gray text-white">
                 <div className="flex flex-col space-y-1">
                   <button
                     className={cn(
@@ -66,7 +70,7 @@ export const SettingsPage = () => {
                     )}
                     onClick={() => setCurrentPage(rightSide.profile)}
                   >
-                    <p className="text-s text-left ml-4 p-2 hover:text-light-blue-2 transition-all duration-100 px-2">
+                    <p className="font-semibold text-s text-left ml-4 p-2 hover:text-light-blue-2 transition-all duration-100 px-2">
                       Profile
                     </p>
                   </button>
@@ -77,7 +81,7 @@ export const SettingsPage = () => {
                     )}
                     onClick={() => setCurrentPage(rightSide.sociallinks)}
                   >
-                    <p className="text-s text-left ml-4 p-2 hover:text-light-blue-2 transition-all duration-100 px-2">
+                    <p className="font-semibold text-s text-left ml-4 p-2 hover:text-light-blue-2 transition-all duration-100 px-2">
                       Social links
                     </p>
                   </button>
@@ -88,7 +92,7 @@ export const SettingsPage = () => {
                     )}
                     onClick={() => setCurrentPage(rightSide.cstracker)}
                   >
-                    <p className="text-s text-left ml-4 p-2 hover:text-light-blue-2 transition-all duration-100 px-2">
+                    <p className="font-semibold text-s text-left ml-4 p-2 hover:text-light-blue-2 transition-all duration-100 px-2">
                       CS Tracker
                     </p>
                   </button>
@@ -103,8 +107,8 @@ export const SettingsPage = () => {
               )}
               {currentPage == "CSTracker" && <CS2Tracker />}
             </div>
-          )}
-        </Container>
+          </Container>
+        )}
       </div>
     </>
   );

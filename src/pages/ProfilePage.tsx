@@ -69,23 +69,18 @@ export const ProfilePage = () => {
 
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.replace("#", ""); // Получаем хэш без #
+      const hash = window.location.hash.replace("#", "");
       if (hash) {
         setCurrentPage(hash);
       } else {
-        setCurrentPage("CS2"); // Если хэш пустой, устанавливаем значение по умолчанию
+        setCurrentPage("CS2");
       }
     };
 
-    // Устанавливаем обработчик события при монтировании компонента
-    window.addEventListener("hashchange", handleHashChange);
+    const hashChange = window.addEventListener("hashchange", handleHashChange);
 
-    // Вызываем функцию при первом рендере, чтобы установить начальное значение
-    handleHashChange();
-
-    // Удаляем обработчик события при размонтировании компонента
     return () => {
-      window.removeEventListener("hashchange", handleHashChange);
+      hashChange;
     };
   }, []);
 

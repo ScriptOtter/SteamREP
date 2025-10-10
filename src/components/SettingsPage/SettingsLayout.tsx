@@ -8,9 +8,8 @@ export const SettingsLayout = ({ children, header }: Props) => {
   return (
     <>
       <div className="w-full rounded-t-2xl outline-1 outline-light-gray-2">
-        <div className="bg-light-gray rounded-t-2xl">
-          <h1 className={"text-white p-6 text-xl font-bold"}>{header}</h1>
-        </div>
+        <h1 className={"text-white p-6 text-2xl font-bold"}>{header}</h1>
+
         {children}
       </div>
     </>

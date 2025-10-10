@@ -2,18 +2,19 @@ import { LogOut, Settings, User } from "lucide-react";
 import { fontSize } from "@/styles/font";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
+import { cn } from "@/lib/utils";
 export const DropdownMenu = ({ ...props }) => {
   const navigate = useNavigate();
   const auth = useAuth();
-  const { onProfile, handleLogout } = props;
+  const { onProfile, handleLogout, isMenuOpen } = props;
 
   return (
     <>
       <div className="flex flex-col z-999">
         <div
-          className={
-            "bg-secondary absolute -right-2 top-12 w-40 rounded-xl outline-1 "
-          }
+          className={cn(
+            "bg-secondary absolute -right-2 top-12 w-40 rounded-xl outline-1"
+          )}
         >
           <div className="h-full">
             <button

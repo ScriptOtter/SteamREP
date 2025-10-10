@@ -4,6 +4,8 @@ import { CountryItem } from "./CountryItem";
 import { SettingsLayout } from "./SettingsLayout";
 import { FindLinkItem } from "./FindLinkItem";
 import { Copy } from "lucide-react";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { useState } from "react";
 
 function modifyString(input: string): string {
   const mail = input.split("@")[1];
@@ -20,10 +22,11 @@ function modifyString(input: string): string {
 }
 export const SettingsProfile = ({ ...props }) => {
   const { auth, inputValue } = props;
+  const [visibleEmail, setVisibleEmail] = useState<boolean>(true);
 
   return (
     <>
-      <SettingsLayout header={"Profile"}>
+      <SettingsLayout header={"Account Settings"}>
         <div className="relative">
           <SettingsProfileItems
             key={1}
@@ -32,31 +35,52 @@ export const SettingsProfile = ({ ...props }) => {
             description="Your Personal link to your SteamREP Profile"
             valueInput={
               auth.role == "VERIFIED"
-                ? "steamrep.help/profile/" + auth.id
+                ? "https://steamrep.help/profile/" + auth.id
                 : "You need to connect Steam Account"
             }
           />
           <div className="absolute md:top-11.5 bottom-6.5 right-9">
-            <Copy
-              onClick={() =>
-                navigator.clipboard.writeText(
-                  "https://steamrep.help/profile/" + auth.id || ""
-                )
-              }
-              size={17}
-              className="mt-1.5 cursor-pointer text-white hover:text-light-blue-2"
-            />
+            {auth.role == "VERIFIED" && (
+              <Copy
+                onClick={() =>
+                  navigator.clipboard.writeText(
+                    "https://steamrep.help/profile/" + auth.id || ""
+                  )
+                }
+                size={18}
+                className="mt-2 mr-2 cursor-pointer text-white hover:text-light-blue-2"
+              />
+            )}
           </div>
         </div>
+        <div className="relative">
+          <SettingsProfileItems
+            key={2}
+            title="Your email"
+            disabled={true}
+            valueInput={visibleEmail ? modifyString(auth?.email) : auth?.email}
+          />
 
-        <SettingsProfileItems
-          key={2}
-          title="Your email"
-          disabled={true}
-          valueInput={(auth?.email && modifyString(auth?.email)) || ""}
-          onClick={() => {}}
-        />
-
+          <div className="absolute md:top-11.5 bottom-6.5 right-9">
+            {auth.role == "VERIFIED" && (
+              <>
+                {visibleEmail ? (
+                  <MdVisibility
+                    onClick={() => setVisibleEmail((prev) => !prev)}
+                    size={18}
+                    className="mt-2 mr-2 cursor-pointer text-white hover:text-light-blue-2"
+                  />
+                ) : (
+                  <MdVisibilityOff
+                    onClick={() => setVisibleEmail((prev) => !prev)}
+                    size={18}
+                    className="mt-2 mr-2 cursor-pointer text-white hover:text-light-blue-2"
+                  />
+                )}
+              </>
+            )}
+          </div>
+        </div>
         <CountryItem auth={auth} />
         <SettingsProfileItems
           key={3}
@@ -64,6 +88,7 @@ export const SettingsProfile = ({ ...props }) => {
           description="Trade Link will be displayed on SteamREP"
           valueInput={inputValue?.tradeLink && inputValue.tradeLink}
           placeholder="steamcommunity.com/tradeoffer/new/?partner=15"
+          disabled={false}
           onClick={saveTradeLink}
         />
         <div className="ml-6 pb-2">
