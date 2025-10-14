@@ -15,6 +15,10 @@ import { PasswordRecoveryForm } from "./components/AuthForm/PasswordRecoveryForm
 import { BlogPage } from "./pages/BlogPage.tsx";
 import { TrackingUsersPage } from "./pages/TrackingUsersPage.tsx";
 import { MatchPage } from "./pages/MatchPage.tsx";
+import { AnalyzedMatches } from "./pages/AnalyzedMatches.tsx";
+import { Terms_of_Use } from "./pages/Terms-of-Use.tsx";
+import { Privacy_Policy } from "./pages/Privacy-Policy.tsx";
+import { Privacy_Settings } from "./pages/Privacy_Settings.tsx";
 
 function App() {
   return (
@@ -42,7 +46,10 @@ function App() {
           <Route path="/match/:id" element={<MatchPage />} />
           <Route path="/account/verify" element={<HomePage />} />
           <Route path="/tracking-users" element={<TrackingUsersPage />} />
-
+          <Route path="/analyzed-matches" element={<AnalyzedMatches />} />
+          <Route path="/terms-of-use" element={<Terms_of_Use />} />
+          <Route path="/privacy-policy" element={<Privacy_Policy />} />
+          <Route path="/privacy-settings" element={<Privacy_Settings />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>

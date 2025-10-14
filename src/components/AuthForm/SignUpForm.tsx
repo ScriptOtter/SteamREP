@@ -6,11 +6,13 @@ import axios, { AxiosError } from "axios";
 import { API_ENDPOINTS } from "@/services/apiService";
 import { Loader } from "@/components/Loader";
 import { AuthLayout } from "./AuthLayout";
-import { ArrowLeft, Info } from "lucide-react";
+import { ArrowLeft, Info, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { PasswordRecommendation } from "./PasswordRecommendation";
 import { useAuth } from "@/hooks/use-auth";
+import { MdEmail, MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { FaInfo, FaKey } from "react-icons/fa";
 
 type FormData = z.infer<typeof formDataScheme>;
 
@@ -54,6 +56,7 @@ export const SignUpForm = () => {
   const [showErrors, setShowErrors] = useState(false);
   const [passwordRecommendation, setPasswordRecommendation] =
     useState<boolean>(false);
+  const [visiblePassword, setVisiblePassword] = useState<boolean>(false);
   const formData = {
     ...initialFormData,
     ...userFormData,
@@ -142,8 +145,9 @@ export const SignUpForm = () => {
                 {errors?.email?._errors}
               </label>
             </div>
-            <div className="flex flex-col items-center w-full">
+            <div className="flex flex-col items-center w-full relative">
               <Input
+                className="pl-8 placeholder:text-light-gray-3"
                 variant="forAuth"
                 value={formData.email}
                 placeholder="user@adress.com"
@@ -154,6 +158,9 @@ export const SignUpForm = () => {
                   }))
                 }
               ></Input>
+              <div className="absolute top-2.5 left-2 text-light-gray-3">
+                <MdEmail size={20} />
+              </div>
             </div>
             <div className="flex justify-between mb-3">
               <label className="text-white font-semibold text-[14px]">
@@ -163,8 +170,9 @@ export const SignUpForm = () => {
                 {errors?.username?._errors}
               </label>
             </div>
-            <div className="flex flex-col items-center w-full">
+            <div className="flex flex-col items-center w-full relative">
               <Input
+                className="pl-8 placeholder:text-light-gray-3"
                 variant="forAuth"
                 value={formData.username}
                 placeholder="user"
@@ -175,6 +183,9 @@ export const SignUpForm = () => {
                   }))
                 }
               ></Input>
+              <div className="absolute top-2.5 left-2 text-light-gray-3">
+                <User size={20} />
+              </div>
             </div>
             <div className="flex justify-between mb-3">
               <label className="text-white font-semibold text-[14px]">
@@ -186,16 +197,17 @@ export const SignUpForm = () => {
             </div>
 
             <div className="flex flex-col items-center w-full relative">
-              <div className="absolute text-gray-text cursor-pointer top-2.5 right-2.5 z-15 hover:text-gray-hover">
-                <Info
-                  size={18}
+              <div className="absolute text-gray-text cursor-pointer -top-4.5 right-1 z-15 hover:text-gray-hover">
+                <FaInfo
+                  size={12}
                   onMouseEnter={() => setPasswordRecommendation(true)}
                   onMouseLeave={() => setPasswordRecommendation(false)}
                 />
               </div>
               <Input
+                className="placeholder:text-[20px] pl-8 placeholder:text-light-gray-2"
                 variant="forAuth"
-                type="password"
+                type={visiblePassword ? "text" : "password"}
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={(e) =>
@@ -205,11 +217,29 @@ export const SignUpForm = () => {
                   }))
                 }
               ></Input>
+              <div className="absolute top-3 left-2 text-light-gray-3">
+                <FaKey size={16} />
+              </div>
+              <div className="absolute top-0.5 right-1">
+                {!visiblePassword ? (
+                  <MdVisibility
+                    onClick={() => setVisiblePassword((prev) => !prev)}
+                    size={20}
+                    className="mt-2 mr-2 cursor-pointer text-light-gray-3 hover:text-light-blue-2"
+                  />
+                ) : (
+                  <MdVisibilityOff
+                    onClick={() => setVisiblePassword((prev) => !prev)}
+                    size={20}
+                    className="mt-2 mr-2 cursor-pointer text-white hover:text-light-blue-2"
+                  />
+                )}
+              </div>
               <div className="relative w-full">
                 <div
                   className={cn(
                     passwordRecommendation
-                      ? "absolute bg-light-gray outline-1 p-3.5 rounded-2xl text-white top-2 right-0"
+                      ? "absolute bg-light-gray outline-1 p-3.5 rounded-2xl text-white top-2 right-0 z-999"
                       : "hidden"
                   )}
                 >
@@ -226,10 +256,11 @@ export const SignUpForm = () => {
                 {errors?.confirmPassword?._errors}
               </label>
             </div>
-            <div className="flex flex-col items-center w-full">
+            <div className="flex flex-col items-center w-full relative">
               <Input
+                className="placeholder:text-[20px] pl-8 placeholder:text-light-gray-2"
                 variant="forAuth"
-                type="password"
+                type={visiblePassword ? "text" : "password"}
                 value={formData.confirmPassword}
                 placeholder="••••••••"
                 onChange={(e) =>
@@ -239,6 +270,9 @@ export const SignUpForm = () => {
                   }))
                 }
               ></Input>
+              <div className="absolute top-3 left-2 text-light-gray-3">
+                <FaKey size={16} />
+              </div>
             </div>
 
             <div className="flex justify-between">

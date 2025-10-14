@@ -39,16 +39,11 @@ export const SettingsPage = () => {
     fetchData();
   }, []);
 
-  const render = () => {
-    setLoading(true);
-    setLoading(false);
-  };
-
   useEffect(() => {
     console.log(auth.isAuth);
     if (auth.isAuth == false) navigate("/");
   }, [auth.isAuth]);
-  console.log("useEffect");
+
   return (
     <>
       <Header />

@@ -1,5 +1,6 @@
 import { Container } from "@/components/container";
 import { cn } from "@/lib/utils";
+import { Footer } from "@/views/Footer";
 import { Header } from "@/views/Header";
 
 export const BlogPage = () => {
@@ -121,14 +122,10 @@ export const BlogPage = () => {
                 </ul>
               </div>
             ))}
-            <footer className="mt-10 text-center text-gray-500">
-              <p>
-                Спасибо, что остаётесь с нами! Следите за новыми обновлениями!
-              </p>
-            </footer>
           </div>
         </Container>
       </div>
+      <Footer />
     </>
   );
 };

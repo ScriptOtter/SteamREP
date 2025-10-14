@@ -9,8 +9,8 @@ interface Props {
 export const SiteFeature = ({ ...props }: Props) => {
   const { title, description, icon } = props;
   return (
-    <div className="bg-light-gray/40 hover:bg-light-blue transition-all duration-200 py-2 rounded-xl outline-2 outline-light-gray-2 md:w-[300px] w-[280px] h-[200px]">
-      <div className="bg-secondary/50 rounded-xl m-4 p-1 w-11 text-light-gray-3">
+    <div className="mx-2.5 bg-light-gray/40 hover:bg-light-blue transition-all duration-200 py-2 rounded-xl outline-2 outline-light-gray-2 md:w-[300px] w-[280px] h-[200px]">
+      <div className="bg-secondary/50 rounded-xl m-4 p-1 w-10.5 text-light-gray-3">
         {icon}
       </div>
       <div className="text-white mx-4 text-[18px] mb-2">

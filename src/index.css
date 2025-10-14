@@ -107,3 +107,30 @@
 .fade-in-home-text-2 {
   animation: fadeIn 3s ease forwards; /* Анимация набора текста */
 }
+
+.typing-container {
+  border-right: 2px solid black; /* Курсор */
+  white-space: nowrap; /* Запрет на перенос строк */
+  overflow: hidden; /* Скрыть текст, который не помещается */
+  width: 0; /* Начальная ширина равна 0 */
+  animation: typing 5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0; /* Начальная ширина */
+  }
+  to {
+    width: 100%; /* Конечная ширина */
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent; /* Прозрачный курсор */
+  }
+  50% {
+    border-color: black; /* Цвет курсора */
+  }
+}

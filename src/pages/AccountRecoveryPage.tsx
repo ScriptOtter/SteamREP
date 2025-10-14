@@ -11,6 +11,8 @@ import { AuthLayout } from "@/components/AuthForm/AuthLayout";
 import { cn } from "@/lib/utils";
 import { PasswordRecommendation } from "@/components/AuthForm/PasswordRecommendation";
 import { Info } from "lucide-react";
+import { FaInfo, FaKey } from "react-icons/fa";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 const passwordSchema = z
   .object({
@@ -55,6 +57,7 @@ export const AccountRecoveryPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [passwordRecommendation, setPasswordRecommendation] =
     useState<boolean>(false);
+  const [visiblePassword, setVisiblePassword] = useState<boolean>(false);
   const { id } = useParams<RouteParams>();
   const navigate = useNavigate();
 
@@ -139,15 +142,16 @@ export const AccountRecoveryPage = () => {
             Password
           </label>
           <div className="flex flex-col items-center w-full relative">
-            <div className="absolute text-gray-text cursor-pointer top-2.5 right-2.5 z-15 hover:text-gray-hover">
-              <Info
-                size={18}
+            <div className="absolute text-gray-text cursor-pointer -top-4.5 right-1 z-15 hover:text-gray-hover">
+              <FaInfo
+                size={12}
                 onMouseEnter={() => setPasswordRecommendation(true)}
                 onMouseLeave={() => setPasswordRecommendation(false)}
               />
             </div>
             <Input
-              type="password"
+              className="placeholder:text-[20px] pl-8 placeholder:text-light-gray-2"
+              type={visiblePassword ? "text" : "password"}
               placeholder="••••••••"
               variant="forAuth"
               value={userFormData.password}
@@ -155,11 +159,29 @@ export const AccountRecoveryPage = () => {
                 setUserFormData((l) => ({ ...l, password: e.target.value }));
               }}
             ></Input>
+            <div className="absolute top-3 left-2 text-light-gray-3">
+              <FaKey size={16} />
+            </div>
+            <div className="absolute top-0.5 right-1">
+              {!visiblePassword ? (
+                <MdVisibility
+                  onClick={() => setVisiblePassword((prev) => !prev)}
+                  size={20}
+                  className="mt-2 mr-2 cursor-pointer text-light-gray-3 hover:text-light-blue-2"
+                />
+              ) : (
+                <MdVisibilityOff
+                  onClick={() => setVisiblePassword((prev) => !prev)}
+                  size={20}
+                  className="mt-2 mr-2 cursor-pointer text-white hover:text-light-blue-2"
+                />
+              )}
+            </div>
             <div className="relative w-full">
               <div
                 className={cn(
                   passwordRecommendation
-                    ? " absolute bg-light-gray p-3.5 outline-1 rounded-2xl text-white top-2 right-0"
+                    ? " absolute bg-light-gray p-3.5 outline-1 z-999 rounded-2xl text-white top-2 right-0"
                     : "hidden"
                 )}
               >
@@ -174,9 +196,10 @@ export const AccountRecoveryPage = () => {
           <label className="text-white font-semibold text-[14px] mb-3">
             Confirm Password
           </label>
-          <div className="flex flex-col items-center w-full">
+          <div className="flex flex-col items-center w-full relative">
             <Input
-              type="password"
+              className="placeholder:text-[20px] pl-8 placeholder:text-light-gray-2"
+              type={visiblePassword ? "text" : "password"}
               placeholder="••••••••"
               variant="forAuth"
               value={userFormData.confirmPassword}
@@ -187,6 +210,9 @@ export const AccountRecoveryPage = () => {
                 }));
               }}
             ></Input>
+            <div className="absolute top-3 left-2 text-light-gray-3">
+              <FaKey size={16} />
+            </div>
           </div>
           <p className="text-red-500">
             {showError &&

@@ -9,6 +9,7 @@ import { AuthLayout } from "./AuthLayout";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
+import { MdEmail } from "react-icons/md";
 
 export const PasswordRecoveryForm = () => {
   const handleRecoveryAccount = async (event: React.FormEvent) => {
@@ -80,8 +81,9 @@ export const PasswordRecoveryForm = () => {
             <label className="text-white font-semibold text-[14px] mb-3">
               Email
             </label>
-            <div className="flex flex-col items-center w-full">
+            <div className="flex flex-col items-center w-full relative">
               <Input
+                className="pl-8 placeholder:text-light-gray-3"
                 variant="forAuth"
                 value={email}
                 placeholder="user@adress.com"
@@ -89,6 +91,9 @@ export const PasswordRecoveryForm = () => {
                   setEmail(e.target.value);
                 }}
               ></Input>
+              <div className="absolute top-2.5 left-2 text-light-gray-3">
+                <MdEmail size={20} />
+              </div>
             </div>
 
             <p className="text-red-500">{showError && error}</p>

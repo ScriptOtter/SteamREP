@@ -7,10 +7,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { getMe } from "@/data/getUser";
-
 import { setUser } from "@/store/UserSlice";
-
 import { FeaturesHomePage } from "@/components/FeaturesHomePage";
+import { Footer } from "@/views/Footer";
+import { SiteDescription } from "@/components/HomePage/SiteDescription";
+import { PendingAnalysisMatches } from "@/components/PendingAnalysisMatches";
+import { RecentlyAnalyzedMatches } from "@/components/HomePage/RecentlyAnalyzedMatches";
 
 export const HomePage = () => {
   const dispatch = useDispatch();
@@ -83,11 +85,17 @@ export const HomePage = () => {
                   </div>
                 </div>
                 <FeaturesHomePage />
+                <SiteDescription />
               </div>
             </div>
           </Container>
+
+          <PendingAnalysisMatches />
         </div>
+
+        <RecentlyAnalyzedMatches />
       </div>
+      <Footer />
     </>
   );
 };

@@ -7,8 +7,10 @@ import axios, { AxiosError } from "axios";
 import { Input } from "../Input";
 import { Loader } from "../Loader";
 import { AuthLayout } from "./AuthLayout";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, User, UserCircle } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
+import { FaKey } from "react-icons/fa";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 export const SignInForm = () => {
   const handleSignIn = async (event: React.FormEvent) => {
@@ -60,7 +62,7 @@ export const SignInForm = () => {
   const [error, setError] = useState<string>("");
   const [showError, setShowError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [visiblePassword, setVisiblePassword] = useState<boolean>(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -90,10 +92,11 @@ export const SignInForm = () => {
             onSubmit={handleSignIn}
           >
             <label className="text-white font-semibold text-[14px] mb-3">
-              Username
+              Username or email address
             </label>
-            <div className="flex flex-col items-center w-full">
+            <div className="flex flex-col items-center w-full relative">
               <Input
+                className="pl-8 placeholder:text-light-gray-2"
                 variant="forAuth"
                 value={username}
                 placeholder="user"
@@ -101,22 +104,43 @@ export const SignInForm = () => {
                   setUsername(e.target.value);
                 }}
               ></Input>
+              <div className="absolute top-2.5 left-2 text-light-gray-3">
+                <User size={20} />
+              </div>
             </div>
 
             <label className="text-white text-[14px] font-semibold mb-3">
               Password
             </label>
-            <div className="flex flex-col items-center w-full">
+            <div className="flex flex-col items-center w-full relative">
               <Input
                 variant="forAuth"
-                type="password"
+                type={visiblePassword ? "text" : "password"}
                 placeholder="••••••••"
-                className="placeholder:text-xs"
+                className="placeholder:text-[20px] pl-8 placeholder:text-light-gray-2"
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
               ></Input>
+              <div className="absolute top-3 left-2 text-light-gray-3">
+                <FaKey size={16} />
+              </div>
+              <div className="absolute top-0.5 right-1">
+                {!visiblePassword ? (
+                  <MdVisibility
+                    onClick={() => setVisiblePassword((prev) => !prev)}
+                    size={20}
+                    className="mt-2 mr-2 cursor- text-light-gray-3 hover:text-light-blue-2"
+                  />
+                ) : (
+                  <MdVisibilityOff
+                    onClick={() => setVisiblePassword((prev) => !prev)}
+                    size={20}
+                    className="mt-2 mr-2 cursor-pointer text-white hover:text-light-blue-2"
+                  />
+                )}
+              </div>
             </div>
 
             <div className="flex justify-between">
