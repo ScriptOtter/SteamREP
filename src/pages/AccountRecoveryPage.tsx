@@ -10,7 +10,6 @@ import { z } from "zod";
 import { AuthLayout } from "@/components/AuthForm/AuthLayout";
 import { cn } from "@/lib/utils";
 import { PasswordRecommendation } from "@/components/AuthForm/PasswordRecommendation";
-import { Info } from "lucide-react";
 import { FaInfo, FaKey } from "react-icons/fa";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 

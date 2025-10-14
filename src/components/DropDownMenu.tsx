@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 export const DropdownMenu = ({ ...props }) => {
   const navigate = useNavigate();
   const auth = useAuth();
-  const { onProfile, handleLogout, isMenuOpen } = props;
+  const { onProfile, handleLogout } = props;
 
   return (
     <>

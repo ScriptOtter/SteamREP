@@ -7,7 +7,7 @@ import axios, { AxiosError } from "axios";
 import { Input } from "../Input";
 import { Loader } from "../Loader";
 import { AuthLayout } from "./AuthLayout";
-import { ArrowLeft, User, UserCircle } from "lucide-react";
+import { ArrowLeft, User } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { FaKey } from "react-icons/fa";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";

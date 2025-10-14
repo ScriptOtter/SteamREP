@@ -6,7 +6,7 @@ import axios, { AxiosError } from "axios";
 import { API_ENDPOINTS } from "@/services/apiService";
 import { Loader } from "@/components/Loader";
 import { AuthLayout } from "./AuthLayout";
-import { ArrowLeft, Info, User } from "lucide-react";
+import { ArrowLeft, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { PasswordRecommendation } from "./PasswordRecommendation";

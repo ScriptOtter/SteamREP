@@ -1,6 +1,5 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
-import { MdClose } from "react-icons/md";
 
 export const PendingAnalysisMatches = () => {
   const [currentText, setCurrentText] = useState<
