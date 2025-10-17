@@ -54,10 +54,10 @@ export const CS2Stats = ({ ...props }) => {
                   <div className="grid grid-cols-2 w-full xl:w-2/3 gap-y-2 text-xs md:text-xl items-center ">
                     <p className="text-light-gray-3">Matches Tracked:</p>
                     <p>{cs2Stats?.TotalMatches || 0}</p>
-                    {cs2Stats?.wins && (
-                      <p className="text-light-gray-3">Matches Won:</p>
-                    )}
-                    {cs2Stats?.wins && <p>{cs2Stats?.wins}</p>}
+
+                    <p className="text-light-gray-3">Matches Won:</p>
+
+                    <p>{cs2Stats?.wins}</p>
                     <p className="text-gray-500 ">In the game since:</p>
                     <p>
                       {(cs2Stats?.inGameSinse &&
