@@ -32,7 +32,8 @@ export const PendingAnalysisMatches = () => {
         }));
       }
     };
-    const socket = io(process.env.VITE_SOCKET);
+
+    const socket = io(import.meta.env.VITE_SOCKET);
     socket.on("trackingStats", handleTrackingStats);
     socket.emit("trackingStats");
     return () => {
