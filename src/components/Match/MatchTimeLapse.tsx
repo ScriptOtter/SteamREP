@@ -77,9 +77,8 @@ export const MatchTimeLapse = ({ ...props }: IProps) => {
         (Number(item.headshot_kills_total) / Number(item.kills_total)) * 100 ||
         0
       ).toFixed(0),
-      ace_rounds_total: "-",
-      k3_rounds_total: "-",
-      k4_rounds_total: "-",
+      k3_rounds_total: item["3k_rounds_total"],
+      k4_rounds_total: item["4k_rounds_total"],
       clutchV2: "-",
       clutchV3: "-",
       clutchV4: "-",
