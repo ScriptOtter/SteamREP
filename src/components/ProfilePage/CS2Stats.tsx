@@ -141,13 +141,14 @@ export const CS2Stats = ({ ...props }) => {
                   </div>
                 </div>
               </div>
-              {cs2Stats?.WeaponStats.toString() === "" && (
-                <div className="overflow-x-auto overflow-y-hidden xl:overflow-hidden">
-                  <div className="">
-                    <CS2WeaponsStatistics weapons={cs2Stats.WeaponStats} />
+              {cs2Stats?.WeaponStats &&
+                cs2Stats?.WeaponStats.toString() !== "" && (
+                  <div className="overflow-x-auto overflow-y-hidden xl:overflow-hidden">
+                    <div className="">
+                      <CS2WeaponsStatistics weapons={cs2Stats.WeaponStats} />
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
             </>
           ) : (
             <p>{error}</p>
