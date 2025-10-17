@@ -32,7 +32,7 @@ export const PendingAnalysisMatches = () => {
         }));
       }
     };
-    const socket = io("http://localhost:80");
+    const socket = io(process.env.SOCKET_PORT);
     socket.on("trackingStats", handleTrackingStats);
     socket.emit("trackingStats");
     return () => {
