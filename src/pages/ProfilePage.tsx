@@ -39,9 +39,7 @@ export const ProfilePage = () => {
         if (id !== "createProfile") {
           const res = await getSteamUser(id);
 
-          //console.log(res);
           if (!res.id) {
-            //console.log("User not found");
             setError("User not found!");
             setShowError(true);
             setLoading(false);
@@ -91,11 +89,11 @@ export const ProfilePage = () => {
     <>
       <Header />
 
-      <div className={"flex justify-center"}>
+      <div className={"flex justify-center "}>
         <Container
           className={cn(
             (currentPage === "CS2" || currentPage === "CS2Matches") &&
-              "transition-all duration-200 max-w-[90%]"
+              "transition-all duration-200 max-w-[90%] "
           )}
         >
           {!showError ? (
@@ -113,8 +111,8 @@ export const ProfilePage = () => {
                   <ProfileLeftSide user={steamUser} viewers={viewers} />
                 )
               )}
-              <div className="md:mx-4 w-full">
-                <nav className="flex justify-center text-white text-md md:text-xl py-2 mt-4 md:mx-4 md:px-2 rounded-xl outline-1 outline-light-gray">
+              <div className="md:mx-4 w-full ">
+                <nav className="flex justify-center text-white text-md md:text-xl py-2 mt-4 md:mx-4 md:px-2 rounded-xl outline-1 outline-light-gray ">
                   <div className="flex">
                     {Object.keys(menu).map((key) => (
                       <div

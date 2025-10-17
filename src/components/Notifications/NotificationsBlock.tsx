@@ -24,7 +24,7 @@ export const NotificationsBlock = () => {
     const res = await api.get(API_ENDPOINTS.getMyNotifications, {
       withCredentials: true,
     });
-    console.log(res.data);
+
     if (res) {
       setNotifications(res.data);
       setNewNotifications(getValueNewNotifications(res.data));

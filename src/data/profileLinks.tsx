@@ -38,7 +38,7 @@ export const saveTradeLink = async (url: string) => {
       },
       { withCredentials: true }
     );
-    console.log(res);
+
     toast.success(
       <div className="font-bold">
         <p>{res.data.message}</p>
@@ -120,7 +120,6 @@ export const saveDiscordNickname = async (url: string) => {
       </div>
     );
   } catch (e: unknown) {
-    console.log(e);
     if (e instanceof AxiosError)
       toast.error(
         <div className="font-bold">

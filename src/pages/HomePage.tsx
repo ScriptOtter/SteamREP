@@ -23,7 +23,6 @@ export const HomePage = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const verify = async () => {
-      console.log(token);
       const res = await axios.patch(API_ENDPOINTS.verificationEmail, null, {
         params: {
           token,
@@ -32,7 +31,6 @@ export const HomePage = () => {
         withCredentials: true,
       });
       if (res) {
-        console.log(res);
         dispatch(setUser(res.data));
         getMe(dispatch);
         toast.success("Emain verified!", res.data);

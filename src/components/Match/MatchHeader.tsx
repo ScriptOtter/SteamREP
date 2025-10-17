@@ -5,6 +5,7 @@ import { IPlayerStatisticInMatch } from "../CS2MatchesPage/CS2Matches";
 interface IMatchHeader {
   teamName: string;
   matchResult: string;
+  type: string;
   className?: string;
   sort: (key: keyof IPlayerStatisticInMatch) => any;
 }
@@ -14,14 +15,19 @@ export const MatchHeader = ({ ...props }: IMatchHeader) => {
     DRAW: "text-gray",
     WIN: "text-green-win-match",
   };
-  const { teamName, matchResult } = props;
+  const { teamName, matchResult, type } = props;
   const { sort } = props;
   const useSort = (col: string) => {
     sort(col as keyof IPlayerStatisticInMatch);
   };
   return (
     <>
-      <div className={cn("grid grid-cols-24 text-md")}>
+      <div
+        className={cn(
+          type !== "WINGMAN" ? "grid-cols-24" : "grid-cols-17",
+          "grid  mt-4"
+        )}
+      >
         <div className="col-start-1 col-end-2 md:col-end-1 text-xl flex space-x-2">
           <p>Team</p>
           <p>{teamName}</p>
@@ -89,36 +95,40 @@ export const MatchHeader = ({ ...props }: IMatchHeader) => {
         <p onClick={() => useSort("matchHS")} className="cursor-pointer">
           HS%
         </p>
-        <p
-          onClick={() => useSort("k3_rounds_total")}
-          className="cursor-pointer"
-        >
-          3K
-        </p>
-        <p
-          onClick={() => useSort("k4_rounds_total")}
-          className="cursor-pointer"
-        >
-          4K
-        </p>
-        <p
-          onClick={() => useSort("ace_rounds_total")}
-          className="cursor-pointer"
-        >
-          ACE
-        </p>
-        <p onClick={() => useSort("clutchV2")} className="cursor-pointer">
-          VS2
-        </p>
-        <p onClick={() => useSort("clutchV3")} className="cursor-pointer">
-          VS3
-        </p>
-        <p onClick={() => useSort("clutchV4")} className="cursor-pointer">
-          VS4
-        </p>
-        <p onClick={() => useSort("clutchV5")} className="cursor-pointer">
-          VS5
-        </p>
+        {type !== "WINGMAN" && (
+          <>
+            <p
+              onClick={() => useSort("k3_rounds_total")}
+              className="cursor-pointer"
+            >
+              3K
+            </p>
+            <p
+              onClick={() => useSort("k4_rounds_total")}
+              className="cursor-pointer"
+            >
+              4K
+            </p>
+            <p
+              onClick={() => useSort("ace_rounds_total")}
+              className="cursor-pointer"
+            >
+              ACE
+            </p>
+            <p onClick={() => useSort("clutchV2")} className="cursor-pointer">
+              1v2
+            </p>
+            <p onClick={() => useSort("clutchV3")} className="cursor-pointer">
+              1v3
+            </p>
+            <p onClick={() => useSort("clutchV4")} className="cursor-pointer">
+              1v4
+            </p>
+            <p onClick={() => useSort("clutchV5")} className="cursor-pointer">
+              1v5
+            </p>
+          </>
+        )}
       </div>
     </>
   );

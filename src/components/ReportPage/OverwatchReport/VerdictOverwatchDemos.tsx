@@ -34,16 +34,13 @@ export const VerdictOverwatchDemos = ({
       const res = await api.post(API_ENDPOINTS.postVerdict + id, data, {
         withCredentials: true,
       });
-      console.log(res);
+
       if (!res) {
-        console.log(res);
         return;
       }
       updateDemos!();
       toast.success("Your verdict was Posted!");
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
   return (
     <div className="flex flex-col md:flex-row bg-[#282a2e] rounded-2xl mx-4 my-2">

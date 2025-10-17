@@ -11,9 +11,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { RouteParams } from "./ProfilePage";
 import { PageLoader } from "@/components/Loader";
-
-import { MatchPlayersStats } from "@/components/Match/MatchPlayersStats";
 import { Container } from "@/components/container";
+import { WeaponsPlayerStatistic } from "@/components/Match/WeaponsPlayerStatistic";
+
+import { MatchScoreboard } from "@/components/Match/MatchScoreboard";
+import { MatchTimeLapse } from "@/components/Match/MatchTimeLapse";
 
 const findMaxSumObject = (arr: IPlayerStatisticInMatch[]) => {
   return arr.reduce((maxObj, currentObj) => {
@@ -38,20 +40,28 @@ export const MatchPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>();
   const { id } = useParams<RouteParams>();
+  const [currentPage, setCurrentPage] = useState<
+    "Scoreboard" | "WeaponsPlayerStatistic" | "TimeLapse"
+  >("Scoreboard");
 
   useEffect(() => {
     const fetchMatch = async () => {
-      const res = await axios.get(API_ENDPOINTS.getMatch + id);
-      if (res.data) {
-        setMatch(res.data);
-        setLoading(false);
-      } else {
+      try {
+        const res = await axios.get(API_ENDPOINTS.getMatch + id);
+
+        if (res.data) {
+          setMatch(res.data);
+          setLoading(false);
+        } else {
+          setError("Match not found");
+          setLoading(false);
+        }
+      } catch (e) {
         setError("Match not found");
         setLoading(false);
       }
     };
     fetchMatch();
-    return () => setMatch(null);
   }, []);
 
   let teamWin: IPlayerStatisticInMatch[] = [];
@@ -92,7 +102,10 @@ export const MatchPage = () => {
     ).toFixed(0),
     rounds:
       Number(match.score.split(":")[0]) + Number(match.score.split(":")[1]),
-    kd: (item.kills_total / item.deaths_total).toFixed(2),
+    kd:
+      item.deaths_total > 0
+        ? (item.kills_total / item.deaths_total).toFixed(1)
+        : item.kills_total || 0,
     adr: (
       item.damage_total / Number(match.score.split(":")[0]) +
       Number(match.score.split(":")[1])
@@ -106,13 +119,16 @@ export const MatchPage = () => {
     ).toFixed(0),
     rounds:
       Number(match.score.split(":")[0]) + Number(match.score.split(":")[1]),
-    kd: (item.kills_total / item.deaths_total).toFixed(2),
+    kd:
+      item.deaths_total > 0
+        ? (item.kills_total / item.deaths_total).toFixed(1)
+        : item.kills_total || 0,
     adr: (
       item.damage_total / Number(match.score.split(":")[0]) +
       Number(match.score.split(":")[1])
     ).toFixed(0),
   }));
-  console.log(match);
+
   return (
     <>
       <Header />
@@ -127,29 +143,41 @@ export const MatchPage = () => {
             loseResult={loseResult}
             type={match.type}
             map={match.map}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
             participants={match.participants}
           />
 
           <div className="flex xl:justify-center mt-6">
             <div className="overflow-x-auto">
               <Container className="text-white min-w-[1150px] max-w-[1600px]">
-                <MatchPlayersStats
-                  teamName={"A"}
-                  matchResult={teamWin[0].result}
-                  team={teamWinScoreboard}
-                  matchScore={match.score}
-                  participants={match.participants}
-                />
-
-                <MatchPlayersStats
-                  teamName={"B"}
-                  matchResult={teamLose[0].result}
-                  team={teamLoseScoreboard}
-                  matchScore={match.score}
-                  participants={match.participants}
-                />
+                {currentPage === "Scoreboard" && (
+                  <MatchScoreboard
+                    teamWin={teamWin[0].result}
+                    match={match}
+                    teamLose={teamLose[0].result}
+                    teamWinScoreboard={teamWinScoreboard}
+                    teamLoseScoreboard={teamLoseScoreboard}
+                  />
+                )}
+                {currentPage === "WeaponsPlayerStatistic" && (
+                  <WeaponsPlayerStatistic
+                    data={match.kill_stats}
+                    participants={match.participants}
+                  />
+                )}
+                {currentPage === "TimeLapse" && (
+                  <MatchTimeLapse
+                    teamWin={teamWin}
+                    match={match}
+                    teamLose={teamLose}
+                  />
+                )}
               </Container>
             </div>
+          </div>
+          <div className="flex xl:justify-center mt-6">
+            <Container className="text-white min-w-[1150px] max-w-[1600px]"></Container>
           </div>
         </div>
       ) : (

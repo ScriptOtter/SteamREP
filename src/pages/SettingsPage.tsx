@@ -40,7 +40,6 @@ export const SettingsPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log(auth.isAuth);
     if (auth.isAuth == false) navigate("/");
   }, [auth.isAuth]);
 

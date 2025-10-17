@@ -3,12 +3,14 @@ export interface ICS2Stats {
   faceit_elo: number | null;
   premier: number | null;
   wingman: number | null;
+  wingmanMathes: number | null;
+  wingmanWins: number | null;
   TotalMatches: number | null;
-  winrate: number | null;
+  wins: number | null;
   inGameSinse: string | null;
   updatedAt: Date;
   MapRanks: MapRank[];
-  WeaponStats: [];
+  WeaponStats: IWeaponStats[];
   steam: {
     steamUserBans: {
       csBan: boolean;
@@ -16,7 +18,19 @@ export interface ICS2Stats {
     };
   };
 }
-
+export interface IWeaponStats {
+  id: string;
+  name: string;
+  fire: number;
+  hits: IHits[];
+}
+export interface IHits {
+  hitLocation: string;
+  hits: number;
+  id: string;
+  kills: number;
+  totalDamage: number;
+}
 interface MapRank {
   name: string | null;
   rank: number | null;

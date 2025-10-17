@@ -18,9 +18,9 @@ export const SiteDescription = () => {
           <p className="text-xl text-center mb-2">Real Steam reputation</p>
           <div className="px-2 py-1 flex space-x-1">
             <p className="text-light-gray-3 text-left px-2">
-              Sometimes, while playing or trading, you want to know whether
+              Sometimes while playing or trading you want to know whether
               someone is honest or not. Our website provides the ability to both
-              monitor and influence your Steam account's reputation.
+              monitor and influence your Steam accounts reputation.
             </p>
           </div>
         </div>

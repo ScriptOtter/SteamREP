@@ -86,7 +86,7 @@ export const SignUpForm = () => {
         const res = await axios.post(API_ENDPOINTS.signup, data, {
           withCredentials: true,
         });
-        console.log(res);
+
         if (!res) {
           setLoading(false);
           return;
@@ -96,11 +96,7 @@ export const SignUpForm = () => {
           toast.success(res.data);
         }
       } catch (e: unknown) {
-        console.log(e);
         if (e instanceof AxiosError) {
-          console.log("catch");
-          console.log(e.response?.data?.message[0]);
-
           toast(e.response?.data?.message[0] + " already exists!");
           setLoading(false);
         }

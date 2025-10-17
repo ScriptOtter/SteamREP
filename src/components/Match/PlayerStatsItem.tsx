@@ -7,6 +7,8 @@ import { ISteamUser } from "@/models/ISteamUser";
 import { playerColors } from "@/lib/playerColors";
 import { ToastSuccess } from "../Toasts/ToastSuccess";
 import { IScoreboard } from "@/pages/MatchPage";
+import { PremierForMatch } from "../PremierRating";
+import { useNavigate } from "react-router-dom";
 
 interface IPlayerStatsItem {
   player: IScoreboard;
@@ -14,10 +16,11 @@ interface IPlayerStatsItem {
   participants: ISteamUser[];
   className?: string;
   team: IPlayerStatisticInMatch[];
+  type: string;
 }
 
 export const PlayerStatsItem = ({ ...props }: IPlayerStatsItem) => {
-  const { player, participants, team, className } = props;
+  const { player, participants, team, className, type } = props;
   const {
     ace_rounds_total,
     assists_total,
@@ -50,11 +53,16 @@ export const PlayerStatsItem = ({ ...props }: IPlayerStatsItem) => {
     matchHS,
   } = player;
   const [lightbulbDesc, setLightbulbDesc] = useState<boolean>(false);
-  console.log(player);
+  const navigate = useNavigate();
 
   return (
     <div className={className}>
-      <div className={cn("grid grid-cols-24 mt-4")}>
+      <div
+        className={cn(
+          type !== "WINGMAN" ? "grid-cols-24" : "grid-cols-17",
+          "grid  mt-4"
+        )}
+      >
         <div className="col-start-1 col-end-4">
           <div className="flex items-center space-x-2">
             {isSuspicious && (
@@ -74,10 +82,11 @@ export const PlayerStatsItem = ({ ...props }: IPlayerStatsItem) => {
             )}
 
             <img
+              onClick={() => navigate(`/profile/${steamid}`)}
               className={cn(
                 player_color && `outline-1 ${playerColors[player_color]}`,
                 !isSuspicious && "ml-7",
-                "w-7 h-7 rounded-full"
+                "w-7 h-7 rounded-full cursor-pointer hover:outline-2"
               )}
               src={
                 participants.find((i) => i.id === steamid)?.avatar ||
@@ -91,7 +100,25 @@ export const PlayerStatsItem = ({ ...props }: IPlayerStatsItem) => {
           </div>
         </div>
         <div className="col-start-5 col-end-6">
-          <img className="size-10 -mt-2" src={`/ranks/skillgroup${rank}.svg`} />
+          {type === "MATCHMAKING" && (
+            <img
+              className="size-10 pb-3"
+              src={`/ranks/skillgroup${rank}.svg`}
+            />
+          )}
+          {type === "WINGMAN" && (
+            <div className="">
+              <img
+                className="size-10 pb-3"
+                src={`/wingman_ranks/wingman${rank}.svg`}
+              />
+            </div>
+          )}
+          {type === "PREMIER" && (
+            <div className="">
+              <PremierForMatch rating={rank} />
+            </div>
+          )}
         </div>
         <div className="col-start-6 col-end-7">
           <div
@@ -141,27 +168,31 @@ export const PlayerStatsItem = ({ ...props }: IPlayerStatsItem) => {
         <div className="ml-2">
           <p>{matchHS}</p>
         </div>
-        <div className="ml-2">
-          <p>{k3_rounds_total}</p>
-        </div>
-        <div className="ml-2">
-          <p>{k4_rounds_total}</p>
-        </div>
-        <div className="ml-3">
-          <p>{ace_rounds_total}</p>
-        </div>
-        <div className="ml-3">
-          <p>{clutchV2}</p>
-        </div>
-        <div className="ml-3">
-          <p>{clutchV3}</p>
-        </div>
-        <div className="ml-4">
-          <p>{clutchV4}</p>
-        </div>
-        <div className="ml-4">
-          <p>{clutchV5}</p>
-        </div>
+        {type !== "WINGMAN" && (
+          <>
+            <div className="ml-2">
+              <p>{k3_rounds_total}</p>
+            </div>
+            <div className="ml-2">
+              <p>{k4_rounds_total}</p>
+            </div>
+            <div className="ml-3">
+              <p>{ace_rounds_total}</p>
+            </div>
+            <div className="ml-3">
+              <p>{clutchV2}</p>
+            </div>
+            <div className="ml-3">
+              <p>{clutchV3}</p>
+            </div>
+            <div className="ml-4">
+              <p>{clutchV4}</p>
+            </div>
+            <div className="ml-4">
+              <p>{clutchV5}</p>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

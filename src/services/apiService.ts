@@ -37,6 +37,7 @@ export const API_ENDPOINTS = {
   getMatches: URL + "cs2/getMatches/",
   getMatch: URL + "cs2/getMatch/",
   getCs2Codes: URL + "cs2/getCodes",
+  getLastMatches: URL + "cs2/getLastMatches",
   saveSharedCode: URL + "cs2/saveSharedCode",
   saveAuthenticationCode: URL + "cs2/saveAuthenticationCode",
 };

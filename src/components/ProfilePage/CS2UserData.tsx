@@ -43,7 +43,7 @@ export const CS2UserData = ({ ...props }) => {
       )}
       <div className="grid grid-cols-8 md:grid-cols-5 gap-y-2">
         {cs2UserData?.medals?.display_items_defidx?.map((medal) => (
-          <Medal medal={medal} />
+          <Medal key={medal} medal={medal} />
         ))}
       </div>
     </div>

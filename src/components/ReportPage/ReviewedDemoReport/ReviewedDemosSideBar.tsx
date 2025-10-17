@@ -20,11 +20,8 @@ export const ReviewedDemosSideBar = () => {
       });
       if (demos.data) {
         setDemos(demos.data);
-        console.log(demos.data);
       }
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   useEffect(() => {

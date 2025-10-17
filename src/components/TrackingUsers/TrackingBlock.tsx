@@ -17,7 +17,6 @@ export const TrackingBlock = () => {
     });
 
     if (res.data) {
-      console.log(res);
       setTrackingUsers(res.data);
       setLoading(false);
     }

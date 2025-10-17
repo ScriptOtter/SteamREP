@@ -8,7 +8,6 @@ export const MobileItemMatch = ({ ...props }) => {
   const [mouseHover, setMouseHover] = useState<boolean>(false);
   const ref = useRef(null);
 
-  console.log({ ...props });
   const {
     date,
     id,

@@ -122,11 +122,10 @@ export const UseUploadFile = (
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      console.log("RES === ", res.data);
 
       if (res) {
         ToastSuccess(type == "create" ? "Comment Posted" : "Comment Updated");
-        console.log("GOTOVO!");
+
         setFiles(null);
         renderComments();
 

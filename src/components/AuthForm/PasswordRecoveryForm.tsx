@@ -31,9 +31,7 @@ export const PasswordRecoveryForm = () => {
           );
           setLoading(false);
         }
-        console.log(res.data);
       } catch (e: unknown) {
-        console.log(e);
         if (e instanceof AxiosError) {
           toast.error(e?.response?.data?.message);
         }

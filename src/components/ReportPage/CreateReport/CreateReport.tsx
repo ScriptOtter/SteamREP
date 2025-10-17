@@ -99,7 +99,7 @@ export const CreateReportSideBar = () => {
 
     if (errors || selectedOptions.toString() === "") {
       setShowErrors(true);
-      console.log("ERROR", errors, selectedOptions);
+
       return;
     } else {
       const data = {
@@ -124,8 +124,6 @@ export const CreateReportSideBar = () => {
         );
       } catch (e: unknown) {
         if (e instanceof AxiosError) {
-          console.log("catch");
-          console.log(e.response?.data.target[0]);
           toast.error(e.response?.data.target[0] + " already exists!");
         }
       }
@@ -153,8 +151,6 @@ export const CreateReportSideBar = () => {
         return;
       }
       try {
-        console.log("getSteam");
-
         const res = await getSteamUser(getUserId(steamUrl));
         if (res) {
           setNickname(res.personaName || "");
@@ -162,9 +158,7 @@ export const CreateReportSideBar = () => {
         }
 
         return res;
-      } catch (e) {
-        console.log(e);
-      }
+      } catch (e) {}
     };
 
     if (debouncedSteamUrl === "") {

@@ -11,9 +11,10 @@ export interface IMatchPlayersStats {
   matchResult: string;
   matchScore: string;
   participants: ISteamUser[];
+  type: string;
 }
 export const MatchPlayersStats = ({ ...props }: IMatchPlayersStats) => {
-  const { teamName, team, matchResult, participants, matchScore } = props;
+  const { teamName, team, matchResult, participants, matchScore, type } = props;
 
   const [filter, setFilter] = useState<keyof IScoreboard>("damage_total");
 
@@ -40,6 +41,7 @@ export const MatchPlayersStats = ({ ...props }: IMatchPlayersStats) => {
             teamName={teamName}
             matchResult={matchResult}
             className={""}
+            type={type}
             sort={setFilter}
           />
           <div
@@ -58,6 +60,7 @@ export const MatchPlayersStats = ({ ...props }: IMatchPlayersStats) => {
                   matchScore={matchScore}
                   key={player.steamid}
                   participants={participants}
+                  type={type}
                 />
               ))}
           </div>

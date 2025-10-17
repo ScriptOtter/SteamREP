@@ -25,11 +25,10 @@ export const SignInForm = () => {
         const res = await axios.post(API_ENDPOINTS.signin, data, {
           withCredentials: true,
         });
-        console.log(res.data);
 
         if (!res.data.steamUser) {
           setLoading(false);
-          console.log(res.data);
+
           dispatch(setUser(res.data));
           setUsername("");
           setPassword("");
@@ -42,11 +41,9 @@ export const SignInForm = () => {
       } catch (e: unknown) {
         setLoading(false);
         if (e instanceof AxiosError) {
-          console.log(e.response?.data.message);
           setShowError(true);
           setError(e.response?.data.message);
         }
-        console.log(e);
       }
     }
   };

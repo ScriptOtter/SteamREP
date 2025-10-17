@@ -22,6 +22,8 @@ export interface IPlayerStatisticInMatch {
   ace_rounds_total: number;
   k4_rounds_total: number;
   k3_rounds_total: number;
+  "3k_rounds_total"?: number;
+  "4k_rounds_total"?: number;
   damage_total: number;
   mvps: number;
   crosshair_code: string;
@@ -53,7 +55,7 @@ export interface IMatches {
   playersStatistic: IPlayerStatisticInMatch[];
   participants: ISteamUser[];
   score: string;
-  parsedMatch: object;
+  parsedMatch: { [key: number]: IPlayerStatisticInMatch[] };
   kill_stats: object;
   date: string;
   sharedCode: string;
@@ -131,11 +133,14 @@ export const CS2Matches = ({ ...props }) => {
               </div>
             </div>
           ) : (
-            <div className="w-full h-[600px]">
-              <div className="flex flex-col items-center font-mono space-y-2 mt-[10%]">
-                <p className="text-white text-7xl sm:text-9xl">404</p>
-                <p className="text-white text-5xl sm:text-7xl">
-                  PAGE NOT FOUND!
+            <div className="w-full h-full py-13">
+              <div className="flex flex-col items-center font-mono space-y-2 ml-6">
+                <p className="text-white text-4xl sm:text-5xl mb-8">
+                  There are no matches played.
+                </p>
+                <p className="text-md md:text-xl">
+                  If this is someone you know, tell them about the ability to
+                  track their CS2 game statistics on our website.
                 </p>
               </div>
             </div>

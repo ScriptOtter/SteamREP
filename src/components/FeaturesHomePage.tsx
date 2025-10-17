@@ -9,14 +9,14 @@ export const FeaturesHomePage = () => {
 
       title: "Steam Data",
       description:
-        "Find out everything about the account, even the number of views",
+        "Find out everything about the account even the number of views",
     },
     {
       icon: <MessageSquare className="text-light-blue-3" size={36} />,
 
       title: "Leave comments to users",
       description:
-        "Leave comments to any Steam user, even if this Steam profile is hidden",
+        "Leave comments to any Steam user even if the Steam profile is hidden",
     },
     {
       icon: <FaShieldAlt className="text-red-600" size={36} />,
@@ -35,7 +35,7 @@ export const FeaturesHomePage = () => {
       icon: <EyeIcon className="text-orange-600" size={36} />,
 
       title: "Overwatch CS2",
-      description: "Watch and download CS2 demos to our system",
+      description: "Watch and upload CS2 demos into our system",
     },
 
     {
@@ -51,8 +51,9 @@ export const FeaturesHomePage = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  md:gap-4">
         {features.map((feature, index) => (
           <div
-            //style={{ animationDelay: `${index * 0.2}s` }}
-            className={"p-4 fade-in-feature"}
+            className={
+              "p-4 fade-in-feature duration-300 hover:-translate-y-[4px]"
+            }
             key={index}
           >
             <div>

@@ -16,7 +16,7 @@ export const Privacy_Policy = () => {
               Our service allows players of CSGO to keep a full match history in
               our database, this includes the following data:
             </p>
-            <p className=" mb-4">
+            <div className=" mb-4">
               <p>
                 1. Your game nickname, Steam ID, any bans within Steam
                 associated with this account and a link to your profile picture
@@ -76,7 +76,7 @@ export const Privacy_Policy = () => {
                   Steam-account.
                 </p>
               </div>
-            </p>
+            </div>
           </div>
         </Container>
       </div>

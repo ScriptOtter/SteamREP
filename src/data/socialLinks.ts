@@ -35,7 +35,7 @@ export const getSocialLinks = async (
     const res: AxiosResponse<ISocialLinks> = await api.get(
       API_ENDPOINTS.getSocialLinks + id
     );
-    console.log(API_ENDPOINTS.getSocialLinks + id);
+
     return res.data;
   } catch (e) {
     //console.log(e);

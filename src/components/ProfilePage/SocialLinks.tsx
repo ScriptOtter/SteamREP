@@ -18,10 +18,9 @@ export const SocialLinks = ({ ...props }) => {
   const { id } = props;
   const fetchData = async () => {
     const links = await getSocialLinks(dispatch, id!);
-    console.log();
+
     if (links) setSocialLinks(links);
     setLoading(false);
-    console.log(socialLinks);
   };
   useEffect(() => {
     fetchData();

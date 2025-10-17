@@ -70,7 +70,7 @@ export const AccountRecoveryPage = () => {
     if (res.success) {
       return undefined;
     }
-    console.log(res);
+
     return res.error.format();
   };
 
@@ -87,12 +87,12 @@ export const AccountRecoveryPage = () => {
         ...formData,
         token: id,
       };
-      console.log(data);
+
       try {
         const res = await axios.patch(API_ENDPOINTS.accountRecovery, data, {
           withCredentials: true,
         });
-        console.log(res);
+
         if (res) {
           toast.success(
             "The password has been successfully changed. You can log in to your account with the new password."
@@ -104,7 +104,6 @@ export const AccountRecoveryPage = () => {
       } catch (e: unknown) {
         setLoading(false);
         if (e instanceof AxiosError) {
-          console.log(e.response?.data.message);
           setShowError(true);
           setError(
             Array.isArray(e.response?.data.message)
@@ -113,7 +112,6 @@ export const AccountRecoveryPage = () => {
           );
         }
         setLoading(false);
-        console.log(e);
       }
     } else {
       setError(errors);
@@ -121,7 +119,7 @@ export const AccountRecoveryPage = () => {
     }
   };
   const errors = showError ? validate() : undefined;
-  console.log(errors);
+
   return (
     <>
       <AuthLayout>

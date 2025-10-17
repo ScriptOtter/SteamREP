@@ -8,7 +8,6 @@ import { PremierRatingInMatch } from "../PremierRating";
 export const ItemMatch = ({ ...props }) => {
   const [lightbulbDesc, setLightbulbDesc] = useState<boolean>(false);
 
-  console.log({ ...props });
   const {
     date,
     id,

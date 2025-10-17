@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 export const UploadedImage = ({ ...props }) => {
   const { file } = props;
   const { deleteUploadedImage } = props;
-  console.log("файл отображение - ", file);
+
   return (
     <div className="flex justify-end space-x-1 items-center mb-2">
       <img
