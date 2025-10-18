@@ -107,8 +107,8 @@ export const MatchPage = () => {
         ? (item.kills_total / item.deaths_total).toFixed(1)
         : item.kills_total || 0,
     adr: (
-      item.damage_total / Number(match.score.split(":")[0]) +
-      Number(match.score.split(":")[1])
+      item.damage_total /
+      (Number(match.score.split(":")[0]) + Number(match.score.split(":")[1]))
     ).toFixed(0),
   }));
   const teamLoseScoreboard = teamLose.map((item) => ({
@@ -124,8 +124,8 @@ export const MatchPage = () => {
         ? (item.kills_total / item.deaths_total).toFixed(1)
         : item.kills_total || 0,
     adr: (
-      item.damage_total / Number(match.score.split(":")[0]) +
-      Number(match.score.split(":")[1])
+      item.damage_total /
+      (Number(match.score.split(":")[0]) + Number(match.score.split(":")[1]))
     ).toFixed(0),
   }));
 
