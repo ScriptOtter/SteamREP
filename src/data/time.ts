@@ -28,12 +28,3 @@ export function isoDateToString(isoDateString: Date): string {
   // Форматируем дату в нужный вид
   return `${year}-${month}-${day}`;
 }
-
-// Пример использования
-const isoDateString: string = "2025-10-16T21:00:00.368Z";
-try {
-  const formattedDate: string = isoDateToString(isoDateString);
-  console.log(formattedDate); // Вывод: "2025-10-16"
-} catch (error) {
-  console.error(error instanceof Error ? error.message : "Unknown error");
-}

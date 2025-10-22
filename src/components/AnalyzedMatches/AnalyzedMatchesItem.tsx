@@ -3,7 +3,7 @@ import {
   IMatches,
   IPlayerStatisticInMatch,
 } from "../CS2MatchesPage/CS2Matches";
-import { PremierForAnalyzedMatches, PremierForMatch } from "../PremierRating";
+import { PremierForAnalyzedMatches } from "../PremierRating";
 import { getTeamScore, parseTeams } from "@/pages/MatchPage";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
