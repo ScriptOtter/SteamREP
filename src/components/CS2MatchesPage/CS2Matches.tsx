@@ -65,7 +65,7 @@ export interface IMatches {
   region: string;
   map: string;
   avg_rank: number;
-
+  dateUnix?: number;
   createdAt: string;
   updatedAt: string;
 }

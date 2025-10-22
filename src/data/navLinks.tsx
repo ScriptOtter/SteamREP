@@ -11,6 +11,6 @@ export const menuUrls: { [key: string]: string } = {
   reportUser: "/report",
   blog: "/blog",
   analyzedMatches: "/analyzed-matches",
-  VACTracker: "/VACTracker",
+  VACTracker: "/vac-tracker",
   morelinks: "/404",
 };

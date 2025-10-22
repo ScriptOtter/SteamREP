@@ -8,10 +8,10 @@ export const Loader = () => {
   );
 };
 
-export const PageLoader = () => {
+export const PageLoader = ({ size }: { size?: number }) => {
   return (
     <div className="flex justify-center py-8">
-      <Loader2 size={100} className="animate-spin text-white" />
+      <Loader2 size={size || 100} className="animate-spin text-white" />
     </div>
   );
 };

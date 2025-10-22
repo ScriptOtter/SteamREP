@@ -35,6 +35,43 @@ export interface IScoreboard extends IPlayerStatisticInMatch {
   adr: string;
 }
 
+export const parseTeams = (
+  match: IMatches
+): {
+  teamWin: IPlayerStatisticInMatch[];
+  teamLose: IPlayerStatisticInMatch[];
+} => {
+  let teamWin: IPlayerStatisticInMatch[] = [];
+  let teamLose: IPlayerStatisticInMatch[] = [];
+  const team1: IPlayerStatisticInMatch[] = [];
+  const team2: IPlayerStatisticInMatch[] = [];
+
+  const teams = match?.playersStatistic;
+  const team_id = teams[0].team;
+  teams.forEach((item: any) => {
+    if (team_id === item.team) team1.push(item);
+    else team2.push(item);
+  });
+
+  let team1Result = "LOSE";
+  if (team1.some((item) => item.result === "WIN")) team1Result = "WIN";
+  if (team1.some((item) => item.result === "DRAW")) team1Result = "DRAW";
+
+  if (team1Result === "WIN" || team1Result === "DRAW") {
+    teamWin = team1;
+    teamLose = team2;
+  } else if (team1Result === "LOSE") {
+    teamWin = team2;
+    teamLose = team1;
+  }
+  return { teamWin, teamLose };
+};
+export const getTeamScore = (team: IPlayerStatisticInMatch[]) => {
+  return (
+    findMaxSumObject(team).team_score_first_half +
+    findMaxSumObject(team).team_score_second_half
+  );
+};
 export const MatchPage = () => {
   const [match, setMatch] = useState<IMatches | null>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -63,38 +100,13 @@ export const MatchPage = () => {
     };
     fetchMatch();
   }, []);
-
-  let teamWin: IPlayerStatisticInMatch[] = [];
-  let teamLose: IPlayerStatisticInMatch[] = [];
-  const team1: IPlayerStatisticInMatch[] = [];
-  const team2: IPlayerStatisticInMatch[] = [];
   if (!match) return;
-  const teams = match?.playersStatistic;
-  const team_id = teams[0].team;
-  teams.forEach((item) => {
-    if (team_id === item.team) team1.push(item);
-    else team2.push(item);
-  });
+  const { teamWin, teamLose } = parseTeams(match);
+  const winResult = getTeamScore(teamWin);
 
-  let team1Result = "LOSE";
-  if (team1.some((item) => item.result === "WIN")) team1Result = "WIN";
-  if (team1.some((item) => item.result === "DRAW")) team1Result = "DRAW";
+  const loseResult = getTeamScore(teamLose);
 
-  if (team1Result === "WIN" || team1Result === "DRAW") {
-    teamWin = team1;
-    teamLose = team2;
-  } else if (team1Result === "LOSE") {
-    teamWin = team2;
-    teamLose = team1;
-  }
-  const winResult =
-    findMaxSumObject(teamWin).team_score_first_half +
-    findMaxSumObject(teamWin).team_score_second_half;
-
-  const loseResult =
-    findMaxSumObject(teamLose).team_score_first_half +
-    findMaxSumObject(teamLose).team_score_second_half;
-  const teamWinScoreboard = teamWin.map((item) => ({
+  const teamWinScoreboard = teamWin.map((item: IPlayerStatisticInMatch) => ({
     ...item,
     diff_kd: item.kills_total - item.deaths_total,
     matchHS: (
@@ -111,7 +123,7 @@ export const MatchPage = () => {
       (Number(match.score.split(":")[0]) + Number(match.score.split(":")[1]))
     ).toFixed(0),
   }));
-  const teamLoseScoreboard = teamLose.map((item) => ({
+  const teamLoseScoreboard = teamLose.map((item: IPlayerStatisticInMatch) => ({
     ...item,
     diff_kd: item.kills_total - item.deaths_total,
     matchHS: (

@@ -2,7 +2,7 @@ import { MatchHeader } from "./MatchHeader";
 import { PlayerStatsItem } from "./PlayerStatsItem";
 import { cn } from "@/lib/utils";
 import { ISteamUser } from "@/models/ISteamUser";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { IScoreboard } from "@/pages/MatchPage";
 
 export interface IMatchPlayersStats {
@@ -18,21 +18,14 @@ export const MatchPlayersStats = ({ ...props }: IMatchPlayersStats) => {
 
   const [filter, setFilter] = useState<keyof IScoreboard>("damage_total");
 
-  const [sortedTeam, setSortedTeam] = useState<IScoreboard[]>(team);
-  useEffect(() => {
-    function sortByField() {
-      const sorted = [...sortedTeam].sort((a, b) => {
-        const aValue = a[filter];
-        const bValue = b[filter];
+  const sortedTeam = useMemo(() => {
+    return [...team].sort((a, b) => {
+      const aValue = a[filter];
+      const bValue = b[filter];
 
-        return (bValue as any) - (aValue as any);
-      });
-
-      setSortedTeam(sorted);
-    }
-    sortByField();
-  }, [filter]);
-
+      return (bValue as any) - (aValue as any);
+    });
+  }, [team, filter]); // Зависимости: команда и фильтр
   return (
     <>
       <div className="px-2">

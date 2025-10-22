@@ -19,6 +19,7 @@ import { AnalyzedMatches } from "./pages/AnalyzedMatches.tsx";
 import { Terms_of_Use } from "./pages/Terms-of-Use.tsx";
 import { Privacy_Policy } from "./pages/Privacy-Policy.tsx";
 import { Privacy_Settings } from "./pages/Privacy_Settings.tsx";
+import { VacTracker } from "./pages/VacTracker.tsx";
 
 function App() {
   return (
@@ -50,6 +51,8 @@ function App() {
           <Route path="/terms-of-use" element={<Terms_of_Use />} />
           <Route path="/privacy-policy" element={<Privacy_Policy />} />
           <Route path="/privacy-settings" element={<Privacy_Settings />} />
+          <Route path="/vac-tracker" element={<VacTracker />} />
+
           <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>
