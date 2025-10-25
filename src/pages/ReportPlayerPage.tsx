@@ -1,9 +1,12 @@
 import { Container } from "@/components/container";
 
 import { CreateReportSideBar } from "@/components/ReportPage/CreateReport/CreateReport";
+import ModalAlert from "@/components/ReportPage/ModalAlert";
 import { MyReportsSideBar } from "@/components/ReportPage/MyReports/MyReportsSideBar";
 import { OverwatchSideBar } from "@/components/ReportPage/OverwatchReport/OverwatchSideBar";
 import { ReviewedDemosSideBar } from "@/components/ReportPage/ReviewedDemoReport/ReviewedDemosSideBar";
+import { useAuth } from "@/hooks/use-auth";
+
 import { cn } from "@/lib/utils";
 import { Header } from "@/views/Header";
 import { Eye, Plus } from "lucide-react";
@@ -11,6 +14,21 @@ import { useEffect, useState } from "react";
 
 export const ReportPlayerPage = () => {
   const [currentPage, setCurrentPage] = useState<string>("Overwatch");
+
+  const auth = useAuth();
+  useEffect(() => {}, [auth.role]);
+  const [modal, setModal] = useState<boolean>(true);
+
+  const NAVIGATION_MENU = [
+    { path: "Overwatch", name: "Overwatch" },
+    { path: "ReviewedDemos", name: "Reviewed Demos" },
+    { path: "MyReports", name: "My Reports" },
+    { path: "CreateReport", name: "Create Report" },
+  ];
+
+  useEffect(() => {
+    if (auth.role === "VERIFIED") setModal(false);
+  }, [auth.role]);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -38,77 +56,43 @@ export const ReportPlayerPage = () => {
     <>
       <Header />
 
-      <div className="bg-secondary h-full min-h-screen shadow-lg p-4">
-        <div className="flex justify-center items-center">
-          <Container>
-            {/* Ограничение максимальной ширины */}
+      {modal && <ModalAlert setModal={setModal} auth={auth} />}
 
-            <h1 className="text-2xl text-white mb-4 text-center md:text-left">
-              Report (Доступно тем кто верифицировался через стим)
-            </h1>
-            <nav className="flex justify-between text-white text-2xl mb-2">
-              <div className="flex space-x-3">
-                <div
-                  className={cn(
-                    currentPage === "Overwatch" && "text-orange-500",
-                    "cursor-pointer hover:text-orange-400 duration-600"
-                  )}
-                  onClick={() => {
-                    setCurrentPage("Overwatch");
-                    window.location.hash = "#Overwatch"; // Добавляем # в URL
-                  }}
-                >
-                  <div className="flex items-center space-x-1">
-                    <Eye size={32} />
-                    <p>Overwatch</p>
-                  </div>
-                </div>
-                <div
-                  className={cn(
-                    currentPage === "ReviewedDemos" && "text-orange-500",
-                    "cursor-pointer hover:text-orange-400 duration-600"
-                  )}
-                  onClick={() => {
-                    setCurrentPage("ReviewedDemos");
-                    window.location.hash = "#ReviewedDemos"; // Добавляем # в URL
-                  }}
-                >
-                  Reviewed Demos
-                </div>
-                <div
-                  className={cn(
-                    currentPage === "MyReports" && "text-orange-500",
-                    "cursor-pointer hover:text-orange-400 duration-600"
-                  )}
-                  onClick={() => {
-                    setCurrentPage("MyReports");
-                    window.location.hash = "#MyReports"; // Добавляем # в URL
-                  }}
-                >
-                  My Reports
-                </div>
+      <div
+        className={cn(
+          modal && "opacity-10",
+          "bg-secondary h-full min-h-screen shadow-lg p-4"
+        )}
+      >
+        <div className="flex justify-center items-center">
+          <Container className="max-w-[1440px]">
+            <div className="overflow-x-auto ">
+              <div className="min-w-[500px]">
+                <nav className="flex justify-end mb-4 space-x-5">
+                  {NAVIGATION_MENU.map((item) => (
+                    <p
+                      className={cn(
+                        currentPage === item.path
+                          ? "text-light-blue-2"
+                          : "text-white",
+                        "cursor-pointer hover:text-light-blue duration-50"
+                      )}
+                      onClick={() => {
+                        setCurrentPage(item.path);
+                        window.location.hash = `#${item.path}`;
+                      }}
+                    >
+                      {item.name}
+                    </p>
+                  ))}
+                </nav>
+
+                {currentPage === "Overwatch" && <OverwatchSideBar />}
+                {currentPage === "ReviewedDemos" && <ReviewedDemosSideBar />}
+                {currentPage === "MyReports" && <MyReportsSideBar />}
+                {currentPage === "CreateReport" && <CreateReportSideBar />}
               </div>
-              <div>
-                <div
-                  className={cn(
-                    currentPage === "CreateReport" && "text-orange-500",
-                    "cursor-pointer hover:text-orange-400 duration-600"
-                  )}
-                  onClick={() => {
-                    setCurrentPage("CreateReport");
-                    window.location.hash = "#CreateReport"; // Добавляем # в URL
-                  }}
-                >
-                  <div className="flex items-center space-x-2">
-                    <Plus size={32} /> <p>Create Report</p>
-                  </div>
-                </div>
-              </div>
-            </nav>
-            {currentPage === "Overwatch" && <OverwatchSideBar />}
-            {currentPage === "ReviewedDemos" && <ReviewedDemosSideBar />}
-            {currentPage === "MyReports" && <MyReportsSideBar />}
-            {currentPage === "CreateReport" && <CreateReportSideBar />}
+            </div>
           </Container>
         </div>
       </div>

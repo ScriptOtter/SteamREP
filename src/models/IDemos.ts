@@ -8,7 +8,8 @@ interface IVerdicts {
   comment: string;
   createdAt: string;
 }
-export interface IDemos {
+
+export interface IReport {
   id?: number;
   youtubeLink: string;
   demoLink: string;
@@ -21,5 +22,4 @@ export interface IDemos {
   author: IAuthor;
   recipient: ISteamUser;
   verdicts?: IVerdicts[];
-  updateDemos?: () => void;
 }

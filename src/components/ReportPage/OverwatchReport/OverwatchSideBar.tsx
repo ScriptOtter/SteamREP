@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { createApi } from "@/services/axios";
 import { useDispatch } from "react-redux";
 import { API_ENDPOINTS } from "@/services/apiService";
-import { IDemos } from "@/models/IDemos";
+import { IReport } from "@/models/IDemos";
 import { HeaderReportPage } from "../HeaderReportPage";
 import { OverwatchItem } from "./OverwatchItem";
 
@@ -11,41 +11,36 @@ export const OverwatchSideBar = () => {
   const dispatch = useDispatch();
   const api = createApi(dispatch);
 
-  const [demos, setDemos] = useState<IDemos[]>([]);
-
-  const getDemos = async (): Promise<void> => {
+  const [demos, setDemos] = useState<IReport[]>([]);
+  const getReports = async (): Promise<void> => {
     try {
       const demos = await api.get(API_ENDPOINTS.getDemos, {
         withCredentials: true,
       });
       if (demos.data) {
         setDemos(demos.data);
+        console.log(demos.data);
       }
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   };
-
-  const updateDemos = () => {
-    getDemos();
+  const updateReports = () => {
+    getReports();
   };
 
   useEffect(() => {
-    getDemos();
+    getReports();
   }, []);
+
   return (
     <>
       <HeaderReportPage />
-      {demos.map((demo: IDemos) => (
+      {demos.map((report) => (
         <OverwatchItem
-          key={demo.youtubeLink}
-          id={demo.id}
-          youtubeLink={demo.youtubeLink}
-          demoLink={demo.demoLink}
-          comment={demo.comment}
-          createdAt={demo.createdAt}
-          author={demo.author}
-          recipient={demo.recipient}
-          reasonsReport={[]}
-          updateDemos={updateDemos}
+          key={report.id}
+          report={report}
+          updateReports={updateReports}
         />
       ))}
     </>

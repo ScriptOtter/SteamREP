@@ -11,6 +11,7 @@ import { API_ENDPOINTS } from "@/services/apiService";
 import { z } from "zod";
 import { AxiosError } from "axios";
 import { useDebounce } from "@/hooks/use-debounce";
+import { ToastWarning } from "@/components/Toasts/ToastWarning";
 
 export const CreateReportSideBar = () => {
   type FormData = z.infer<typeof formDataScheme>;
@@ -18,31 +19,40 @@ export const CreateReportSideBar = () => {
   const initialFormData = {
     steamUrl: "",
     youtubeLink: "",
-    demoLink: "steam://rungame/730/",
+    demoLink: "",
     comment: "",
   };
 
   const formDataScheme = z.object({
     steamUrl: z.string().min(2),
-    youtubeLink: z.string().refine(
-      (link) => {
-        return (
-          link.startsWith("https://www.youtube.com/watch?v=") ||
-          link.startsWith("https://youtu.be/")
-        );
-      },
-      {
-        message: "Youtube link is not valid!",
-      }
-    ),
-    demoLink: z.string().refine(
-      (link) => {
-        return link.startsWith("steam://rungame/730/");
-      },
-      {
-        message: "Demo link is not valid!",
-      }
-    ),
+    youtubeLink: z
+      .string()
+      .optional()
+      .refine(
+        (link) => {
+          return link
+            ? link.trim().startsWith("https://www.youtube.com/watch?v=") ||
+                link.trim().startsWith("https://youtu.be/")
+            : true;
+        },
+        {
+          message: "Youtube link is not valid!",
+        }
+      ),
+
+    demoLink: z
+      .string()
+      .optional()
+      .refine(
+        (link) => {
+          // Проверяем, если link существует и является непустой строкой
+          return link ? link.trim().startsWith("steam://rungame/730/") : true;
+        },
+        {
+          message: "Demo link is not valid!",
+        }
+      ),
+
     comment: z
       .string()
       .optional()
@@ -124,7 +134,7 @@ export const CreateReportSideBar = () => {
         );
       } catch (e: unknown) {
         if (e instanceof AxiosError) {
-          toast.error(e.response?.data.target[0] + " already exists!");
+          ToastWarning(e.response?.data.message);
         }
       }
     }

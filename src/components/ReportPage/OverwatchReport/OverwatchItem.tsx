@@ -1,46 +1,60 @@
 import { useDropDownMenu } from "@/hooks/use-drop-down-menu";
-
 import { VerdictOverwatchDemos } from "./VerdictOverwatchDemos";
 import { ArrowUp } from "lucide-react";
-import { Avatar } from "../../../components/Avatar";
-import { IDemos } from "@/models/IDemos";
+import { IReport } from "@/models/IDemos";
 import { Time } from "@/data/time";
 
-export const OverwatchItem = ({
-  id,
-  youtubeLink,
-  demoLink,
-  comment,
-  createdAt,
-  author,
-  recipient,
-  updateDemos,
-}: IDemos) => {
+interface IProps {
+  report: IReport;
+  updateReports: () => void;
+}
+
+export const OverwatchItem = ({ report, updateReports }: IProps) => {
   const { isMenuOpen, toggleMenu } = useDropDownMenu();
 
   return (
     <>
       <div
         onClick={toggleMenu}
-        className="flex flex-col md:flex-row bg-[#282a2e] rounded-xl px-4 py-4 mb-2 cursor-pointer"
+        className="bg-gray text-white grid grid-cols-[1fr_1fr_1fr_1fr_0.5fr] px-2 border-1 border-light-gray hover:border-light-gray-3 duration-150 cursor-pointer my-1 py-1.5"
       >
         {!isMenuOpen && (
           <>
-            <div className="flex items-center flex-1 text-white cursor-pointer">
-              <Avatar src={author.steamUser.avatar || ""} />
-              <h2 className="text-xl ml-2">{author.steamUser.personaName}</h2>
+            <div className="flex items-center text-white ">
+              <img
+                className="rounded-full w-8"
+                src={
+                  report.recipient.avatar || import.meta.env.VITE_UNKOWN_AVATAR
+                }
+              />
+              <p className="text-xs ml-2">{report.recipient.personaName}</p>
             </div>
-            <div className="flex items-center flex-1 text-white cursor-pointer">
-              <Avatar src={recipient.avatar || ""} />
-              <h2 className="text-xl ml-2">{recipient.personaName}</h2>
+            <div className="flex items-center">
+              <div className="ml-0.5 text-xs space-y-2">
+                <p className="hover:text-red-600 duration-150">
+                  YouTube Moment
+                </p>
+                <p className="hover:text-light-blue">{report.demoLink}</p>
+              </div>
             </div>
-            <div className="flex-1 text-white cursor-pointer">
-              <h2 className="text-xl">{Time(createdAt)}</h2>
+            {report.verdicts && (
+              <div className="ml-3 text-xs grid grid-cols-1">
+                {report.verdicts[0].verdicts.map((item, index) => (
+                  <p key={index}>{item}</p>
+                ))}
+              </div>
+            )}
+
+            <div className="ml-0.5 flex items-center">
+              <p className="text-xs">{report.comment}</p>
+            </div>
+            <div className="ml-1.5 flex items-center text-xs">
+              <p>{Time(report.createdAt).split(" ")[0]}</p>
             </div>
           </>
         )}
         {isMenuOpen && (
-          <p className="text-white text-xl items-center">
+          <p className=" text-xl items-center">
             <ArrowUp />
           </p>
         )}
@@ -48,16 +62,9 @@ export const OverwatchItem = ({
 
       {isMenuOpen && (
         <VerdictOverwatchDemos
-          key={youtubeLink}
-          id={id}
-          youtubeLink={youtubeLink}
-          demoLink={demoLink}
-          comment={comment}
-          createdAt={createdAt}
-          author={author}
-          recipient={recipient}
-          reasonsReport={[]}
-          updateDemos={updateDemos}
+          key={report.id}
+          report={report}
+          updateReports={updateReports}
         />
       )}
     </>
