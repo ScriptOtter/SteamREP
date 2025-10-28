@@ -81,9 +81,10 @@ export const UseUploadFile = (
       }
     } catch (e: unknown) {
       setLoading(false);
+
       if (e instanceof AxiosError) {
         if (e.response?.data.message !== "Unauthorized")
-          console.log(e.response?.data.message);
+          ToastWarning(e.response?.data.message);
       }
     }
   };
@@ -135,7 +136,7 @@ export const UseUploadFile = (
       setLoading(false);
       if (e instanceof AxiosError) {
         if (e.response?.data.message !== "Unauthorized")
-          console.log(e.response?.data.message);
+          ToastWarning(e.response?.data.message);
       }
     }
   };

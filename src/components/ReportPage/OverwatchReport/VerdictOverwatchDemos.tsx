@@ -41,10 +41,10 @@ export const VerdictOverwatchDemos = ({ report, updateReports }: IProps) => {
     } catch (e) {}
   };
   return (
-    <div className="grid grid-cols-[1fr_0.2fr_1fr] bg-gray border-1 border-light-gray duration-150 cursor-pointer my-1 px-6 pt-6">
+    <div className="grid grid-cols-[1fr_0.2fr_1fr] bg-gray border-1 border-light-gray duration-150 my-1 px-6 pt-6">
       <div>
         <div className="flex items-center justify-center space-x-2 text-white outline-1 outline-light-gray-2 rounded-xl mb-4">
-          <p className="text-xl">Report owner:</p>
+          <p className="">Report owner:</p>
           <img
             className="rounded-full w-10 outline-1 outline-light-gray"
             src={report.author.steamUser.avatar || ""}
@@ -70,14 +70,11 @@ export const VerdictOverwatchDemos = ({ report, updateReports }: IProps) => {
           )}
         </div>
         <div className="outline-1 outline-light-gray-2 rounded-xl p-4 text-white mb-8">
-          <p className="text-s">{report.comment}</p>
-        </div>
-        <div className="text-right text-[16px] text-white">
-          Report Created At: {Time(report.createdAt)}
+          <p>{report.comment}</p>
         </div>
       </div>
 
-      <div></div>
+      <div className="border-l-1 border-light-gray-3 mx-auto mb-[25%]"></div>
 
       <div>
         <div className="flex items-center justify-center space-x-2 text-white outline-1 outline-light-gray-2 rounded-xl mb-4">
@@ -110,7 +107,7 @@ export const VerdictOverwatchDemos = ({ report, updateReports }: IProps) => {
         {!visibleComment && (
           <button
             onClick={() => setVisibleComment(true)}
-            className="text-white cursor-pointer"
+            className="text-white cursor-pointer hover:text-light-blue-2"
           >
             Add Comment
           </button>
@@ -119,17 +116,17 @@ export const VerdictOverwatchDemos = ({ report, updateReports }: IProps) => {
           <div className="mb-1">
             <p className="text-white">Comment:</p>
             <textarea
-              className="text-white break-all w-full border-orange-500 border-1 rounded-s bg-gray-700 px-2 text-xs h-50 mt-2 p-2"
+              className="text-white break-all w-full border-gray-300 outline-none transition-all duration-200 resize-none border-1 rounded-lg pl-4 px-4 py-3 focus:h-32 h-13 focus:border-light-blue"
               value={verdictComment}
               onChange={(e) => setVerdictComment(e.target.value)}
             ></textarea>{" "}
           </div>
         )}
 
-        <div className="flex items-center justify-end space-x-4 mt-2">
+        <div className="flex items-center justify-end space-x-4 my-2">
           <button
             onClick={postVerdict}
-            className="bg-orange-500 rounded-xl cursor-pointer px-4 py-1 text-white"
+            className="bg-light-blue rounded-xl cursor-pointer px-4 py-1 text-white"
           >
             Confirm
           </button>

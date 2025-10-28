@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Input } from "./Input";
 import { useDropDownMenu } from "@/hooks/use-drop-down-menu";
 import { Check, ListChecks } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -44,22 +43,21 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({ onChange }) => {
   return (
     <>
       <div ref={menuRef} className="relative mb-3">
-        <Input
-          variant="forAuth"
+        <input
           type="text"
           readOnly
           onClick={toggleMenu}
           value={selectedOptions.join(", ")}
           placeholder="Choose..."
-          className="block w-full p-1 border border-gray-300 rounded-md cursor-pointer hover:outline-1 hover:outline-white"
+          className="w-full pl-3 py-2 text-white placeholder:text-light-gray-3 bg-light-gray outline-1 outline-light-gray-2 rounded-md cursor-pointer hover:outline-light-gray-3"
         />
         <ListChecks
-          size={22}
-          className="absolute right-2 top-1.5 text-white cursor-pointer"
+          size={20}
+          className="absolute top-2.5 right-3 text-white cursor-pointer"
           onClick={toggleMenu}
         />
         {isMenuOpen && (
-          <div className="absolute z-10 w-full shadow-white rounded-xs mt-1 shadow-xs bg-[#2F3136] text-white">
+          <div className="absolute z-10 w-full mt-0.5 bg-gray text-white">
             {options.map((option: Option) => (
               <div
                 key={option.key}
@@ -67,8 +65,8 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({ onChange }) => {
                 className={
                   cn(
                     selectedOptions.includes(option.value)
-                      ? "bg-orange-500"
-                      : "bg-[#2F3136]"
+                      ? "bg-light-blue-3"
+                      : "bg-light-gray"
                   ) +
                   " cursor-pointer rounded-xs p-1 m-0.5 hover:outline-1 hover:outline-white"
                 }

@@ -9,7 +9,6 @@ import { useAuth } from "@/hooks/use-auth";
 
 import { cn } from "@/lib/utils";
 import { Header } from "@/views/Header";
-import { Eye, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export const ReportPlayerPage = () => {
