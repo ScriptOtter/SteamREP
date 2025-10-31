@@ -9,30 +9,31 @@ export const BlogPage = () => {
       version: "1.0.0",
       date: "01.11.2025",
       type: "Global Update",
-      description: "Welcome to SteamRep! Основные фишки сайта.",
+      description: "Welcome to SteamRep! The main features of the site.",
 
       featureGroups: [
         {
-          title: "Взаимодействие с платформой Steam",
+          title: "Interacting with CS2",
           features: [
-            "Удобное получение идентификаторов пользователей, включая SteamID, SteamID2, SteamID3 и SteamID64Hex",
-            "Возможность оставлять и отслеживать подлинные комментарии к профилям пользователей, включая закрытые аккаунты",
-            "Мониторинг игровых и торговых блокировок пользователей",
+            "Access statistics from recent matches, including ranks, ratings, and shooting information",
+            "Submitting reports to Steam game profiles with evidence attached",
+            "Track players' private ranks, likes, and medals directly from our website",
           ],
         },
         {
-          title: "Взаимодействие с CS2",
+          title: "Interacting with the Steam platform",
           features: [
-            "Отслеживание приватных рангов, лайков и медалей игроков непосредственно с нашего веб-сайта",
-            "Доступ к статистическим данным последних матчей, включая ранги, рейтинг и информацию о стрельбе",
-            "Отправка репортов на игровые профили Steam с приложением доказательств",
+            "The ability to leave and track genuine comments on user profiles, including private accounts",
+            "Monitoring user gaming and trading bans",
+            "Easily retrieve user IDs, including SteamID, SteamID2, SteamID3, and SteamID64Hex",
           ],
         },
+
         {
-          title: "Дополнительные возможности",
+          title: "Additional features",
           features: [
-            "Ежедневная проверка нашей базы данных аккаунтов Steam на наличие VAC-блокировок",
-            "Сохранение и мониторинг Steam-аккаунтов в едином удобном месте",
+            "We check our Steam account database daily for VAC bans",
+            "Save and monitor Steam accounts in one convenient place",
           ],
         },
       ],
@@ -45,7 +46,7 @@ export const BlogPage = () => {
         <Container>
           <div>
             <h1 className="text-3xl font-bold mb-6 text-center text-white ">
-              Последние обновления и новые функции
+              Latest updates and new features
             </h1>
             {updates.map((update) => (
               <div
