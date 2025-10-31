@@ -4,7 +4,6 @@ export const menu: { [key: string]: string } = {
   blog: "Blog",
   analyzedMatches: "Analyzed Matches",
   VACTracker: "VAC Tracker",
-  morelinks: "More links",
 };
 export const menuUrls: { [key: string]: string } = {
   home: "/",
@@ -12,5 +11,4 @@ export const menuUrls: { [key: string]: string } = {
   blog: "/blog",
   analyzedMatches: "/analyzed-matches",
   VACTracker: "/vac-tracker",
-  morelinks: "/404",
 };

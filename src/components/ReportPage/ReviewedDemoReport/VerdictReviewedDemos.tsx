@@ -1,104 +1,98 @@
-import { Flag } from "lucide-react";
 import { YourubeVideo } from "../../youtube-video";
-import { Avatar } from "../../../components/Avatar";
-import { IDemos } from "@/models/IDemos";
-import { Time } from "@/data/time";
-import { Input } from "../../Input";
+import { IReport } from "@/models/IDemos";
+import { useNavigate } from "react-router-dom";
 
-export const VerdictReviewedDemos = ({
-  youtubeLink,
-  demoLink,
-  comment,
-  createdAt,
-  author,
-  recipient,
-  verdicts,
-}: IDemos) => {
+interface IProps {
+  report: IReport;
+}
+
+export const VerdictReviewedDemos = ({ report }: IProps) => {
+  const navigate = useNavigate();
   return (
-    <div className="flex flex-col md:flex-row bg-[#282a2e] rounded-2xl mx-4 my-2">
-      <div className="flex-1 p-4">
-        <div className="flex items-center text-xl text-white mb-2">
-          <p className="mr-2">Report owner:</p>
-          <Avatar src={author.steamUser.avatar || ""} />
-          <a
-            href={
-              import.meta.env.VITE_FRONTEND_URL +
-              "profile/" +
-              author.steamUser.id
-            }
-            className="text-s hover:text-orange-300 duration-300"
+    <div className="grid grid-cols-[1fr_0.2fr_1fr] bg-gray border-1 border-light-gray-3 duration-150 my-1 px-6 pt-6 overflow-y-auto">
+      <div>
+        <div className="flex items-center justify-center space-x-2 text-white outline-1 outline-light-gray-2 rounded-xl mb-4">
+          <p className="">Report owner:</p>
+          <img
+            className="rounded-full w-10 outline-1 outline-light-gray"
+            src={report.author.steamUser.avatar || ""}
+          />
+          <p
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/profile/${report.author.steamUser.id}`);
+            }}
+            className="hover:text-light-blue-2 duration-150 cursor-pointer"
           >
-            {author.steamUser.personaName}
-          </a>
+            {report.author.steamUser.personaName}
+          </p>
         </div>
-        <div className="mb-2">
-          <YourubeVideo youtubeLink={youtubeLink} />
+
+        <div className="text-white text-xl outline-1 outline-light-gray-2 rounded-xl mb-4">
+          {report.verdicts && (
+            <div className="p-2 relative">
+              <p className="absolute -top-[9px] left-4 bg-gray text-xs text-light-gray-3">
+                Verdicts
+              </p>
+              {report.verdicts[0].verdicts.map((item) => (
+                <p className="ml-2 py-1">{item}</p>
+              ))}
+            </div>
+          )}
         </div>
-        <div className="text-white text-xl">
-          <div className="flex space-x-1">
-            <p>Demo Link: </p>{" "}
-            <a
-              href={demoLink}
-              className="text-s cursor-pointer hover:text-orange-400 duration-300"
-            >
-              {demoLink}
-            </a>
-          </div>
-          {comment && <p>Comment by Report Owner:</p>}
-          <div className="bg-gray-700 rounded-xl outline-orange-500 outline-1 px-2 mt-2 mb-2">
-            <p className="text-s">{comment}</p>
-          </div>
-          <div className="text-right text-[16px]">
-            Report Created At: {Time(createdAt)}
-          </div>
+        <div className="relative outline-1 outline-light-gray-2 rounded-xl p-4 text-white mb-8">
+          <p className="absolute -top-[9px] left-4 bg-gray text-xs text-light-gray-3">
+            Comment from {report.author.steamUser.personaName}
+          </p>
+          <p>{report.comment}</p>
         </div>
       </div>
 
-      <div className="w-[2px] my-4 bg-[#1b1c1f] hidden md:block"></div>
+      <div className="border-l-1 border-light-gray-3 mx-auto mb-[25%]"></div>
 
-      <div className="flex-1">
-        <div className="p-4">
-          <div className="flex items-center text-xl text-white mb-2">
-            <p className="mr-2">Suspect:</p>
-            <Avatar src={recipient.avatar || ""} />
-            <a
-              href={
-                import.meta.env.VITE_FRONTEND_URL + "profile/" + recipient.id
-              }
-              className="text-s hover:text-orange-300 duration-300"
-            >
-              {recipient.personaName}
-            </a>
-          </div>
-          <div className="flex justify-between mb-3">
-            <label className="text-white text-[14px]">Your verdict:</label>
-          </div>
-          <Input
-            variant="forAuth"
-            type="text"
-            readOnly
-            value={verdicts![0].verdicts.join(", ")}
-            placeholder="Choose..."
-            className="block w-full p-1 border border-gray-300 rounded-md cursor-pointer hover:outline-1 hover:outline-white mb-3"
+      <div>
+        <div className="flex items-center justify-center space-x-2 text-white outline-1 outline-light-gray-2 rounded-xl mb-4">
+          <p>Suspect:</p>
+          <img
+            className="rounded-full w-10 outline-1 outline-light-gray"
+            src={report.recipient.avatar || import.meta.env.VITE_UNKOWN_AVATAR}
           />
-
-          {verdicts![0].comment && (
-            <div className="mb-1">
-              <p className="text-white">Your Comment:</p>
-              <textarea
-                className="text-white break-all w-full border-orange-500 border-1 rounded-s bg-gray-700 px-2 text-xs h-50 mt-2 p-2"
-                value={verdicts![0].comment}
-                readOnly
-              ></textarea>{" "}
-            </div>
-          )}
-
-          <div className="flex items-center justify-end mt-2">
-            <button className="cursor-pointer">
-              <Flag className="text-white" />
-            </button>
-          </div>
+          <p
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/profile/${report.recipient.id}`);
+            }}
+            className="hover:text-light-blue-2 duration-150 cursor-pointer"
+          >
+            {report.recipient.personaName}
+          </p>
         </div>
+        <YourubeVideo
+          width={640}
+          height={250}
+          youtubeLink={report.youtubeLink}
+          className={
+            "flex justify-center border-1 border-light-gray-2 rounded-xl mb-4"
+          }
+        />
+
+        <div className="relative outline-1 outline-light-gray-2 rounded-xl p-4 text-white mb-8">
+          <p className="absolute -top-[9px] left-4 bg-gray text-xs text-light-gray-3">
+            Your verdict
+          </p>
+          <p>{report.verdicts![0].verdicts.join(", ")}</p>
+        </div>
+
+        {report.verdicts![0].comment && (
+          <div className="relative outline-1 outline-light-gray-2 rounded-xl p-4 text-white mb-8">
+            <p className="absolute -top-[9px] left-4 bg-gray text-xs text-light-gray-3">
+              Your comment
+            </p>
+            <p>{report.verdicts![0].comment}</p>
+          </div>
+        )}
+
+        <div className="flex items-center justify-end mt-2"></div>
       </div>
     </div>
   );

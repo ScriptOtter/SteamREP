@@ -19,6 +19,7 @@ export const PendingAnalysisMatches = () => {
     loading: true,
   });
   useEffect(() => {
+    let loaded = false;
     const handleTrackingStats = (data: {
       matches: number;
       players: number;
@@ -30,6 +31,10 @@ export const PendingAnalysisMatches = () => {
           players: data.players,
           loading: false,
         }));
+        if (!loaded) {
+          setState((prev) => ({ ...prev, currentText: "Players" }));
+          loaded = true;
+        }
       }
     };
 
@@ -114,7 +119,7 @@ export const PendingAnalysisMatches = () => {
       {state.currentText === "Closed" && (
         <div
           onClick={() =>
-            setState((prev) => ({ ...prev, currentText: "Pending" }))
+            setState((prev) => ({ ...prev, currentText: "Players" }))
           }
           className="px-[17.5px] py-[17.5px] bg-secondary/20 rounded-xl outline-1 outline-light-gray/70 flex items-center space-x-2"
         >

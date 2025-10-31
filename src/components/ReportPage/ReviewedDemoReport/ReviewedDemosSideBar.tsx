@@ -3,15 +3,16 @@ import { useEffect, useState } from "react";
 import { createApi } from "@/services/axios";
 import { useDispatch } from "react-redux";
 import { API_ENDPOINTS } from "@/services/apiService";
-import { IDemos } from "@/models/IDemos";
+
 import { ReviewedDemosItem } from "./ReviewedDemosItem";
 import { HeaderReportPage } from "../HeaderReportPage";
+import { IReport } from "@/models/IDemos";
 
 export const ReviewedDemosSideBar = () => {
   const dispatch = useDispatch();
   const api = createApi(dispatch);
 
-  const [demos, setDemos] = useState<IDemos[]>([]);
+  const [demos, setDemos] = useState<IReport[]>([]);
 
   const getDemos = async (): Promise<void> => {
     try {
@@ -27,22 +28,12 @@ export const ReviewedDemosSideBar = () => {
   useEffect(() => {
     getDemos();
   }, []);
+
   return (
     <>
       <HeaderReportPage />
-      {demos.map((demo: IDemos) => (
-        <ReviewedDemosItem
-          key={demo.youtubeLink}
-          id={demo.id}
-          youtubeLink={demo.youtubeLink}
-          demoLink={demo.demoLink}
-          comment={demo.comment}
-          createdAt={demo.createdAt}
-          verdicts={demo.verdicts}
-          author={demo.author}
-          recipient={demo.recipient}
-          reasonsReport={[]}
-        />
+      {demos.map((report: IReport) => (
+        <ReviewedDemosItem key={report.youtubeLink} report={report} />
       ))}
     </>
   );

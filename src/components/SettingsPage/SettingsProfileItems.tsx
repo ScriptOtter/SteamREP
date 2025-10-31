@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import { MdCheck } from "react-icons/md";
 import { Loader } from "../Loader";
 
 interface IProps {
@@ -15,7 +14,7 @@ interface IProps {
 export const SettingsProfileItems = ({ ...props }: IProps) => {
   const [input, setInput] = useState<string>(props.valueInput || "");
   const { onClick } = props;
-  const [loading, setLoading] = useState<boolean>(false);
+
   useEffect(() => {
     setInput(props.valueInput || "");
   }, [props.valueInput]);
@@ -67,24 +66,16 @@ export const SettingsProfileItems = ({ ...props }: IProps) => {
               <button
                 onClick={() => {
                   onClick(input);
-                  new Promise((res) => {
-                    setLoading(true);
-
-                    setTimeout(() => {
-                      setLoading(false);
-                      res;
-                    }, 4000);
-                  });
                 }}
                 className={
                   "text-white bg-light-gray/20 rounded-md items-center w-full text-s p-1 cursor-pointer"
                 }
               >
-                {!loading ? (
-                  <MdCheck size={21} className="text-emerald-400" />
-                ) : (
-                  <Loader />
-                )}
+                <p className="rounded-2xl px-2 bg-light-gray-2/40 cursor-pointer">
+                  Save
+                </p>
+
+                <Loader />
               </button>
             </div>
           )}

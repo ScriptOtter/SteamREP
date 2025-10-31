@@ -31,7 +31,7 @@ export const CS2HeaderTable = ({ ...props }) => {
       <div
         className={cn(
           currentView == "raws"
-            ? "hidden xl:grid grid-cols-31 gap-4 mx-4 mr-5 mb-5 items-center text-xl"
+            ? "hidden xl:grid grid-cols-31 gap-4 mx-4 mr-5 mb-5 items-center text-xl text-light-gray-3"
             : "hidden"
         )}
       >

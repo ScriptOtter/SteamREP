@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "@/hooks/use-auth.ts";
 import { ProfileButton } from "@/components/profileButton";
-import { BellDot, Bookmark, CircleHelp, LogIn, Search } from "lucide-react";
+import { BellDot, Bookmark, LogIn, Search } from "lucide-react";
 import { getMe } from "@/data/getUser.ts";
 import { getUserId, profileURL } from "@/utils/steamUrl";
 import { useDropDownMenu } from "@/hooks/use-drop-down-menu";
@@ -90,9 +90,15 @@ export const Header = () => {
         <div className="flex justify-between items-center p-3">
           {/* Логотип */}
 
-          <div className="flex items-center md:mx-2 lg:mx-8 space-x-2 mr-4">
-            <CircleHelp className="size-9 text-light-gray" />
+          <div className="flex items-center md:mx-2 lg:mx-8 space-x-2 mr-4 relative">
+            <div className="mr-14.5"></div>
             <Link to="/" className="text-white text-2xl font-bold">
+              <img
+                className="absolute -top-3 -left-2.5"
+                src="/logo.png"
+                width={60}
+                alt="logo"
+              />
               SteamREP
             </Link>
           </div>

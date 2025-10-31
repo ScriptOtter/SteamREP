@@ -1,4 +1,4 @@
-import { FaIcons, FaSteam, FaTelegram } from "react-icons/fa";
+import { FaSteam, FaTelegram } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export const Footer = () => {
@@ -9,9 +9,19 @@ export const Footer = () => {
         <div className="mb-6 text-center">
           <h2 className="font-semibold mb-3">Follow Us!</h2>
           <div className="flex justify-center space-x-4">
-            <FaSteam size={24} />
-            <FaTelegram size={24} />
-            <FaIcons size={24} />
+            <FaSteam
+              onClick={() =>
+                (location.href = "https://steamcommunity.com/groups/SRep-help")
+              }
+              size={24}
+              className="cursor-pointer hover:text-light-blue"
+            />
+            <FaTelegram
+              onClick={() => (location.href = "https://t.me/steamrep")}
+              size={24}
+              className="cursor-pointer hover:text-light-blue-2"
+            />
+            {/* <FaIcons size={24} /> */}
           </div>
         </div>
         <div className="mb-3">

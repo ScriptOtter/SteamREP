@@ -21,13 +21,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { ToggleGroup } from "@/components/ui/toggle-group";
 import { Container } from "./container";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_ENDPOINTS } from "@/services/apiService";
 import { PageLoader } from "./Loader";
-import { cn } from "@/lib/utils";
 
 export const description = "An interactive area chart";
 
@@ -49,15 +48,9 @@ export function VacTrackerWidget() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (timeRange === "") setTimeRange("7d");
-  }, [timeRange]);
-
-  useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(API_ENDPOINTS.getBans);
-
       setChartData(res.data);
-
       setLoading(false);
     };
     fetchData();
@@ -98,39 +91,7 @@ export function VacTrackerWidget() {
                     onValueChange={setTimeRange}
                     variant="outline"
                     className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
-                  >
-                    <ToggleGroupItem
-                      className={cn(
-                        timeRange === `${chartData.length}d` && "bg-light-gray",
-                        "cursor-pointer"
-                      )}
-                      value={`${chartData.length}d`}
-                    >
-                      All time
-                    </ToggleGroupItem>
-                    {days >= 30 && (
-                      <ToggleGroupItem
-                        className={cn(
-                          timeRange === `30d` && "bg-light-gray",
-                          "cursor-pointer"
-                        )}
-                        value="30d"
-                      >
-                        Last 30 days
-                      </ToggleGroupItem>
-                    )}
-                    {days >= 7 && (
-                      <ToggleGroupItem
-                        className={cn(
-                          timeRange === `7d` && "bg-light-gray",
-                          "cursor-pointer"
-                        )}
-                        value="7d"
-                      >
-                        Last 7 days
-                      </ToggleGroupItem>
-                    )}
-                  </ToggleGroup>
+                  ></ToggleGroup>
                   <Select value={timeRange} onValueChange={setTimeRange}>
                     <SelectTrigger
                       className="flex w-40 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate @[767px]/card:hidden"

@@ -29,7 +29,7 @@ export const CountryItem = ({ ...props }) => {
               </p>
             </div>
             {auth.country ? (
-              <div className="flex items-center space-x-2 ml-2">
+              <div className="flex items-center space-x-2 ml-8">
                 <ReactCountryFlag
                   countryCode={auth.country || ""}
                   svg

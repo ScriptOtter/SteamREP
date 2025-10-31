@@ -8,6 +8,8 @@ import axios, { AxiosResponse } from "axios";
 import { API_ENDPOINTS } from "@/services/apiService";
 import { PageLoader } from "../Loader";
 import { ISteamUser } from "@/models/ISteamUser";
+import { useAuth } from "@/hooks/use-auth";
+import { ArrowRight } from "lucide-react";
 
 export interface IPlayerStatisticInMatch {
   id: string;
@@ -76,7 +78,7 @@ export const CS2Matches = ({ ...props }) => {
   const [currentView, setCurrentView] = useState<"raws" | "blocks">("raws");
   const [matches, setMatches] = useState<IMatches[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const auth = useAuth();
   useEffect(() => {
     const getMatches = async () => {
       try {
@@ -133,17 +135,39 @@ export const CS2Matches = ({ ...props }) => {
               </div>
             </div>
           ) : (
-            <div className="w-full h-full py-13">
-              <div className="flex flex-col items-center font-mono space-y-2 ml-6">
-                <p className="text-white text-4xl sm:text-5xl mb-8">
-                  There are no matches played.
-                </p>
-                <p className="text-md md:text-xl">
-                  If this is someone you know, tell them about the ability to
-                  track their CS2 game statistics on our website.
-                </p>
-              </div>
-            </div>
+            <>
+              {auth.steamid !== steamid ? (
+                <div className="w-full h-full py-13">
+                  <div className="flex flex-col items-center font-mono space-y-2 ml-6">
+                    <p className="text-white text-4xl sm:text-5xl mb-8">
+                      There are no matches played.
+                    </p>
+                    <p className="text-md md:text-xl">
+                      If this is someone you know, tell them about the ability
+                      to track their CS2 game statistics on our website.
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="w-full h-full py-13">
+                  <div className="flex flex-col items-center font-mono space-y-2 ml-6">
+                    <p className="text-white text-4xl sm:text-5xl mb-8">
+                      There are no matches played
+                    </p>
+                    <p className="text-md md:text-2xl text-light-blue-3">
+                      Start tracking your matches now
+                    </p>
+                    <p className="text-2xl">Go to the following path:</p>
+                    <p
+                      onClick={() => navigate("/settings")}
+                      className="flex text-light-blue text-xl hover:underline cursor-pointer"
+                    >
+                      Settings <ArrowRight /> CS Tracker
+                    </p>
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       ) : (

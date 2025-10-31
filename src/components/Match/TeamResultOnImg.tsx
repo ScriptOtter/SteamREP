@@ -1,6 +1,6 @@
 import { ISteamUser } from "@/models/ISteamUser";
 import { IPlayerStatisticInMatch } from "../CS2MatchesPage/CS2Matches";
-import { PremierRating } from "../PremierRating";
+import { PremierForAnalyzedMatches } from "../PremierRating";
 import { cn } from "@/lib/utils";
 import { playerColors } from "@/lib/playerColors";
 import { useNavigate } from "react-router-dom";
@@ -50,7 +50,7 @@ export const TeamResultOnImg = ({
       {type === "PREMIER" && (
         <div className="mt-1">
           {" "}
-          <PremierRating rating={teammate.rank} />
+          <PremierForAnalyzedMatches rating={teammate.rank} />
         </div>
       )}
     </div>

@@ -20,10 +20,7 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
-import { ChevronLeft } from "lucide-react";
 
 export function RecentlyAnalyzedMatches() {
   const [maps, setMaps] = useState<IMap[]>([]);

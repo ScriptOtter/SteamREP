@@ -107,7 +107,9 @@ export const CS2Stats = ({ ...props }) => {
                   </div>
                 </div>
                 <div className="flex flex-col flex-1/2">
-                  <div className="mb-1.5 text-xs md:text-xl">MAP RANKS:</div>
+                  <div className="mb-1.5 text-xs md:text-xl">
+                    {cs2Stats?.MapRanks ? "MAP RANKS:" : "RANKS NOT FOUND"}
+                  </div>
 
                   {cs2Stats?.MapRanks.toString() === "" && (
                     <div className="font-mono text-xs md:text-xl">

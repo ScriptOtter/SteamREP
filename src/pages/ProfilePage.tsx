@@ -197,12 +197,6 @@ export const ProfilePage = () => {
               <p className="text-red-600 text-3xl">{error?.toString()}</p>
             </div>
           )}
-
-          {/* <p>
-                  Когда зареган акк, основная инфа, сколько игр,SteamID Запреты
-                  и ограничения трейд ссылка Формула для рейтинга аккаунта,
-                  доверие к челу
-                </p> */}
         </Container>
       </div>
     </>
