@@ -69,7 +69,7 @@ export function VacTrackerWidget() {
     return date >= startDate;
   });
   const days = Number(timeRange.split("d")[0]);
-  console.log(timeRange, days);
+
   return (
     <>
       {!loading ? (

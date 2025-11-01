@@ -13,7 +13,7 @@ export const createApi = (dispatch: any) => {
   });
 
   // Добавляем интерсептор для обработки ошибок
-  //console.log("Запрос отрравлен!");
+
   api.interceptors.response.use(
     (response) => response,
     async (error) => {

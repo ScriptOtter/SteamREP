@@ -63,7 +63,6 @@ export const OverwatchSideBar = () => {
           });
 
           if (res.data) {
-            console.log("DATA LOADED!");
             setReports(res.data);
             const firstReport: IReport =
               res.data[Math.floor(Math.random() * res.data.length)];
@@ -87,7 +86,7 @@ export const OverwatchSideBar = () => {
 
     if (reports.length > 0) {
       random = Math.floor(Math.random() * reports.length);
-      console.log(reports.length, random, reports[random].id);
+
       setReport(reports[random]);
       setReports((prev) => [
         ...prev.filter((item) => item.id !== prev[random].id),

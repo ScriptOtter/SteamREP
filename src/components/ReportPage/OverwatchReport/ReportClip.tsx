@@ -31,12 +31,12 @@ export const ReportClip = ({
       userComment: reportComment,
       reportId: report.id,
     };
-    console.log("REPORT --- ", data.reportId);
+
     try {
       const res = await api.post(API_ENDPOINTS.contentReport, data, {
         withCredentials: true,
       });
-      console.log(res.data);
+
       if (res.data) {
         setVerdict((prev) => !prev);
         setVisibleReport(false);

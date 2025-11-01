@@ -20,9 +20,8 @@ export const saveSocialLinks = async (
     if (!res) {
       return false;
     }
-    //console.log(res);
   } catch (e) {
-    //console.log(e);
+    console.log(e);
   }
 };
 
@@ -38,7 +37,7 @@ export const getSocialLinks = async (
 
     return res.data;
   } catch (e) {
-    //console.log(e);
+    console.log(e);
     return null;
   }
 };
@@ -52,10 +51,10 @@ export const getMySocialLinks = async (
     const res: AxiosResponse<ISocialLinks> = await api.get(
       API_ENDPOINTS.getSocialLinks + auth.steamid
     );
-    //console.log(res.data);
+
     return res.data;
   } catch (e) {
-    //console.log(e);
+    console.log(e);
     return null;
   }
 };

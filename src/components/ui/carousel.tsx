@@ -197,7 +197,7 @@ const CarouselPrevious = React.forwardRef<
   React.ComponentProps<typeof Button>
 >(({ className }, ref) => {
   const { scrollPrev, canScrollPrev } = useCarousel();
-  console.log(className);
+
   return (
     <Button
       ref={ref}

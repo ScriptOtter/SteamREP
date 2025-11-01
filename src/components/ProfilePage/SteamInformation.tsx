@@ -149,7 +149,7 @@ export const SteamInformation = ({ user }: ISteamInformation) => {
         </div>
         <div className="flex space-x-1">
           <p className="text-light-gray-2 lg:w-[20%] w-[30%]"> Trade Bans:</p>
-          {steamUserBans?.economyBan != "none" ? (
+          {steamUserBans?.economyBan == "none" ? (
             <p className="text-red-500"> Banned </p>
           ) : (
             <p className="text-emerald-400"> In Good Standing </p>

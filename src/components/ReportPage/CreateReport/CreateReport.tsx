@@ -167,7 +167,6 @@ export const CreateReportSideBar = () => {
         setNickname(res.personaName || "Steam user not found");
         setVisible(true);
 
-        console.log(res);
         return res;
       } catch (e) {}
     };

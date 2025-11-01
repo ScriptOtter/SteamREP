@@ -47,7 +47,6 @@ export const AnalyzedMatches = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !loading && page < totalPages) {
-          console.log(`obsrver ${loading} ${page} ${totalPages}`);
           setPage((prevPage) => prevPage + 1);
         }
       },
