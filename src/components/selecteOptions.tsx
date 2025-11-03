@@ -14,6 +14,7 @@ interface SelectOptionsProps {
   value: string[];
   resetTrigger: boolean;
   error: boolean;
+  type: "CREATE" | "VERDICT";
 }
 
 export const SelectOptions: React.FC<SelectOptionsProps> = ({
@@ -22,6 +23,7 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({
   onChange,
   className,
   resetTrigger,
+  type,
 }) => {
   const options = [
     { key: 1, value: "WALL HACKING" },
@@ -31,6 +33,12 @@ export const SelectOptions: React.FC<SelectOptionsProps> = ({
     { key: 5, value: "FARM BOT" },
     { key: 6, value: "NOT ENOUGH EVIDENCE" },
   ];
+
+  if (type === "CREATE") {
+    options.pop();
+  }
+
+  console.log(options);
   const [selectedOptions, setSelectedOptions] = useState<string[]>(value);
   const { isMenuOpen, toggleMenu, menuRef } = useDropDownMenu();
 

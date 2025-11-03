@@ -272,6 +272,7 @@ export const CreateReportSideBar = () => {
                 Give reasons
               </p>
               <SelectOptions
+                type={"CREATE"}
                 onChange={setSelectedOptions}
                 error={error}
                 value={selectedOptions}

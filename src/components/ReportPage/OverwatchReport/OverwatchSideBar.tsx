@@ -159,6 +159,7 @@ export const OverwatchSideBar = () => {
               <div>
                 {
                   <SelectOptions
+                    type={"VERDICT"}
                     error={error}
                     value={selectedOptions}
                     onChange={setSelectedOptions}
